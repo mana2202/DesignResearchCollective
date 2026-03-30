@@ -22,7 +22,7 @@
     --muted:    #7a8099;
     --card:     #161a26;
     --ideation:       #5b8dee;
-    --optimization:   #50c9a0;
+    --optimmization:   #50c9a0;
     --grammar:        #e06c4e;
     --decision_making:#c07ef0;
   }
@@ -169,7 +169,7 @@
   }
   .tag-cat { border: 1px solid; }
   .tag-cat.ideation       { color: var(--ideation);       border-color: var(--ideation);       background: rgba(91,141,238,0.1); }
-  .tag-cat.optimization   { color: var(--optimization);   border-color: var(--optimization);   background: rgba(80,201,160,0.1); }
+  .tag-cat.optimmization   { color: var(--optimmization);   border-color: var(--optimmization);   background: rgba(80,201,160,0.1); }
   .tag-cat.grammar        { color: var(--grammar);        border-color: var(--grammar);        background: rgba(224,108,78,0.1); }
   .tag-cat.decision_making{ color: var(--decision_making);border-color: var(--decision_making);background: rgba(192,126,240,0.1); }
   .tag-kw { color: var(--muted); background: var(--bg3); }
@@ -368,7 +368,7 @@
     <select id="filter-cat" onchange="filterPapers()">
       <option value="">All Categories</option>
       <option value="ideation">Ideation</option>
-      <option value="optimization">Optimization</option>
+      <option value="optimmization">Optimmization</option>
       <option value="grammar">Grammar</option>
       <option value="decision_making">Decision Making</option>
     </select>
@@ -393,7 +393,7 @@
     <select id="cluster-filter-cat" onchange="renderCluster()">
       <option value="">All Categories</option>
       <option value="ideation">Ideation</option>
-      <option value="optimization">Optimization</option>
+      <option value="optimmization">Optimmization</option>
       <option value="grammar">Grammar</option>
       <option value="decision_making">Decision Making</option>
     </select>
@@ -415,7 +415,7 @@ let filtered   = [];
 
 const CAT_COLORS = {
   ideation:       '#5b8dee',
-  optimization:   '#50c9a0',
+  optimmization:   '#50c9a0',
   grammar:        '#e06c4e',
   decision_making:'#c07ef0',
   '':             '#7a8099',
@@ -424,8 +424,15 @@ const SOURCE_COLORS = {
   'CCM Lab':        '#5b8dee',
   'CMU Engineering':'#e06c4e',
 };
+
+function paperSource(p) {
+  if (p.hf_dataset === 'ccm/publications') return 'CCM Lab';
+  if (p.hf_dataset === 'ccm/cmu-engineering-publications') return 'CMU Engineering';
+  return '';
+}
+
 const CAT_LABELS = {
-  ideation:'Ideation', optimization:'Optimization', grammar:'Grammar', decision_making:'Decision Making'
+  ideation:'Ideation', optimmization:'Optimmization', grammar:'Grammar', decision_making:'Decision Making'
 };
 
 // ── Load CSV ──────────────────────────────────────────────────
@@ -454,8 +461,18 @@ async function loadData() {
 }
 
 function parseCats(s) {
-  return s.split(',').map(c => c.trim().toLowerCase().replace(/\s+/g,'_')).filter(c => Object.keys(CAT_COLORS).includes(c));
+  const c = String(s || '').trim().toLowerCase().replace(/\s+/g, '_');
+  const valid = Object.keys(CAT_COLORS).filter(k => k !== '');
+  return valid.includes(c) ? [c] : [];
 }
+function scholarAbsUrl(u) {
+  if (!u) return '';
+  const t = String(u).trim();
+  if (/^https?:\/\//i.test(t)) return t;
+  if (t.startsWith('/')) return 'https://scholar.google.com' + t;
+  return t;
+}
+
 function parseKws(s) {
   if (!s) return [];
   const t = String(s).trim();
@@ -465,32 +482,35 @@ function parseKws(s) {
   return t.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
 }
 
-// ── Fallback sample data ──────────────────────────────────────
+// ── Fallback sample data (r[5] = hf_dataset id) ─────────────────
 function getSampleData() {
   const titles = [
-    ["Conceptual Design Generation Using Large Language Models","Kevin Ma, Daniele Grandi, Christopher McComb","2023","ideation","llm, concept generation, design, creativity, nlp","CCM Lab","International Design Engineering Technical Conferences","36","https://asmedigitalcollection.asme.org/IDETC-CIE/proceedings-abstract/IDETC-CIE2023/87349/1170650","Concept generation is a creative step in the conceptual design phase..."],
-    ["When Faced with Increasing Complexity: The Effectiveness of AI Assistance for Drone Design","Binyang Song, Nicolas Soria Zurita, Christopher McComb","2022","decision_making","ai assistance, drone design, complexity, hidden markov models, team performance","CCM Lab","Journal of Mechanical Design","34","","As artificial intelligence (AI) assistance tools become more ubiquitous..."],
-    ["A Strategic Decision-making Architecture Toward Hybrid Teams","Alparslan Bayrak, Christopher McComb, Jonathan Cagan","2021","decision_making","decision support, game theory, hybrid teams, reinforcement learning, starcraft","CCM Lab","Decision Support Systems","26","","Advances in artificial intelligence create new opportunities..."],
-    ["Mining Design Heuristics for Additive Manufacturing Via Eye-Tracking","Priyesh Mehta, Christopher McComb","2020","optimization","additive manufacturing, eye tracking, design heuristics, hidden markov model","CCM Lab","Journal of Mechanical Design","27","","In this research, we collected eye-tracking data..."],
-    ["Using Hidden Markov Models to Uncover States in Neuroimaging Data","Kosa Goucher-Lambert, Christopher McComb","2019","ideation","neuroimaging, fmri, hidden markov models, design cognition, brain activation","CCM Lab","ICED","32","","Recently, design researchers have begun to use neuroimaging..."],
-    ["Physics-Informed Generative Adversarial Networks for Fluid Simulations","Matthew Li, Christopher McComb","2022","optimization","generative adversarial network, cfd, super resolution, physics-informed ml","CCM Lab","JCISE","28","","Computational fluid dynamics simulations are useful..."],
-    ["A Conceptual Framework for Multidisciplinary Design Research","Christopher McComb, Kathryn Jablokow","2022","grammar","multidisciplinary research, design theory, agent-based modeling, frameworks","CCM Lab","Design Studies","31","","The design community traditionally excels at multidisciplinary research..."],
-    ["Rapid Design of Engineered Systems Through Deep Neural Networks","Christopher McComb","2018","optimization","deep learning, engineering design, neural networks, rapid design","CCM Lab","DCCS","26","","The design of a system commits a significant portion of the final cost..."],
-    ["Using Workplace Thriving Theory for Online Learning Engineering Students","Sandeep Krishnakumar, Christopher McComb","2022","decision_making","online learning, engineering education, covid-19, student perception","CCM Lab","Journal of Engineering Education","29","","During the onset of the COVID-19 crisis, universities rapidly pivoted..."],
-    ["Can Design Teams Be Empathically Creative?","Mohammad Alzayed, Christopher McComb","2020","ideation","empathy, team dynamics, concept generation, simulation, design teams","CCM Lab","IDETC","26","","Research on empathy has been surging in popularity..."],
-    ["Optimizing Multi-Material Structures with Topology Optimization","James Chen, Sarah Park","2021","optimization","topology optimization, multi-material, structural mechanics, finite element","CMU Engineering","Structural and Multidisciplinary Optimization","45","","Topology optimization has emerged as a powerful tool..."],
-    ["Natural Language Processing for Design Intent Recognition","Anna Liu, Robert Kim","2023","grammar, ideation","nlp, design intent, semantic parsing, engineering design, language models","CMU Engineering","CAD","22","","Understanding design intent from textual descriptions..."],
-    ["Reinforcement Learning for Parametric Design Exploration","David Brown, Lisa Wang","2022","optimization, decision_making","reinforcement learning, parametric design, exploration, design automation","CMU Engineering","ASME","18","","Parametric design exploration involves searching large solution spaces..."],
-    ["Shape Grammar Applications in Product Architecture","Emily Zhang, Michael Torres","2020","grammar","shape grammar, product architecture, design rules, modularity","CMU Engineering","Research in Engineering Design","14","","Shape grammars provide a formal language for describing product families..."],
-    ["Human-AI Collaborative Decision Making in Engineering Teams","Jessica Lee, Tom Anderson","2023","decision_making","human-ai collaboration, engineering teams, cognitive load, trust","CMU Engineering","Human Factors","31","","The integration of AI decision support tools in engineering workflows..."],
+    ["Conceptual Design Generation Using Large Language Models","Kevin Ma, Daniele Grandi, Christopher McComb","2023","ideation","llm, concept generation, design, creativity, nlp","ccm/publications","International Design Engineering Technical Conferences","36","https://asmedigitalcollection.asme.org/IDETC-CIE/proceedings-abstract/IDETC-CIE2023/87349/1170650","Concept generation is a creative step in the conceptual design phase..."],
+    ["When Faced with Increasing Complexity: The Effectiveness of AI Assistance for Drone Design","Binyang Song, Nicolas Soria Zurita, Christopher McComb","2022","decision_making","ai assistance, drone design, complexity, hidden markov models, team performance","ccm/publications","Journal of Mechanical Design","34","","As artificial intelligence (AI) assistance tools become more ubiquitous..."],
+    ["A Strategic Decision-making Architecture Toward Hybrid Teams","Alparslan Bayrak, Christopher McComb, Jonathan Cagan","2021","decision_making","decision support, game theory, hybrid teams, reinforcement learning, starcraft","ccm/publications","Decision Support Systems","26","","Advances in artificial intelligence create new opportunities..."],
+    ["Mining Design Heuristics for Additive Manufacturing Via Eye-Tracking","Priyesh Mehta, Christopher McComb","2020","optimmization","additive manufacturing, eye tracking, design heuristics, hidden markov model","ccm/publications","Journal of Mechanical Design","27","","In this research, we collected eye-tracking data..."],
+    ["Using Hidden Markov Models to Uncover States in Neuroimaging Data","Kosa Goucher-Lambert, Christopher McComb","2019","ideation","neuroimaging, fmri, hidden markov models, design cognition, brain activation","ccm/publications","ICED","32","","Recently, design researchers have begun to use neuroimaging..."],
+    ["Physics-Informed Generative Adversarial Networks for Fluid Simulations","Matthew Li, Christopher McComb","2022","optimmization","generative adversarial network, cfd, super resolution, physics-informed ml","ccm/publications","JCISE","28","","Computational fluid dynamics simulations are useful..."],
+    ["A Conceptual Framework for Multidisciplinary Design Research","Christopher McComb, Kathryn Jablokow","2022","grammar","multidisciplinary research, design theory, agent-based modeling, frameworks","ccm/publications","Design Studies","31","","The design community traditionally excels at multidisciplinary research..."],
+    ["Rapid Design of Engineered Systems Through Deep Neural Networks","Christopher McComb","2018","optimmization","deep learning, engineering design, neural networks, rapid design","ccm/publications","DCCS","26","","The design of a system commits a significant portion of the final cost..."],
+    ["Using Workplace Thriving Theory for Online Learning Engineering Students","Sandeep Krishnakumar, Christopher McComb","2022","decision_making","online learning, engineering education, covid-19, student perception","ccm/publications","Journal of Engineering Education","29","","During the onset of the COVID-19 crisis, universities rapidly pivoted..."],
+    ["Can Design Teams Be Empathically Creative?","Mohammad Alzayed, Christopher McComb","2020","ideation","empathy, team dynamics, concept generation, simulation, design teams","ccm/publications","IDETC","26","","Research on empathy has been surging in popularity..."],
+    ["Optimizing Multi-Material Structures with Topology Optimization","James Chen, Sarah Park","2021","optimmization","topology optimization, multi-material, structural mechanics, finite element","ccm/cmu-engineering-publications","Structural and Multidisciplinary Optimization","45","","Topology optimization has emerged as a powerful tool..."],
+    ["Natural Language Processing for Design Intent Recognition","Anna Liu, Robert Kim","2023","grammar","nlp, design intent, semantic parsing, engineering design, language models","ccm/cmu-engineering-publications","CAD","22","","Understanding design intent from textual descriptions..."],
+    ["Reinforcement Learning for Parametric Design Exploration","David Brown, Lisa Wang","2022","optimmization","reinforcement learning, parametric design, exploration, design automation","ccm/cmu-engineering-publications","ASME","18","","Parametric design exploration involves searching large solution spaces..."],
+    ["Shape Grammar Applications in Product Architecture","Emily Zhang, Michael Torres","2020","grammar","shape grammar, product architecture, design rules, modularity","ccm/cmu-engineering-publications","Research in Engineering Design","14","","Shape grammars provide a formal language for describing product families..."],
+    ["Human-AI Collaborative Decision Making in Engineering Teams","Jessica Lee, Tom Anderson","2023","decision_making","human-ai collaboration, engineering teams, cognitive load, trust","ccm/cmu-engineering-publications","Human Factors","31","","The integration of AI decision support tools in engineering workflows..."],
   ];
   return titles.map((r, i) => ({
     _id: i, title:r[0], authors:r[1], year:parseInt(r[2]), categories:r[3],
     cats:parseCats(r[3]), keywords:r[4], kwArr:parseKws(r[4]),
-    source:r[5], journal:r[6], citations:parseInt(r[7]), url:r[8], abstract:r[9],
-    hf_dataset: r[5] === 'CMU Engineering' ? 'ccm/cmu-engineering-publications' : 'ccm/publications',
-    data_source: r[5] === 'CMU Engineering' ? 'CMU Engineering publications' : 'CCM Lab publications',
+    hf_dataset:r[5],
+    data_source: r[5] === 'ccm/cmu-engineering-publications' ? 'CMU Engineering publications' : 'CCM Lab publications',
+    journal:r[6], citations:parseInt(r[7]), url:r[8], abstract:r[9],
     bert_topics: '',
+    bibtex: '',
+    citedby_url: '',
+    url_related_articles: '',
     department:'', _x:null, _y:null,
   }));
 }
@@ -511,8 +531,8 @@ function showTab(name) {
 // ═══════════════════════════════════════════════════════════════
 function buildOverview() {
   const papers = ALL_PAPERS;
-  const ccm    = papers.filter(p => p.source === 'CCM Lab');
-  const cmu    = papers.filter(p => p.source === 'CMU Engineering');
+  const ccm    = papers.filter(p => paperSource(p) === 'CCM Lab');
+  const cmu    = papers.filter(p => paperSource(p) === 'CMU Engineering');
   const sorted = [...papers].sort((a,b) => b.citations - a.citations);
 
   document.getElementById('stat-total').textContent = papers.length.toLocaleString();
@@ -636,7 +656,7 @@ function buildKwChart() {
 
 function buildSourceChart() {
   const sources = {};
-  ALL_PAPERS.forEach(p => { if(p.source) sources[p.source]=(sources[p.source]||0)+1; });
+  ALL_PAPERS.forEach(p => { const s = paperSource(p); if(s) sources[s]=(sources[s]||0)+1; });
   const data = Object.entries(sources).map(([k,v])=>({label:k,value:v}));
   const total = data.reduce((s,d)=>s+d.value,0);
 
@@ -687,10 +707,10 @@ function filterPapers() {
 
   filtered = ALL_PAPERS.filter(p => {
     if (yr  && String(p.year) !== yr) return false;
-    if (src && p.source !== src) return false;
+    if (src && paperSource(p) !== src) return false;
     if (cat && !p.cats.includes(cat)) return false;
     if (q) {
-      const hay = `${p.title} ${p.authors} ${p.keywords} ${p.abstract} ${p.bert_topics || ''} ${p.data_source || ''} ${p.hf_dataset || ''}`.toLowerCase();
+      const hay = `${p.title} ${p.authors} ${p.keywords} ${p.abstract} ${p.bert_topics || ''} ${p.data_source || ''} ${p.hf_dataset || ''} ${p.citedby_url || ''}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
@@ -714,7 +734,7 @@ function renderCards(papers) {
       <div class="paper-title">${escHtml(p.title)}</div>
       <div class="paper-meta">
         ${p.year ? `<span class="paper-year">${p.year}</span>` : ''}
-        <span class="paper-source">${escHtml(p.source||'')}</span>
+        <span class="paper-source">${escHtml(paperSource(p))}</span>
         ${p.citations > 0 ? `<span class="paper-citations">⭐ ${p.citations} citations</span>` : ''}
       </div>
       <div class="paper-authors">${escHtml(p.authors||'')}</div>
@@ -737,7 +757,7 @@ function openModal(id) {
   const meta = document.getElementById('modal-meta-row');
   meta.innerHTML = '';
   if (p.year)     meta.innerHTML += `<span class="paper-year">${p.year}</span>`;
-  if (p.source)   meta.innerHTML += `<span class="paper-source" style="font-size:0.82rem;color:var(--muted)">${escHtml(p.source)}</span>`;
+  if (paperSource(p)) meta.innerHTML += `<span class="paper-source" style="font-size:0.82rem;color:var(--muted)">${escHtml(paperSource(p))}</span>`;
   if (p.journal)  meta.innerHTML += `<span class="paper-journal" style="font-size:0.8rem;color:var(--muted)">${escHtml(p.journal)}</span>`;
   if (p.citations>0) meta.innerHTML += `<span style="font-size:0.8rem;color:var(--muted)">⭐ ${p.citations} citations</span>`;
 
@@ -776,12 +796,25 @@ function openModal(id) {
     document.getElementById('modal-abstract-section').style.display='none';
   }
 
-  // Link
+  // Links (publisher / Scholar cited-by / related)
   const link = document.getElementById('modal-link-section');
-  link.innerHTML = p.url ? `<a class="modal-link" href="${escHtml(p.url)}" target="_blank" rel="noopener">
+  const parts = [];
+  const pu = p.url ? String(p.url).trim() : '';
+  if (pu) {
+    parts.push(`<a class="modal-link" href="${escHtml(scholarAbsUrl(pu))}" target="_blank" rel="noopener">
     <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-    View Paper
-  </a>` : '';
+    View paper
+  </a>`);
+  }
+  const cb = p.citedby_url ? scholarAbsUrl(p.citedby_url) : '';
+  if (cb) {
+    parts.push(`<a class="modal-link" href="${escHtml(cb)}" target="_blank" rel="noopener" style="margin-left:0.5rem">Cited by</a>`);
+  }
+  const rel = p.url_related_articles ? scholarAbsUrl(p.url_related_articles) : '';
+  if (rel) {
+    parts.push(`<a class="modal-link" href="${escHtml(rel)}" target="_blank" rel="noopener" style="margin-left:0.5rem">Related articles</a>`);
+  }
+  link.innerHTML = parts.join('') || '';
 
   document.getElementById('modal-backdrop').classList.add('open');
 }
@@ -817,7 +850,7 @@ function computePositions(papers) {
     p.kwArr.forEach(k => { const i = kwSet[k]; if(i<dim) vec[i]++; });
     // Also encode category
     p.cats.forEach(c => {
-      const ci = ['ideation','optimization','grammar','decision_making'].indexOf(c);
+      const ci = ['ideation','optimmization','grammar','decision_making'].indexOf(c);
       if(ci>=0 && ci<dim) vec[ci] += 2;
     });
     // Normalise
@@ -878,7 +911,7 @@ function renderCluster() {
 
   function getColor(p) {
     if (colorBy==='category') return p.cats.length ? CAT_COLORS[p.cats[0]] : '#7a8099';
-    if (colorBy==='source')   return SOURCE_COLORS[p.source] || '#7a8099';
+    if (colorBy==='source')   return SOURCE_COLORS[paperSource(p)] || '#7a8099';
     if (colorBy==='year')     return p.year ? yearColor(p.year) : '#7a8099';
     return '#7a8099';
   }
@@ -908,7 +941,7 @@ function renderCluster() {
     .on('mouseover', (event, p) => {
       tooltip.classList.add('show');
       ttTitle.textContent = p.title;
-      ttYear.textContent  = `${p.year||'?'} · ${p.source||''} · ${p.cats.map(c=>CAT_LABELS[c]).join(', ')||'—'}`;
+      ttYear.textContent  = `${p.year||'?'} · ${paperSource(p)||''} · ${p.cats.map(c=>CAT_LABELS[c]).join(', ')||'—'}`;
     })
     .on('mousemove', (event) => {
       tooltip.style.left = (event.clientX + 12) + 'px';

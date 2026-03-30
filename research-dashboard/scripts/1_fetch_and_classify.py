@@ -7,6 +7,9 @@ and to the four CCM categories, then writes data/papers.csv.
 
 Usage:
     python scripts/1_fetch_and_classify.py
+
+Optional (faster test runs):
+    MAX_PAPERS=500 python scripts/1_fetch_and_classify.py
 """
 
 from __future__ import annotations
@@ -23,93 +26,138 @@ from transformers import pipeline
 # ── Config ────────────────────────────────────────────────────────────────────
 
 DATASETS = [
-    {
-        "hf_id": "ccm/publications",
-        "source": "CCM Lab",
-        "data_source": "CCM Lab publications",
-    },
-    {
-        "hf_id": "ccm/cmu-engineering-publications",
-        "source": "CMU Engineering",
-        "data_source": "CMU Engineering publications",
-    },
+    {"hf_id": "ccm/publications", "data_source": "CCM Lab publications"},
+    {"hf_id": "ccm/cmu-engineering-publications", "data_source": "CMU Engineering publications"},
 ]
 
 MODEL_ID = (
     "OpenAlex/bert-base-multilingual-cased-finetuned-openalex-topic-classification-title-abstract"
 )
 
-CATEGORIES = ["ideation", "optimization", "grammar", "decision_making"]
+# Single label per paper; spelling matches project convention ("optimmization").
+CATEGORIES = ["ideation", "optimmization", "grammar", "decision_making"]
 
-# Substrings matched (lowercase) against topic labels + title + abstract
+# Substrings (lowercase) in title + abstract + BERT topic labels — weighted toward primary contribution.
 CAT_PATTERNS: dict[str, list[str]] = {
     "ideation": [
         "ideation",
-        "creativity",
-        "creative",
-        "conceptual",
         "concept generation",
+        "conceptual design",
+        "creative",
+        "creativity",
         "brainstorm",
         "design exploration",
+        "exploratory",
+        "novel framework",
+        "proposing",
+        "new concept",
+        "design directions",
         "innovation",
-        "generative",
-        "idea",
-        "concept design",
-        "co-design",
-        "user-centered",
+        "idea generation",
+        "user-centered design",
         "design thinking",
+        "co-design",
         "early design",
+        "generative design",
     ],
-    "optimization": [
+    "optimmization": [
         "optimization",
         "optimisation",
-        "machine learning",
-        "neural",
-        "evolutionary",
-        "surrogate",
-        "metamodel",
+        "optimal",
+        "minimize",
+        "maximize",
+        "efficiency",
+        "performance improvement",
+        "computational cost",
+        "resource use",
+        "best solution",
         "topology optimization",
         "multiobjective",
-        "computational",
-        "algorithm",
+        "surrogate model",
+        "evolutionary algorithm",
+        "machine learning for",
         "deep learning",
         "cfd",
         "finite element",
-        "parametric design",
+        "accuracy",
+        "faster",
+        "reduce cost",
     ],
     "grammar": [
-        "grammar",
         "shape grammar",
-        "rule-based",
-        "formal language",
-        "syntax",
-        "representation",
-        "schema",
-        "symbolic",
         "graph grammar",
+        "design grammar",
+        "rule-based generation",
         "formal grammar",
+        "parametric rule",
+        "syntax",
+        "formal language",
+        "generative rules",
+        "rule-based",
+        "representation system",
+        "formal structure",
+        "grammar",
     ],
     "decision_making": [
-        "decision",
-        "human factors",
-        "team",
-        "collaborative",
-        "behavior",
-        "cognitive",
-        "strategy",
-        "social",
-        "agent-based",
-        "game theory",
+        "decision support",
+        "decision-making",
+        "tradeoff",
+        "trade-off",
+        "tradeoffs",
+        "recommendation system",
+        "evaluation framework",
+        "choose between",
+        "alternative selection",
+        "multi-criteria",
+        "ranking",
+        "human-ai",
+        "decision making",
         "preference",
-        "trust",
+        "game theory",
+        "strategy",
     ],
 }
+
+# Tie-break order when scores tie (first wins).
+CATEGORY_TIE_ORDER = ["ideation", "optimmization", "grammar", "decision_making"]
 
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "papers.csv")
 
 # Inference batch size (pipeline accepts lists)
 CLASSIFY_BATCH = 8
 TOP_K_TOPICS = 8
+
+
+def _s(x: Any) -> str:
+    """Safe string for HF dataset fields that may be None."""
+    if x is None:
+        return ""
+    return str(x).strip()
+
+
+def extract_url_from_bibtex(bib: str) -> str:
+    """Best-effort `url = {...}` from a BibTeX string when pub_url is absent."""
+    if not bib:
+        return ""
+    m = re.search(r"url\s*=\s*\{([^}]*)\}", bib, re.IGNORECASE)
+    if m:
+        return m.group(1).strip()
+    m = re.search(r'url\s*=\s*"([^"]+)"', bib, re.IGNORECASE)
+    if m:
+        return m.group(1).strip()
+    return ""
+
+
+def normalize_scholar_href(s: str) -> str:
+    """HF sometimes stores Google Scholar paths without a host."""
+    s = _s(s)
+    if not s:
+        return ""
+    if s.startswith("http://") or s.startswith("https://"):
+        return s
+    if s.startswith("/"):
+        return "https://scholar.google.com" + s
+    return s
 
 
 def format_openalex_input(title: str, abstract: str) -> str:
@@ -147,12 +195,12 @@ def serialize_bert_topics(topic_results: list[dict[str, Any]]) -> str:
     )
 
 
-def map_to_categories(
+def primary_category(
     topic_results: list[dict[str, Any]],
     title: str,
     abstract: str,
 ) -> str:
-    """Map OpenAlex topic labels + text to the four CCM categories."""
+    """Exactly one label: ideation | optimmization | grammar | decision_making."""
     blobs: list[str] = []
     for item in topic_results[:TOP_K_TOPICS]:
         blobs.append(strip_topic_id(item.get("label", "")).lower())
@@ -167,7 +215,6 @@ def map_to_categories(
             if p in blob:
                 scores[cat] += float(len(p)) ** 0.5
 
-    # Weight higher-confidence topics more
     for i, item in enumerate(topic_results[:5]):
         w = float(item.get("score", 0)) * (1.2 - i * 0.08)
         label = strip_topic_id(item.get("label", "")).lower()
@@ -176,59 +223,99 @@ def map_to_categories(
                 if p in label:
                     scores[cat] += 2.0 * w
 
-    ordered = sorted(CATEGORIES, key=lambda c: scores[c], reverse=True)
-    chosen = [c for c in ordered if scores[c] > 0]
+    best = max(scores.values())
+    if best > 0:
+        for c in CATEGORY_TIE_ORDER:
+            if scores[c] == best:
+                return c
 
-    if not chosen:
-        b = blob
-        if any(x in b for x in ("design", "engineering design", "product development")):
-            chosen = ["ideation"]
-        elif "optim" in b or "machine learning" in b or "neural" in b:
-            chosen = ["optimization"]
-        elif "grammar" in b or " rule" in b or "formal" in b:
-            chosen = ["grammar"]
-        elif "decision" in b or "team" in b or "human" in b:
-            chosen = ["decision_making"]
-        else:
-            chosen = ["ideation"]
-
-    return ", ".join(chosen)
+    # Fallback when no pattern matched — heuristic aligned with user rules
+    b = blob
+    if any(
+        x in b
+        for x in (
+            "tradeoff",
+            "trade-off",
+            "recommendation",
+            "decision support",
+            "evaluation framework",
+            "choose between",
+            "alternatives",
+            "ranking",
+            "multi-criteria",
+        )
+    ):
+        return "decision_making"
+    if any(
+        x in b
+        for x in (
+            "shape grammar",
+            "rule-based",
+            "formal grammar",
+            "syntax",
+            "parametric rule",
+            "representation system",
+        )
+    ):
+        return "grammar"
+    if any(
+        x in b
+        for x in (
+            "optimization",
+            "optimisation",
+            "efficiency",
+            "optimal",
+            "minimize",
+            "maximize",
+            "topology optimization",
+            "surrogate",
+            "performance",
+        )
+    ):
+        return "optimmization"
+    return "ideation"
 
 
 def extract_bib_fields(row: dict, ds_meta: dict) -> dict:
     """Pull title, authors, year, abstract from a dataset row."""
-    source = ds_meta["source"]
     data_source = ds_meta["data_source"]
     hf_dataset = ds_meta["hf_id"]
 
     if "bib_dict" in row and isinstance(row["bib_dict"], dict):
         bd = row["bib_dict"]
+        bibtex_raw = _s(row.get("bibtex"))
+        pub = _s(row.get("pub_url"))
+        url = pub or extract_url_from_bibtex(bibtex_raw)
         return {
-            "title": bd.get("title", "").strip(),
-            "authors": bd.get("author", "").strip(),
+            "title": _s(bd.get("title")),
+            "authors": _s(bd.get("author")),
             "year": bd.get("pub_year") or "",
-            "abstract": bd.get("abstract", "").strip(),
-            "journal": (bd.get("journal") or bd.get("conference") or "").strip(),
-            "url": row.get("pub_url", "") or "",
+            "abstract": _s(bd.get("abstract")),
+            "journal": _s(bd.get("journal") or bd.get("conference")),
+            "url": url,
             "citations": row.get("num_citations", 0) or 0,
-            "source": source,
             "hf_dataset": hf_dataset,
             "data_source": data_source,
             "department": "",
+            "bibtex": bibtex_raw,
+            "citedby_url": normalize_scholar_href(_s(row.get("citedby_url"))),
+            "url_related_articles": normalize_scholar_href(_s(row.get("url_related_articles"))),
         }
 
     return {
-        "title": str(row.get("title", "")).strip(),
-        "authors": str(row.get("faculty", "")).strip(),
-        "year": str(row.get("pub_year", "")).strip()[:4],
+        "title": _s(row.get("title")),
+        "authors": _s(row.get("faculty")),
+        "year": _s(row.get("pub_year"))[:4],
         "abstract": "",
-        "journal": str(row.get("citation", "")).strip(),
+        "journal": _s(row.get("citation")),
         "url": "",
         "citations": int(row.get("num_citations", 0) or 0),
-        "source": source,
         "hf_dataset": hf_dataset,
         "data_source": data_source,
-        "department": str(row.get("department", "")).strip(),
+        "department": _s(row.get("department")),
+        "bibtex": "",
+        "citedby_url": "",
+        "url_related_articles": "",
     }
 
 
@@ -258,6 +345,16 @@ def main() -> None:
 
     print(f"\n✅  Loaded {len(all_rows)} papers total")
 
+    max_papers = os.environ.get("MAX_PAPERS")
+    if max_papers:
+        try:
+            n = int(max_papers)
+            if n > 0 and len(all_rows) > n:
+                print(f"\n⚙️  MAX_PAPERS={n}: classifying first {n} of {len(all_rows)} rows …")
+                all_rows = all_rows[:n]
+        except ValueError:
+            print(f"\n⚠️  Ignoring invalid MAX_PAPERS={max_papers!r}")
+
     print(f"\n🤖  Classifying with OpenAlex BERT (batch size={CLASSIFY_BATCH}) …")
     for i in tqdm(range(0, len(all_rows), CLASSIFY_BATCH)):
         batch = all_rows[i : i + CLASSIFY_BATCH]
@@ -271,7 +368,7 @@ def main() -> None:
             topic_results = raw[j] if j < len(raw) else []
             record["keywords"] = topics_to_keywords(topic_results)
             record["bert_topics"] = serialize_bert_topics(topic_results)
-            record["categories"] = map_to_categories(
+            record["categories"] = primary_category(
                 topic_results,
                 record["title"],
                 record.get("abstract", ""),
@@ -288,8 +385,7 @@ def main() -> None:
     df["year"] = df["year"].apply(parse_year)
     df = df.sort_values("year", ascending=False, na_position="last")
 
-    # Stable column order for CSV consumers
-    preferred = [
+    output_cols = [
         "title",
         "authors",
         "year",
@@ -297,16 +393,17 @@ def main() -> None:
         "keywords",
         "hf_dataset",
         "data_source",
-        "source",
         "bert_topics",
         "journal",
         "citations",
         "url",
+        "citedby_url",
+        "url_related_articles",
         "abstract",
+        "bibtex",
         "department",
     ]
-    cols = [c for c in preferred if c in df.columns] + [c for c in df.columns if c not in preferred]
-    df = df[cols]
+    df = df[[c for c in output_cols if c in df.columns]]
 
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     df.to_csv(OUTPUT_PATH, index=False)

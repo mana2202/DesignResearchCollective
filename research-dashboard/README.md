@@ -1,72 +1,98 @@
 # CCM Research Publications Dashboard
 
-An automated pipeline that fetches, classifies, and visualizes research publications from two Hugging Face datasets into an interactive dashboard.
+An automated pipeline that fetches papers from two Hugging Face datasets, classifies them with an **OpenAlex BERT** topic model (running locally via [Transformers](https://huggingface.co/docs/transformers)), and writes a CSV for the interactive dashboard.
 
-## 🗂️ Repo Structure
+## Repo structure
 
 ```
 research-dashboard/
 ├── scripts/
-│   ├── 1_fetch_and_classify.py   # Fetches HuggingFace data + classifies via Claude API
-│   └── 2_run_pipeline.sh         # One-command runner
+│   ├── 1_fetch_and_classify.py   # Load HF datasets + BERT classification → CSV
+│   └── 2_run_pipeline.sh         # One-command runner (installs deps + runs script)
 ├── data/
-│   └── papers.csv                # Output: enriched & classified papers
+│   └── papers.csv                # Generated: enriched & classified papers
 ├── dashboard/
-│   └── index.html                # Self-contained interactive dashboard
+│   └── index.html                # Self-contained static dashboard
 └── requirements.txt
 ```
 
-## 🚀 Setup & Usage
+## Setup
 
 ### 1. Install dependencies
 
 ```bash
+cd research-dashboard
 pip install -r requirements.txt
 ```
 
-### 2. Set your Anthropic API key
+Requires **PyTorch** and **Transformers**; the first run downloads the model weights for:
 
-```bash
-export ANTHROPIC_API_KEY=your_key_here
-```
+`OpenAlex/bert-base-multilingual-cased-finetuned-openalex-topic-classification-title-abstract`
 
-### 3. Run the pipeline
+### 2. Run the pipeline (build `papers.csv`)
 
 ```bash
 bash scripts/2_run_pipeline.sh
 ```
 
+Or directly:
+
+```bash
+python scripts/1_fetch_and_classify.py
+```
+
+**Runtime:** Classifying the full merged set (tens of thousands of papers) can take **roughly 15–45+ minutes** depending on CPU/GPU (Apple Silicon MPS is used automatically when available). For a quick test, limit how many rows get BERT inference:
+
+```bash
+MAX_PAPERS=500 python scripts/1_fetch_and_classify.py
+```
+
+(Omit `MAX_PAPERS` for the full export.)
+
 This will:
-- Fetch all papers from both HuggingFace datasets
-- Use Claude to extract keywords and classify each paper into categories
-- Output `data/papers.csv`
 
-### 4. Open the dashboard
+- Load all rows from both datasets (`ccm/publications`, `ccm/cmu-engineering-publications`)
+- Run **BERT** on title + abstract (OpenAlex topic labels as “keywords,” mapped to four design categories)
+- Write **`data/papers.csv`** with columns (in order):  
+  `title`, `authors`, `year`, `categories`, `keywords`, `hf_dataset`, `data_source`, `bert_topics`, `journal`, `citations`, `url`, `citedby_url`, `url_related_articles`, `abstract`, `bibtex`, `department`  
+  For CCM Lab rows, `bibtex`, `citedby_url`, and `url_related_articles` are populated when present in the Hugging Face dataset (see table below).
 
-Open `dashboard/index.html` in your browser — **no server needed**.
+No API keys are required for classification.
 
-Or deploy to **GitHub Pages** for public access:
-1. Push this repo to GitHub
-2. Go to Settings → Pages → Source: `main` branch, `/ (root)` folder
-3. Your dashboard will be live at `https://yourusername.github.io/research-dashboard/dashboard/`
+### 3. Open the dashboard
+
+Open `dashboard/index.html` in a browser (double-click or “Open with Live Server”). The page loads `../data/papers.csv` via `fetch`, so some browsers require opening from a local server or adjusting file access; serving the folder with any static server works.
+
+For **GitHub Pages**, point the site at the folder that contains `dashboard/` and `data/` (or adjust `csvPath` in `index.html` to match your published layout).
 
 ---
 
-## 📊 Dashboard Features
+## Dashboard features
 
-- **Overview tab** — publication stats, year trends, category breakdown
-- **Browse tab** — filterable paper cards with search, year, category, and source filters
-- **Cluster View tab** — 2D scatter plot of papers clustered by keyword similarity to find research whitespaces
+- **Overview** — totals, year chart, category bars, keywords, source split
+- **Browse** — search and filters (year, category, source)
+- **Cluster view** — 2D layout by keyword similarity
 
-## 📁 Dataset Sources
+## Dataset sources
 
-- [`ccm/publications`](https://huggingface.co/datasets/ccm/publications) — CCM Lab publications
-- [`ccm/cmu-engineering-publications`](https://huggingface.co/datasets/ccm/cmu-engineering-publications) — CMU Engineering publications
+| Hugging Face dataset | `data_source` column |
+|----------------------|----------------------|
+| [`ccm/publications`](https://huggingface.co/datasets/ccm/publications) | CCM Lab publications |
+| [`ccm/cmu-engineering-publications`](https://huggingface.co/datasets/ccm/cmu-engineering-publications) | CMU Engineering publications |
 
-## 🏷️ Categories
+### What each dataset contains
 
-Papers are classified (can belong to multiple) into:
-- **Ideation** — concept generation, brainstorming, creative design
-- **Optimization** — design optimization, performance, computational methods
-- **Grammar** — design grammars, rule-based systems, structured representations
-- **Decision Making** — decision support, agent-based, strategy, human factors
+**[`ccm/publications`](https://huggingface.co/datasets/ccm/publications)** (239 rows) includes full **`bibtex`** strings, structured **`bib_dict`**, **`pub_url`**, **`citedby_url`**, **`url_related_articles`**, embeddings, etc. The pipeline writes **`bibtex`**, normalizes relative Google Scholar paths on **`citedby_url`** / **`url_related_articles`**, and sets **`url`** from **`pub_url`**, or from a `url = {…}` field inside **`bibtex`** if **`pub_url`** is missing.
+
+**[`ccm/cmu-engineering-publications`](https://huggingface.co/datasets/ccm/cmu-engineering-publications)** (~42k rows) only exposes **`title`**, **`pub_year`**, **`citation`**, **`num_citations`**, **`author_pub_id`**, **`faculty`**, **`department`**, and **`embedding`**. There is **no** `bibtex`, `abstract`, or publisher URL in that dataset, so those CSV columns are empty for CMU rows—URLs cannot be recovered from BibTeX unless you merge another source.
+
+## Categories
+
+Each paper gets **exactly one** label (spelling fixed for this project):
+
+- `ideation` — generating ideas, concepts, frameworks, exploratory approaches
+- `optimmization` — improving performance, efficiency, cost, or seeking a best solution *(spelled with double **m** to match the label set)*
+- `grammar` — formal rules, grammars, parametric logic, structured generative systems
+- `decision_making` — supporting or automating choices, tradeoffs, evaluation, recommendations
+
+Classification uses OpenAlex BERT topic labels plus title/abstract text with **heuristic** scoring and tie-breaking—it approximates the rules above but is not an LLM judge.
