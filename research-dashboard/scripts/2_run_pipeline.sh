@@ -9,13 +9,6 @@ echo "════════════════════════�
 echo "  CCM Research Publications Pipeline"
 echo "══════════════════════════════════════════════"
 
-# Check API key
-if [ -z "$ANTHROPIC_API_KEY" ]; then
-  echo "❌  ANTHROPIC_API_KEY not set."
-  echo "    Run: export ANTHROPIC_API_KEY=your_key_here"
-  exit 1
-fi
-
 # Install dependencies
 echo ""
 echo "📦  Installing dependencies..."

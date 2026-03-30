@@ -1,164 +1,285 @@
 """
 1_fetch_and_classify.py
 
-Fetches papers from two HuggingFace datasets, uses Claude to extract
-keywords and classify each paper, then outputs data/papers.csv.
+Fetches papers from two HuggingFace datasets, classifies them with the
+OpenAlex BERT topic model (title+abstract), maps OpenAlex topics to keywords
+and to the four CCM categories, then writes data/papers.csv.
 
 Usage:
-    export ANTHROPIC_API_KEY=your_key_here
     python scripts/1_fetch_and_classify.py
 """
 
+from __future__ import annotations
+
 import os
-import json
-import time
 import re
+from typing import Any
+
 import pandas as pd
 from datasets import load_dataset
 from tqdm import tqdm
-import anthropic
+from transformers import pipeline
 
 # ── Config ────────────────────────────────────────────────────────────────────
 
 DATASETS = [
-    {"hf_id": "ccm/publications",               "source": "CCM Lab"},
-    {"hf_id": "ccm/cmu-engineering-publications","source": "CMU Engineering"},
+    {
+        "hf_id": "ccm/publications",
+        "source": "CCM Lab",
+        "data_source": "CCM Lab publications",
+    },
+    {
+        "hf_id": "ccm/cmu-engineering-publications",
+        "source": "CMU Engineering",
+        "data_source": "CMU Engineering publications",
+    },
 ]
+
+MODEL_ID = (
+    "OpenAlex/bert-base-multilingual-cased-finetuned-openalex-topic-classification-title-abstract"
+)
 
 CATEGORIES = ["ideation", "optimization", "grammar", "decision_making"]
 
+# Substrings matched (lowercase) against topic labels + title + abstract
+CAT_PATTERNS: dict[str, list[str]] = {
+    "ideation": [
+        "ideation",
+        "creativity",
+        "creative",
+        "conceptual",
+        "concept generation",
+        "brainstorm",
+        "design exploration",
+        "innovation",
+        "generative",
+        "idea",
+        "concept design",
+        "co-design",
+        "user-centered",
+        "design thinking",
+        "early design",
+    ],
+    "optimization": [
+        "optimization",
+        "optimisation",
+        "machine learning",
+        "neural",
+        "evolutionary",
+        "surrogate",
+        "metamodel",
+        "topology optimization",
+        "multiobjective",
+        "computational",
+        "algorithm",
+        "deep learning",
+        "cfd",
+        "finite element",
+        "parametric design",
+    ],
+    "grammar": [
+        "grammar",
+        "shape grammar",
+        "rule-based",
+        "formal language",
+        "syntax",
+        "representation",
+        "schema",
+        "symbolic",
+        "graph grammar",
+        "formal grammar",
+    ],
+    "decision_making": [
+        "decision",
+        "human factors",
+        "team",
+        "collaborative",
+        "behavior",
+        "cognitive",
+        "strategy",
+        "social",
+        "agent-based",
+        "game theory",
+        "preference",
+        "trust",
+    ],
+}
+
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "papers.csv")
 
-# How many papers to classify per API call (batching saves tokens)
-BATCH_SIZE = 5
-
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
-client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+# Inference batch size (pipeline accepts lists)
+CLASSIFY_BATCH = 8
+TOP_K_TOPICS = 8
 
 
-def extract_bib_fields(row: dict, source: str) -> dict:
+def format_openalex_input(title: str, abstract: str) -> str:
+    """Match OpenAlex training format: title+abstract, title-only, or abstract-only."""
+    t = (title or "").strip()
+    a = (abstract or "").strip()
+    if not t and not a:
+        return " "
+    if not a:
+        return f" {t}"
+    if not t:
+        return f" NONE\n {a}"
+    return f" {t}\n {a}"
+
+
+def strip_topic_id(label: str) -> str:
+    return re.sub(r"^\d+\s*:\s*", "", (label or "").strip()).strip()
+
+
+def topics_to_keywords(topic_results: list[dict[str, Any]], max_items: int = 5) -> str:
+    parts: list[str] = []
+    for item in topic_results[:max_items]:
+        name = strip_topic_id(item.get("label", ""))
+        if not name:
+            continue
+        if len(name) > 90:
+            name = name[:87] + "..."
+        parts.append(name)
+    return " | ".join(parts)
+
+
+def serialize_bert_topics(topic_results: list[dict[str, Any]]) -> str:
+    return "; ".join(
+        f'{item["label"]} ({float(item["score"]):.4f})' for item in topic_results[:TOP_K_TOPICS]
+    )
+
+
+def map_to_categories(
+    topic_results: list[dict[str, Any]],
+    title: str,
+    abstract: str,
+) -> str:
+    """Map OpenAlex topic labels + text to the four CCM categories."""
+    blobs: list[str] = []
+    for item in topic_results[:TOP_K_TOPICS]:
+        blobs.append(strip_topic_id(item.get("label", "")).lower())
+        blobs.append((item.get("label") or "").lower())
+    blobs.append((title or "").lower())
+    blobs.append((abstract or "").lower())
+    blob = " ".join(blobs)
+
+    scores: dict[str, float] = {c: 0.0 for c in CATEGORIES}
+    for cat, patterns in CAT_PATTERNS.items():
+        for p in patterns:
+            if p in blob:
+                scores[cat] += float(len(p)) ** 0.5
+
+    # Weight higher-confidence topics more
+    for i, item in enumerate(topic_results[:5]):
+        w = float(item.get("score", 0)) * (1.2 - i * 0.08)
+        label = strip_topic_id(item.get("label", "")).lower()
+        for cat, patterns in CAT_PATTERNS.items():
+            for p in patterns:
+                if p in label:
+                    scores[cat] += 2.0 * w
+
+    ordered = sorted(CATEGORIES, key=lambda c: scores[c], reverse=True)
+    chosen = [c for c in ordered if scores[c] > 0]
+
+    if not chosen:
+        b = blob
+        if any(x in b for x in ("design", "engineering design", "product development")):
+            chosen = ["ideation"]
+        elif "optim" in b or "machine learning" in b or "neural" in b:
+            chosen = ["optimization"]
+        elif "grammar" in b or " rule" in b or "formal" in b:
+            chosen = ["grammar"]
+        elif "decision" in b or "team" in b or "human" in b:
+            chosen = ["decision_making"]
+        else:
+            chosen = ["ideation"]
+
+    return ", ".join(chosen)
+
+
+def extract_bib_fields(row: dict, ds_meta: dict) -> dict:
     """Pull title, authors, year, abstract from a dataset row."""
-    # Dataset 1: bib_dict column (rich structured data)
+    source = ds_meta["source"]
+    data_source = ds_meta["data_source"]
+    hf_dataset = ds_meta["hf_id"]
+
     if "bib_dict" in row and isinstance(row["bib_dict"], dict):
         bd = row["bib_dict"]
         return {
-            "title":    bd.get("title", "").strip(),
-            "authors":  bd.get("author", "").strip(),
-            "year":     bd.get("pub_year") or "",
+            "title": bd.get("title", "").strip(),
+            "authors": bd.get("author", "").strip(),
+            "year": bd.get("pub_year") or "",
             "abstract": bd.get("abstract", "").strip(),
-            "journal":  (bd.get("journal") or bd.get("conference") or "").strip(),
-            "url":      row.get("pub_url", "") or "",
-            "citations":row.get("num_citations", 0) or 0,
-            "source":   source,
+            "journal": (bd.get("journal") or bd.get("conference") or "").strip(),
+            "url": row.get("pub_url", "") or "",
+            "citations": row.get("num_citations", 0) or 0,
+            "source": source,
+            "hf_dataset": hf_dataset,
+            "data_source": data_source,
+            "department": "",
         }
 
-    # Dataset 2: flat columns
     return {
-        "title":    str(row.get("title", "")).strip(),
-        "authors":  str(row.get("faculty", "")).strip(),
-        "year":     str(row.get("pub_year", "")).strip()[:4],
+        "title": str(row.get("title", "")).strip(),
+        "authors": str(row.get("faculty", "")).strip(),
+        "year": str(row.get("pub_year", "")).strip()[:4],
         "abstract": "",
-        "journal":  str(row.get("citation", "")).strip(),
-        "url":      "",
-        "citations":int(row.get("num_citations", 0) or 0),
-        "source":   source,
+        "journal": str(row.get("citation", "")).strip(),
+        "url": "",
+        "citations": int(row.get("num_citations", 0) or 0),
+        "source": source,
+        "hf_dataset": hf_dataset,
+        "data_source": data_source,
         "department": str(row.get("department", "")).strip(),
     }
 
 
-def classify_batch(papers: list[dict]) -> list[dict]:
-    """
-    Send a batch of papers to Claude for keyword extraction + categorisation.
-    Returns a list of dicts with 'keywords' and 'categories' keys.
-    """
-    items = []
-    for i, p in enumerate(papers):
-        items.append(
-            f"[{i}] TITLE: {p['title']}\n"
-            f"    ABSTRACT: {p['abstract'][:400] if p['abstract'] else '(none)'}"
-        )
+def main() -> None:
+    print(f"Loading classifier: {MODEL_ID} …")
+    clf = pipeline(
+        "text-classification",
+        model=MODEL_ID,
+        top_k=TOP_K_TOPICS,
+        truncation=True,
+        max_length=512,
+    )
 
-    prompt = f"""You are a research taxonomy assistant. For each paper below, extract:
-1. keywords: 5–8 concise topic keywords (lowercase, comma-separated)
-2. categories: which of these apply: ideation, optimization, grammar, decision_making
-   - ideation: concept generation, brainstorming, creative design, design exploration
-   - optimization: computational optimization, performance improvement, machine learning for design
-   - grammar: design grammars, rule-based systems, shape grammars, structured representations
-   - decision_making: decision support, agent-based systems, human factors, team dynamics, strategy
+    all_rows: list[dict] = []
 
-A paper can belong to multiple categories. If none clearly apply, use the closest match.
-
-Return ONLY a JSON array (no markdown, no explanation) with one object per paper:
-[
-  {{"index": 0, "keywords": "keyword1, keyword2, ...", "categories": ["ideation","optimization"]}},
-  ...
-]
-
-Papers:
-{chr(10).join(items)}"""
-
-    for attempt in range(3):
-        try:
-            msg = client.messages.create(
-                model="claude-sonnet-4-20250514",
-                max_tokens=1500,
-                messages=[{"role": "user", "content": prompt}]
-            )
-            raw = msg.content[0].text.strip()
-            # Strip markdown fences if present
-            raw = re.sub(r"^```(?:json)?\s*", "", raw)
-            raw = re.sub(r"\s*```$", "", raw)
-            results = json.loads(raw)
-            return results
-        except Exception as e:
-            print(f"  ⚠️  Attempt {attempt+1} failed: {e}")
-            time.sleep(2 ** attempt)
-
-    # Fallback: return empty classifications
-    return [{"index": i, "keywords": "", "categories": []} for i in range(len(papers))]
-
-
-# ── Main ──────────────────────────────────────────────────────────────────────
-
-def main():
-    all_rows = []
-
-    # 1. Load datasets
     for ds_config in DATASETS:
-        print(f"\n📥  Loading {ds_config['hf_id']} ...")
+        print(f"\n📥  Loading {ds_config['hf_id']} …")
         try:
             ds = load_dataset(ds_config["hf_id"], split="train")
             print(f"    → {len(ds)} rows")
             for row in ds:
-                record = extract_bib_fields(dict(row), ds_config["source"])
-                if record["title"]:  # Skip blank titles
+                record = extract_bib_fields(dict(row), ds_config)
+                if record["title"]:
                     all_rows.append(record)
         except Exception as e:
             print(f"    ✗ Failed to load: {e}")
 
     print(f"\n✅  Loaded {len(all_rows)} papers total")
 
-    # 2. Classify in batches
-    print(f"\n🤖  Classifying with Claude (batch size={BATCH_SIZE}) ...")
-    for i in tqdm(range(0, len(all_rows), BATCH_SIZE)):
-        batch = all_rows[i : i + BATCH_SIZE]
-        results = classify_batch(batch)
+    print(f"\n🤖  Classifying with OpenAlex BERT (batch size={CLASSIFY_BATCH}) …")
+    for i in tqdm(range(0, len(all_rows), CLASSIFY_BATCH)):
+        batch = all_rows[i : i + CLASSIFY_BATCH]
+        texts = [format_openalex_input(p["title"], p.get("abstract", "")) for p in batch]
+        raw = clf(texts)
+        # Batch returns list[list[dict]]; single-item edge case
+        if raw and isinstance(raw[0], dict):
+            raw = [raw]
 
-        result_map = {r["index"]: r for r in results}
         for j, record in enumerate(batch):
-            res = result_map.get(j, {})
-            record["keywords"]   = res.get("keywords", "")
-            record["categories"] = ", ".join(res.get("categories", []))
+            topic_results = raw[j] if j < len(raw) else []
+            record["keywords"] = topics_to_keywords(topic_results)
+            record["bert_topics"] = serialize_bert_topics(topic_results)
+            record["categories"] = map_to_categories(
+                topic_results,
+                record["title"],
+                record.get("abstract", ""),
+            )
 
-        # Small delay to respect rate limits
-        time.sleep(0.3)
-
-    # 3. Build DataFrame and save
     df = pd.DataFrame(all_rows)
 
-    # Normalise year to int where possible
-    def parse_year(y):
+    def parse_year(y: object) -> int | None:
         try:
             return int(str(y)[:4])
         except Exception:
@@ -167,10 +288,30 @@ def main():
     df["year"] = df["year"].apply(parse_year)
     df = df.sort_values("year", ascending=False, na_position="last")
 
+    # Stable column order for CSV consumers
+    preferred = [
+        "title",
+        "authors",
+        "year",
+        "categories",
+        "keywords",
+        "hf_dataset",
+        "data_source",
+        "source",
+        "bert_topics",
+        "journal",
+        "citations",
+        "url",
+        "abstract",
+        "department",
+    ]
+    cols = [c for c in preferred if c in df.columns] + [c for c in df.columns if c not in preferred]
+    df = df[cols]
+
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     df.to_csv(OUTPUT_PATH, index=False)
     print(f"\n💾  Saved {len(df)} rows → {OUTPUT_PATH}")
-    print(df[["title","year","categories","keywords"]].head(5).to_string())
+    print(df[["title", "year", "hf_dataset", "categories"]].head(5).to_string())
 
 
 if __name__ == "__main__":

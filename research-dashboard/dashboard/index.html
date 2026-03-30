@@ -285,8 +285,16 @@
       <div class="tag-list" id="modal-cats"></div>
     </div>
     <div class="modal-section" id="modal-kw-section">
-      <div class="modal-section-label">Keywords</div>
+      <div class="modal-section-label">Keywords (from OpenAlex BERT topics)</div>
       <div class="tag-list" id="modal-kws"></div>
+    </div>
+    <div class="modal-section" id="modal-ds-section" style="display:none">
+      <div class="modal-section-label">Hugging Face dataset</div>
+      <div id="modal-dataset" style="font-size:0.82rem;color:#b8bcc8;line-height:1.45"></div>
+    </div>
+    <div class="modal-section" id="modal-bert-section" style="display:none">
+      <div class="modal-section-label">OpenAlex BERT topics (top scores)</div>
+      <div class="modal-abstract" id="modal-bert-topics" style="font-size:0.78rem;line-height:1.45;color:#9aa0b3"></div>
     </div>
     <div class="modal-section" id="modal-abstract-section">
       <div class="modal-section-label">Abstract</div>
@@ -449,7 +457,12 @@ function parseCats(s) {
   return s.split(',').map(c => c.trim().toLowerCase().replace(/\s+/g,'_')).filter(c => Object.keys(CAT_COLORS).includes(c));
 }
 function parseKws(s) {
-  return s.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
+  if (!s) return [];
+  const t = String(s).trim();
+  if (t.includes('|')) {
+    return t.split('|').map(k => k.trim().toLowerCase()).filter(Boolean);
+  }
+  return t.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
 }
 
 // ── Fallback sample data ──────────────────────────────────────
@@ -475,6 +488,9 @@ function getSampleData() {
     _id: i, title:r[0], authors:r[1], year:parseInt(r[2]), categories:r[3],
     cats:parseCats(r[3]), keywords:r[4], kwArr:parseKws(r[4]),
     source:r[5], journal:r[6], citations:parseInt(r[7]), url:r[8], abstract:r[9],
+    hf_dataset: r[5] === 'CMU Engineering' ? 'ccm/cmu-engineering-publications' : 'ccm/publications',
+    data_source: r[5] === 'CMU Engineering' ? 'CMU Engineering publications' : 'CCM Lab publications',
+    bert_topics: '',
     department:'', _x:null, _y:null,
   }));
 }
@@ -674,7 +690,7 @@ function filterPapers() {
     if (src && p.source !== src) return false;
     if (cat && !p.cats.includes(cat)) return false;
     if (q) {
-      const hay = `${p.title} ${p.authors} ${p.keywords} ${p.abstract}`.toLowerCase();
+      const hay = `${p.title} ${p.authors} ${p.keywords} ${p.abstract} ${p.bert_topics || ''} ${p.data_source || ''} ${p.hf_dataset || ''}`.toLowerCase();
       if (!hay.includes(q)) return false;
     }
     return true;
@@ -732,6 +748,24 @@ function openModal(id) {
   // Keywords
   const kws = document.getElementById('modal-kws');
   kws.innerHTML = p.kwArr.map(k=>`<span class="tag tag-kw">${k}</span>`).join('') || '<span style="color:var(--muted);font-size:0.82rem">—</span>';
+
+  const dsSec = document.getElementById('modal-ds-section');
+  const dsEl = document.getElementById('modal-dataset');
+  if (p.hf_dataset || p.data_source) {
+    dsSec.style.display = '';
+    dsEl.innerHTML = escHtml([p.hf_dataset, p.data_source].filter(Boolean).join(' — '));
+  } else {
+    dsSec.style.display = 'none';
+  }
+
+  const bertSec = document.getElementById('modal-bert-section');
+  const bertEl = document.getElementById('modal-bert-topics');
+  if (p.bert_topics) {
+    bertSec.style.display = '';
+    bertEl.textContent = p.bert_topics;
+  } else {
+    bertSec.style.display = 'none';
+  }
 
   // Abstract
   const abs = document.getElementById('modal-abstract');
