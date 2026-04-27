@@ -23,6 +23,13 @@ from datasets import load_dataset
 from tqdm import tqdm
 from transformers import pipeline
 
+from author_profiles import write_author_outputs
+from category_classifier import (
+    classify_categories,
+    primary_category_from_multi,
+    strip_topic_id,
+)
+
 # ── Config ────────────────────────────────────────────────────────────────────
 
 DATASETS = [
@@ -34,94 +41,9 @@ MODEL_ID = (
     "OpenAlex/bert-base-multilingual-cased-finetuned-openalex-topic-classification-title-abstract"
 )
 
-# Single label per paper; spelling matches project convention ("optimmization").
-CATEGORIES = ["ideation", "optimmization", "grammar", "decision_making"]
-
-# Substrings (lowercase) in title + abstract + BERT topic labels — weighted toward primary contribution.
-CAT_PATTERNS: dict[str, list[str]] = {
-    "ideation": [
-        "ideation",
-        "concept generation",
-        "conceptual design",
-        "creative",
-        "creativity",
-        "brainstorm",
-        "design exploration",
-        "exploratory",
-        "novel framework",
-        "proposing",
-        "new concept",
-        "design directions",
-        "innovation",
-        "idea generation",
-        "user-centered design",
-        "design thinking",
-        "co-design",
-        "early design",
-        "generative design",
-    ],
-    "optimmization": [
-        "optimization",
-        "optimisation",
-        "optimal",
-        "minimize",
-        "maximize",
-        "efficiency",
-        "performance improvement",
-        "computational cost",
-        "resource use",
-        "best solution",
-        "topology optimization",
-        "multiobjective",
-        "surrogate model",
-        "evolutionary algorithm",
-        "machine learning for",
-        "deep learning",
-        "cfd",
-        "finite element",
-        "accuracy",
-        "faster",
-        "reduce cost",
-    ],
-    "grammar": [
-        "shape grammar",
-        "graph grammar",
-        "design grammar",
-        "rule-based generation",
-        "formal grammar",
-        "parametric rule",
-        "syntax",
-        "formal language",
-        "generative rules",
-        "rule-based",
-        "representation system",
-        "formal structure",
-        "grammar",
-    ],
-    "decision_making": [
-        "decision support",
-        "decision-making",
-        "tradeoff",
-        "trade-off",
-        "tradeoffs",
-        "recommendation system",
-        "evaluation framework",
-        "choose between",
-        "alternative selection",
-        "multi-criteria",
-        "ranking",
-        "human-ai",
-        "decision making",
-        "preference",
-        "game theory",
-        "strategy",
-    ],
-}
-
-# Tie-break order when scores tie (first wins).
-CATEGORY_TIE_ORDER = ["ideation", "optimmization", "grammar", "decision_making"]
-
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "papers.csv")
+AUTHOR_PROFILES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "author_profiles.json")
+WHITESPACE_MATCHES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "whitespace_matches.json")
 
 # Inference batch size (pipeline accepts lists)
 CLASSIFY_BATCH = 8
@@ -173,10 +95,6 @@ def format_openalex_input(title: str, abstract: str) -> str:
     return f" {t}\n {a}"
 
 
-def strip_topic_id(label: str) -> str:
-    return re.sub(r"^\d+\s*:\s*", "", (label or "").strip()).strip()
-
-
 def topics_to_keywords(topic_results: list[dict[str, Any]], max_items: int = 5) -> str:
     parts: list[str] = []
     for item in topic_results[:max_items]:
@@ -193,87 +111,6 @@ def serialize_bert_topics(topic_results: list[dict[str, Any]]) -> str:
     return "; ".join(
         f'{item["label"]} ({float(item["score"]):.4f})' for item in topic_results[:TOP_K_TOPICS]
     )
-
-
-def primary_category(
-    topic_results: list[dict[str, Any]],
-    title: str,
-    abstract: str,
-) -> str:
-    """Exactly one label: ideation | optimmization | grammar | decision_making."""
-    blobs: list[str] = []
-    for item in topic_results[:TOP_K_TOPICS]:
-        blobs.append(strip_topic_id(item.get("label", "")).lower())
-        blobs.append((item.get("label") or "").lower())
-    blobs.append((title or "").lower())
-    blobs.append((abstract or "").lower())
-    blob = " ".join(blobs)
-
-    scores: dict[str, float] = {c: 0.0 for c in CATEGORIES}
-    for cat, patterns in CAT_PATTERNS.items():
-        for p in patterns:
-            if p in blob:
-                scores[cat] += float(len(p)) ** 0.5
-
-    for i, item in enumerate(topic_results[:5]):
-        w = float(item.get("score", 0)) * (1.2 - i * 0.08)
-        label = strip_topic_id(item.get("label", "")).lower()
-        for cat, patterns in CAT_PATTERNS.items():
-            for p in patterns:
-                if p in label:
-                    scores[cat] += 2.0 * w
-
-    best = max(scores.values())
-    if best > 0:
-        for c in CATEGORY_TIE_ORDER:
-            if scores[c] == best:
-                return c
-
-    # Fallback when no pattern matched — heuristic aligned with user rules
-    b = blob
-    if any(
-        x in b
-        for x in (
-            "tradeoff",
-            "trade-off",
-            "recommendation",
-            "decision support",
-            "evaluation framework",
-            "choose between",
-            "alternatives",
-            "ranking",
-            "multi-criteria",
-        )
-    ):
-        return "decision_making"
-    if any(
-        x in b
-        for x in (
-            "shape grammar",
-            "rule-based",
-            "formal grammar",
-            "syntax",
-            "parametric rule",
-            "representation system",
-        )
-    ):
-        return "grammar"
-    if any(
-        x in b
-        for x in (
-            "optimization",
-            "optimisation",
-            "efficiency",
-            "optimal",
-            "minimize",
-            "maximize",
-            "topology optimization",
-            "surrogate",
-            "performance",
-        )
-    ):
-        return "optimmization"
-    return "ideation"
 
 
 def extract_bib_fields(row: dict, ds_meta: dict) -> dict:
@@ -368,11 +205,13 @@ def main() -> None:
             topic_results = raw[j] if j < len(raw) else []
             record["keywords"] = topics_to_keywords(topic_results)
             record["bert_topics"] = serialize_bert_topics(topic_results)
-            record["categories"] = primary_category(
+            multi_categories = classify_categories(
                 topic_results,
                 record["title"],
                 record.get("abstract", ""),
             )
+            record["primary_category"] = primary_category_from_multi(multi_categories)
+            record["categories"] = "|".join(multi_categories)
 
     df = pd.DataFrame(all_rows)
 
@@ -389,6 +228,7 @@ def main() -> None:
         "title",
         "authors",
         "year",
+        "primary_category",
         "categories",
         "keywords",
         "hf_dataset",
@@ -408,7 +248,20 @@ def main() -> None:
     os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
     df.to_csv(OUTPUT_PATH, index=False)
     print(f"\n💾  Saved {len(df)} rows → {OUTPUT_PATH}")
-    print(df[["title", "year", "hf_dataset", "categories"]].head(5).to_string())
+    counts = df["categories"].fillna("").apply(lambda s: 0 if not s else len(str(s).split("|")))
+    print("\n📊  Multi-label distribution:")
+    for n in range(1, 5):
+        print(f"    {n} category: {int((counts == n).sum())}")
+    print(f"    Misc / empty: {int((counts == 0).sum())}")
+    profile_count, avg_papers, match_count = write_author_outputs(
+        df.to_dict(orient="records"),
+        AUTHOR_PROFILES_PATH,
+        WHITESPACE_MATCHES_PATH,
+    )
+    print(f"\n👤  Authored profiles: {profile_count}")
+    print(f"    Average papers per author: {avg_papers}")
+    print(f"    Whitespace-author matches: {match_count}")
+    print(df[["title", "year", "hf_dataset", "primary_category", "categories"]].head(5).to_string())
 
 
 if __name__ == "__main__":

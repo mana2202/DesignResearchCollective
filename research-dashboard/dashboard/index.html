@@ -3,1003 +3,1028 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CCM Research Publications Dashboard</title>
+<title>DRC Research Whitespace Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@400;500;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap');
-
   :root {
-    --bg:       #0d0f14;
-    --bg2:      #13161f;
-    --bg3:      #1a1e2b;
-    --border:   #252a3a;
-    --accent:   #5b8dee;
-    --accent2:  #e06c4e;
-    --accent3:  #50c9a0;
-    --accent4:  #c07ef0;
-    --text:     #e8eaf0;
-    --muted:    #7a8099;
-    --card:     #161a26;
-    --ideation:       #5b8dee;
-    --optimmization:   #50c9a0;
-    --grammar:        #e06c4e;
-    --decision_making:#c07ef0;
+    --bg: #080810;
+    --surface: #111118;
+    --surface2: #18181f;
+    --border: #252530;
+    --accent1: #7c6af7;
+    --accent2: #f7796a;
+    --accent3: #5af7c0;
+    --accent4: #f7c55a;
+    --text: #dddde8;
+    --muted: #5a5a70;
+    --white: #f0f0f8;
+    --text-soft: #b6b7c9;
+    --surface3: #1f202a;
   }
-
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+  * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: 'DM Sans', sans-serif;
     background: var(--bg);
     color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
   }
 
-  /* ── Header ── */
   header {
+    padding: 22px 28px 16px;
     border-bottom: 1px solid var(--border);
-    padding: 0 2rem;
+    position: relative;
+    background: linear-gradient(180deg, rgba(124,106,247,0.04) 0%, transparent 100%);
+  }
+  header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--accent1) 0%, var(--accent2) 33%, var(--accent3) 66%, var(--accent4) 100%); }
+  .eyebrow { font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--accent1); }
+  h1 { font-family: 'DM Sans', Arial, Helvetica, sans-serif; font-size: clamp(23px, 2.6vw, 34px); font-weight: 700; letter-spacing: -0.05em; line-height: 0.98; color: var(--white); width: 100%; max-width: none; }
+  h1 em { font-style: normal; background: linear-gradient(125deg, var(--accent1) 0%, var(--accent2) 55%, var(--accent3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-row {
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-between;
-    height: 60px;
+    gap: 20px;
+    margin-top: 2px;
+  }
+  .header-stats {
+    display: inline-flex;
+    align-items: stretch;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: rgba(255,255,255,0.02);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+  .header-stat {
+    min-width: 120px;
+    padding: 8px 12px 7px;
+    border-right: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  }
+  .header-stat:last-child { border-right: none; }
+  .header-stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--white);
+  }
+  .header-stat-label {
+    margin-top: 4px;
+    font-size: 16px;
+    color: var(--text-soft);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .layout { display: grid; grid-template-columns: 236px 1fr; min-height: calc(100vh - 140px); }
+
+  .sidebar {
+    border-right: 1px solid var(--border);
+    padding: 20px 16px;
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(13,15,20,0.92);
-    backdrop-filter: blur(12px);
+    height: calc(100vh - 140px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0));
   }
-  .logo {
-    font-family: 'DM Serif Display', serif;
-    font-size: 1.15rem;
-    letter-spacing: 0.02em;
+  .sbs { margin-bottom: 22px; }
+  .sbl { font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
+
+  .catbtn { display: flex; align-items: center; gap: 9px; width: 100%; padding: 9px 10px; background: transparent; border: 1px solid transparent; border-radius: 7px; color: var(--text-soft); cursor: pointer; font-family: 'DM Mono', monospace; font-size: 16px; line-height: 1.4; text-align: left; margin-bottom: 5px; transition: all 0.12s; }
+  .catbtn:hover { color: var(--text); background: var(--surface); border-color: var(--border); }
+  .catbtn.active { color: var(--white); background: var(--surface2); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.02); }
+  .catbtn[data-c="all"].active { border-color: rgba(255,255,255,0.15); }
+  .catbtn[data-c="ideation"].active { border-color: rgba(124,106,247,0.4); }
+  .catbtn[data-c="optimization"].active { border-color: rgba(247,121,106,0.4); }
+  .catbtn[data-c="grammar"].active { border-color: rgba(90,247,192,0.4); }
+  .catbtn[data-c="decision"].active { border-color: rgba(247,197,90,0.4); }
+  .cdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .cdot-all { background: linear-gradient(135deg, var(--accent1), var(--accent3)); }
+  .cdot-ideation { background: var(--accent1); }
+  .cdot-optimization { background: var(--accent2); }
+  .cdot-grammar { background: var(--accent3); }
+  .cdot-decision { background: var(--accent4); }
+  .ccount { margin-left: auto; font-size: 16px; color: var(--text-soft); }
+
+  .pillgroup { display: flex; flex-wrap: wrap; gap: 6px; }
+  .pill { padding: 7px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 16px; color: var(--text-soft); cursor: pointer; transition: all 0.12s; background: transparent; font-family: 'DM Mono', monospace; line-height: 1; }
+  .pill:hover, .pill.active { color: var(--text); border-color: rgba(255,255,255,0.16); background: var(--surface2); }
+
+  .pitem { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 16px; color: var(--text-soft); line-height: 1.65; }
+  .pitem:last-child { border-bottom: none; }
+  .picon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  .content { padding: 22px 28px 28px; }
+  .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 22px; overflow-x: auto; gap: 6px; }
+  .tabbtn { padding: 12px 14px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--text-soft); cursor: pointer; font-family: 'DM Sans', 'DM Mono', sans-serif; font-size: 16px; font-weight: 500; letter-spacing: 0.01em; transition: all 0.12s; margin-bottom: -1px; white-space: nowrap; }
+  .tabbtn:hover { color: var(--text); }
+  .tabbtn.active { color: var(--white); border-bottom-color: var(--accent1); }
+  .tabp { display: none; }
+  .tabp.active { display: block; }
+
+  .sch { font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+  .sch::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .ovgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
+  .ovc { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 15px; }
+  .ovc-lbl { font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .ovc-lbl .d { width: 6px; height: 6px; border-radius: 50%; }
+  .ovt { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; line-height: 1.2; }
+  .ovd { font-size: 16px; color: var(--text-soft); line-height: 1.75; }
+  .dompills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+  .dompill { padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 16px; color: var(--text-soft); background: rgba(255,255,255,0.015); display: flex; align-items: center; gap: 6px; line-height: 1.35; }
+  .teamgrid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .tchip { padding: 8px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 999px; font-size: 16px; color: var(--text); display: flex; align-items: center; gap: 6px; line-height: 1.35; }
+  .trole { font-size: 16px; color: var(--text-soft); }
+  .tsep { width: 1px; height: 10px; background: var(--border); }
+
+  .mxscroll { overflow-x: auto; }
+  .mxgrid { display: grid; gap: 3px; min-width: 500px; }
+  .mxh { padding: 9px 6px; text-align: center; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-soft); background: var(--surface); border-radius: 6px; }
+  .mxyr { padding: 9px 6px; font-size: 16px; color: var(--text-soft); display: flex; align-items: center; justify-content: center; background: var(--surface); border-radius: 6px; }
+  .mxcell { padding: 6px 4px; background: var(--surface); border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.12s; min-height: 40px; }
+  .mxcell:hover { transform: scale(1.06); z-index: 5; position: relative; }
+  .mxempty { background: var(--bg); border: 1px dashed rgba(255,255,255,0.07); }
+  .mxempty:hover { border-color: var(--accent1); background: rgba(124,106,247,0.04); }
+  .mxn { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+  .mxi { background: rgba(124,106,247,0.12); border: 1px solid rgba(124,106,247,0.25); }
+  .mxo { background: rgba(247,121,106,0.12); border: 1px solid rgba(247,121,106,0.25); }
+  .mxg { background: rgba(90,247,192,0.12); border: 1px solid rgba(90,247,192,0.25); }
+  .mxd { background: rgba(247,197,90,0.12); border: 1px solid rgba(247,197,90,0.25); }
+  .mxi .mxn { color: var(--accent1); }
+  .mxo .mxn { color: var(--accent2); }
+  .mxg .mxn { color: var(--accent3); }
+  .mxd .mxn { color: var(--accent4); }
+  .mxnote { margin-top: 10px; font-size: 16px; color: var(--text-soft); display: flex; align-items: center; gap: 8px; }
+
+  .wsgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
+  .wscard { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 16px 14px; position: relative; overflow: hidden; transition: border-color 0.15s, transform 0.15s; }
+  .wscard:hover { border-color: var(--muted); transform: translateY(-1px); }
+  .wscard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+  .wscard.ci::before { background: var(--accent1); }
+  .wscard.co::before { background: var(--accent2); }
+  .wscard.cg::before { background: var(--accent3); }
+  .wscard.cd::before { background: var(--accent4); }
+  .wscard.cc::before { background: linear-gradient(90deg, var(--accent1), var(--accent3)); }
+  .wscard.cx::before { background: linear-gradient(90deg, var(--accent2), var(--accent4)); }
+  .wstag { display: inline-flex; align-items: center; gap: 5px; padding: 6px 10px; border-radius: 999px; font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; }
+  .ti { background: rgba(124,106,247,0.15); color: var(--accent1); }
+  .to { background: rgba(247,121,106,0.15); color: var(--accent2); }
+  .tg { background: rgba(90,247,192,0.15); color: var(--accent3); }
+  .td { background: rgba(247,197,90,0.15); color: var(--accent4); }
+  .tc { background: rgba(124,106,247,0.1); color: #a8a0ff; }
+  .tx { background: rgba(247,121,106,0.1); color: #ffb0a0; }
+  .wstitle { font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; color: var(--white); line-height: 1.32; margin-bottom: 8px; padding-right: 34px; }
+  .wsdesc { font-size: 16px; color: var(--text-soft); line-height: 1.75; margin-bottom: 10px; }
+  .wsopp { background: var(--bg); border-radius: 7px; padding: 10px 11px; font-size: 16px; color: var(--text); line-height: 1.7; border-left: 2px solid var(--border); }
+  .wsopp-h { font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 4px; display: block; }
+  .score { position: absolute; top: 12px; right: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Syne', sans-serif; font-size: 16px; font-weight: 700; }
+  .sh { background: rgba(247,197,90,0.15); color: var(--accent4); border: 1px solid rgba(247,197,90,0.3); }
+  .sm { background: rgba(90,247,192,0.1); color: var(--accent3); border: 1px solid rgba(90,247,192,0.2); }
+
+  .plist { display: grid; gap: 6px; }
+  .prow { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: start; padding: 11px 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; transition: border-color 0.12s; }
+  .prow:hover { border-color: var(--muted); }
+  .ppip { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .ptitle { font-size: 16px; color: var(--text); line-height: 1.55; font-weight: 500; }
+  .pauth { font-size: 16px; color: var(--text-soft); margin-top: 3px; line-height: 1.55; }
+  .pbadges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+  .pb { padding: 4px 8px; border-radius: 999px; font-size: 16px; letter-spacing: 0.03em; text-transform: uppercase; }
+  .pbi { background: rgba(124,106,247,0.18); color: var(--accent1); }
+  .pbo { background: rgba(247,121,106,0.18); color: var(--accent2); }
+  .pbg { background: rgba(90,247,192,0.18); color: var(--accent3); }
+  .pbd { background: rgba(247,197,90,0.18); color: var(--accent4); }
+  .pyr { font-size: 16px; color: var(--text-soft); white-space: nowrap; margin-top: 2px; }
+
+  .author-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .field {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    padding: 10px 12px;
+    font-family: 'DM Sans', 'DM Mono', sans-serif;
+    font-size: 16px;
+    min-width: 180px;
   }
-  .logo span { color: var(--accent); }
-  .nav { display: flex; gap: 0.25rem; }
-  .nav-btn {
-    background: none; border: none; color: var(--muted);
+  .field::placeholder { color: var(--muted); }
+  .author-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 12px;
+    align-items: start;
+  }
+  .author-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.18);
+    overflow: hidden;
+  }
+  .author-card.open { grid-column: 1 / -1; }
+  .author-summary {
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: inherit;
+    text-align: left;
+    padding: 14px;
+    cursor: pointer;
+    aspect-ratio: auto;
+    min-height: 0;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 0;
+  }
+  .author-summary:hover { background: rgba(255,255,255,0.02); }
+  .author-card.open .author-summary {
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+  .author-head { margin-bottom: 0; }
+  .author-name {
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem; font-weight: 500;
-    padding: 0.45rem 1rem; border-radius: 6px;
-    cursor: pointer; transition: all 0.18s;
-    letter-spacing: 0.03em;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.1;
   }
-  .nav-btn:hover { color: var(--text); background: var(--bg3); }
-  .nav-btn.active { color: var(--accent); background: rgba(91,141,238,0.12); }
+  .author-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+    margin-top: 6px;
+  }
+  .author-count, .author-last {
+    font-size: 16px;
+    color: var(--text-soft);
+    white-space: nowrap;
+  }
+  .author-description {
+    margin-top: 40px;
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .author-card.open .author-description {
+    display: block;
+    overflow: visible;
+    margin-top: 18px;
+  }
+  .author-details {
+    display: none;
+    padding: 0 14px 14px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+  }
+  .author-card.open .author-details { display: block; }
+  .author-sections {
+    display: grid;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  .author-block { margin-top: 10px; }
+  .author-block-card {
+    margin-top: 0;
+    padding: 11px 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .author-label {
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 6px;
+  }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+  .soft-chip {
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    color: var(--text-soft);
+    font-size: 16px;
+    line-height: 1.3;
+  }
+  .author-copy {
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.7;
+  }
+  .author-list { display: grid; gap: 6px; }
+  .author-line {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid rgba(255,255,255,0.05);
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.6;
+  }
+  .author-line strong, .author-copy strong { color: var(--text); }
+  .paper-list { display: grid; gap: 6px; }
+  .paper-mini {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+  }
+  .paper-mini-title {
+    font-size: 16px;
+    color: var(--text);
+    line-height: 1.55;
+  }
+  .paper-mini-meta {
+    margin-top: 3px;
+    font-size: 16px;
+    color: var(--text-soft);
+  }
+  .ws-authors {
+    margin-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    padding-top: 10px;
+  }
+  .ws-author-item {
+    font-size: 16px;
+    color: var(--text-soft);
+    line-height: 1.7;
+    margin-top: 4px;
+  }
+  .ws-author-item strong { color: var(--text); }
 
-  .status-dot {
-    display: flex; align-items: center; gap: 0.5rem;
-    font-size: 0.78rem; color: var(--muted); font-family: 'DM Mono', monospace;
-  }
-  .dot { width:7px; height:7px; border-radius:50%; background:var(--accent3); animation: pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .emptystate { text-align: center; padding: 36px; color: var(--text-soft); font-size: 16px; }
 
-  /* ── Tabs ── */
-  .tab { display: none; padding: 2rem; }
-  .tab.active { display: block; }
+  .tt { position: fixed; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-size: 16px; max-width: 240px; pointer-events: none; z-index: 9999; display: none; line-height: 1.6; color: var(--text); box-shadow: 0 10px 30px rgba(0,0,0,0.28); }
+  .tt.v { display: block; }
+  .tt-t { font-weight: 600; color: var(--white); margin-bottom: 3px; font-size: 16px; }
+  .statusline { margin-top: 10px; font-size: 16px; color: var(--text-soft); }
 
-  /* ── Stats Grid ── */
-  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
-  .stat-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.25rem 1.5rem;
-    position: relative; overflow: hidden;
-    transition: border-color 0.2s;
+  @media (max-width: 900px) {
+    .layout { grid-template-columns: 1fr; }
+    .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
+    .ovgrid { grid-template-columns: 1fr; }
+    header { padding: 18px 20px 14px; }
+    .content { padding: 18px 20px 24px; }
+    .hero-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .header-stats {
+      width: 100%;
+    }
+    .header-stat {
+      flex: 1 1 0;
+      min-width: 0;
+    }
   }
-  .stat-card::before {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: var(--c, var(--accent));
-  }
-  .stat-card:hover { border-color: var(--c, var(--accent)); }
-  .stat-label { font-size: 0.73rem; font-weight: 500; color: var(--muted); letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .stat-value { font-size: 2rem; font-family: 'DM Serif Display', serif; color: var(--text); }
-  .stat-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.25rem; }
 
-  /* ── Charts Row ── */
-  .charts-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 2rem; }
-  .chart-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 10px; padding: 1.5rem;
+  @media (max-width: 640px) {
+    .header-stats { width: 100%; }
+    .header-stat {
+      padding: 7px 9px 6px;
+    }
+    .header-stat-value { font-size: 17px; }
+    .header-stat-label { font-size: 16px; letter-spacing: 0.04em; }
+    .tabs { margin-bottom: 18px; }
+    .tabbtn { padding: 10px 12px; font-size: 16px; }
+    .wsgrid { grid-template-columns: 1fr; }
+    .author-head { flex-direction: column; align-items: flex-start; }
+    .author-toolbar { flex-direction: column; }
+    .author-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .author-summary {
+      padding: 12px;
+      min-height: 0;
+    }
+    .author-details { padding: 0 12px 12px; }
+    .prow { grid-template-columns: 6px 1fr; }
+    .pyr { grid-column: 2; }
   }
-  .chart-title { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; }
-  svg text { font-family: 'DM Sans', sans-serif; fill: var(--muted); }
 
-  /* ── Category Pills ── */
-  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-  .cat-bar-row { display: flex; flex-direction: column; gap: 0.3rem; }
-  .cat-bar-label { display: flex; justify-content: space-between; font-size: 0.8rem; }
-  .cat-bar-track { height: 6px; border-radius: 3px; background: var(--bg3); overflow: hidden; }
-  .cat-bar-fill { height: 100%; border-radius: 3px; transition: width 1s cubic-bezier(0.23,1,0.32,1); }
-
-  /* ── Browse Tab ── */
-  .filters {
-    display: flex; gap: 0.75rem; align-items: center;
-    flex-wrap: wrap; margin-bottom: 1.5rem;
-  }
-  .search-wrap { position: relative; flex: 1; min-width: 260px; }
-  .search-wrap input {
-    width: 100%; background: var(--bg3); border: 1px solid var(--border);
-    color: var(--text); border-radius: 8px; padding: 0.6rem 1rem 0.6rem 2.6rem;
-    font-family: 'DM Sans', sans-serif; font-size: 0.88rem; outline: none;
-    transition: border-color 0.2s;
-  }
-  .search-wrap input:focus { border-color: var(--accent); }
-  .search-wrap svg { position: absolute; left: 0.85rem; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
-  select {
-    background: var(--bg3); border: 1px solid var(--border); color: var(--text);
-    border-radius: 8px; padding: 0.6rem 0.9rem; font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem; outline: none; cursor: pointer;
-  }
-  select:focus { border-color: var(--accent); }
-
-  .results-count { font-size: 0.8rem; color: var(--muted); font-family: 'DM Mono', monospace; }
-
-  /* ── Paper Cards ── */
-  .papers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 1rem; }
-  .paper-card {
-    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 1.25rem; cursor: pointer;
-    transition: border-color 0.2s, transform 0.15s, box-shadow 0.2s;
-    position: relative; overflow: hidden;
-  }
-  .paper-card::after {
-    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-    background: var(--c, var(--accent)); transform: scaleX(0); transform-origin: left;
-    transition: transform 0.25s;
-  }
-  .paper-card:hover { border-color: var(--border2, var(--border)); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
-  .paper-card:hover::after { transform: scaleX(1); }
-
-  .paper-title { font-size: 0.92rem; font-weight: 600; line-height: 1.45; margin-bottom: 0.6rem; color: var(--text); }
-  .paper-meta { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; margin-bottom: 0.75rem; }
-  .paper-year { font-family: 'DM Mono', monospace; font-size: 0.75rem; color: var(--accent); background: rgba(91,141,238,0.12); padding: 0.15rem 0.5rem; border-radius: 4px; }
-  .paper-source { font-size: 0.73rem; color: var(--muted); }
-  .paper-journal { font-size: 0.73rem; color: var(--muted); font-style: italic; }
-  .paper-citations { font-size: 0.73rem; color: var(--muted); margin-left: auto; }
-
-  .paper-authors { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.75rem; line-height: 1.4;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-
-  .tag-list { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-  .tag {
-    font-size: 0.7rem; padding: 0.2rem 0.55rem; border-radius: 20px;
-    font-weight: 500; letter-spacing: 0.03em;
-  }
-  .tag-cat { border: 1px solid; }
-  .tag-cat.ideation       { color: var(--ideation);       border-color: var(--ideation);       background: rgba(91,141,238,0.1); }
-  .tag-cat.optimmization   { color: var(--optimmization);   border-color: var(--optimmization);   background: rgba(80,201,160,0.1); }
-  .tag-cat.grammar        { color: var(--grammar);        border-color: var(--grammar);        background: rgba(224,108,78,0.1); }
-  .tag-cat.decision_making{ color: var(--decision_making);border-color: var(--decision_making);background: rgba(192,126,240,0.1); }
-  .tag-kw { color: var(--muted); background: var(--bg3); }
-
-  /* ── Modal ── */
-  .modal-backdrop {
-    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-    z-index: 500; align-items: center; justify-content: center; padding: 2rem;
-    backdrop-filter: blur(4px);
-  }
-  .modal-backdrop.open { display: flex; }
-  .modal {
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 14px;
-    max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 2rem;
-    position: relative;
-    animation: slideUp 0.2s ease;
-  }
-  @keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform:translateY(0); } }
-  .modal-close {
-    position: absolute; top: 1rem; right: 1rem; background: var(--bg3);
-    border: 1px solid var(--border); color: var(--muted); width: 32px; height: 32px;
-    border-radius: 50%; cursor: pointer; font-size: 1rem; transition: all 0.15s;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .modal-close:hover { color: var(--text); background: var(--bg3); border-color: var(--accent); }
-  .modal-title { font-family: 'DM Serif Display', serif; font-size: 1.3rem; line-height: 1.4; margin-bottom: 1rem; padding-right: 2.5rem; }
-  .modal-section { margin-bottom: 1.25rem; }
-  .modal-section-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.5rem; font-weight: 600; }
-  .modal-abstract { font-size: 0.87rem; line-height: 1.7; color: #b8bcc8; }
-  .modal-link {
-    display: inline-flex; align-items: center; gap: 0.4rem;
-    color: var(--accent); font-size: 0.83rem; text-decoration: none; font-weight: 500;
-    border: 1px solid rgba(91,141,238,0.35); padding: 0.45rem 1rem; border-radius: 6px;
-    transition: all 0.15s;
-  }
-  .modal-link:hover { background: rgba(91,141,238,0.1); }
-
-  /* ── Cluster Tab ── */
-  .cluster-controls {
-    display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem;
-  }
-  #cluster-svg { width: 100%; border-radius: 10px; border: 1px solid var(--border); background: var(--card); }
-
-  .cluster-legend { display: flex; gap: 1.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
-  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: var(--muted); cursor: pointer; }
-  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-
-  .tooltip {
-    position: fixed; pointer-events: none; z-index: 999;
-    background: var(--bg2); border: 1px solid var(--border); border-radius: 8px;
-    padding: 0.75rem 1rem; max-width: 280px; font-size: 0.8rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.15s;
-  }
-  .tooltip.show { opacity: 1; }
-  .tt-title { font-weight: 600; color: var(--text); margin-bottom: 0.35rem; line-height: 1.4; }
-  .tt-year  { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.73rem; }
-
-  /* ── Loading ── */
-  .loading {
-    display: flex; align-items: center; justify-content: center;
-    height: 300px; flex-direction: column; gap: 1rem;
-    color: var(--muted); font-size: 0.88rem;
-  }
-  .spinner {
-    width: 32px; height: 32px; border: 2px solid var(--border);
-    border-top-color: var(--accent); border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .empty { text-align: center; padding: 3rem; color: var(--muted); font-size: 0.9rem; }
-
-  @media (max-width: 768px) {
-    .stats-grid { grid-template-columns: 1fr 1fr; }
-    .charts-row { grid-template-columns: 1fr; }
-    .papers-grid { grid-template-columns: 1fr; }
-    header { padding: 0 1rem; }
-    .tab { padding: 1rem; }
-    .logo { display: none; }
+  @media (max-width: 420px) {
+    .author-grid { grid-template-columns: 1fr; }
+    .author-summary {
+      aspect-ratio: auto;
+      min-height: 0;
+    }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <div class="logo">CCM <span>Research</span> Dashboard</div>
-  <nav class="nav">
-    <button class="nav-btn active" onclick="showTab('overview')">Overview</button>
-    <button class="nav-btn" onclick="showTab('browse')">Browse Papers</button>
-    <button class="nav-btn" onclick="showTab('cluster')">Cluster View</button>
-  </nav>
-  <div class="status-dot"><div class="dot"></div><span id="paper-count-header">Loading…</span></div>
+  <div class="eyebrow">Carnegie Mellon University · Design Research Collective</div>
+  <div class="hero-row">
+    <h1>Research <em>Whitespace</em> Explorer</h1>
+    <div class="header-stats" aria-label="Paper counters">
+      <div class="header-stat">
+        <div class="header-stat-value" id="h-total">0</div>
+        <div class="header-stat-label">Total Papers</div>
+      </div>
+      <div class="header-stat">
+        <div class="header-stat-value" id="h-drc" style="color:var(--accent1)">0</div>
+        <div class="header-stat-label">DRC Papers</div>
+      </div>
+      <div class="header-stat">
+        <div class="header-stat-value" id="h-eng" style="color:var(--accent2)">0</div>
+        <div class="header-stat-label">Engineering Papers</div>
+      </div>
+    </div>
+  </div>
+  <div class="statusline" id="data-status">Loading live dataset…</div>
 </header>
 
-<!-- Tooltip -->
-<div class="tooltip" id="tooltip">
-  <div class="tt-title" id="tt-title"></div>
-  <div class="tt-year" id="tt-year"></div>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sbs">
+      <div class="sbl">Category</div>
+      <button class="catbtn active" data-c="all" onclick="setCat('all',this)"><span class="cdot cdot-all"></span> All <span class="ccount" id="c-all">0</span></button>
+      <button class="catbtn" data-c="ideation" onclick="setCat('ideation',this)"><span class="cdot cdot-ideation"></span> Ideation <span class="ccount" id="c-id">0</span></button>
+      <button class="catbtn" data-c="optimization" onclick="setCat('optimization',this)"><span class="cdot cdot-optimization"></span> Optimization <span class="ccount" id="c-op">0</span></button>
+      <button class="catbtn" data-c="grammar" onclick="setCat('grammar',this)"><span class="cdot cdot-grammar"></span> Grammar <span class="ccount" id="c-gr">0</span></button>
+      <button class="catbtn" data-c="decision" onclick="setCat('decision',this)"><span class="cdot cdot-decision"></span> Decision Making <span class="ccount" id="c-de">0</span></button>
+    </div>
+    <div class="sbs">
+      <div class="sbl">Year</div>
+      <div class="pillgroup" id="year-pills"></div>
+    </div>
+    <div class="sbs">
+      <div class="sbl">DRC Research Pillars</div>
+      <div class="pitem"><div class="picon">👥</div><div>People Doing Design — individuals & teams creating products</div></div>
+      <div class="pitem"><div class="picon">🤖</div><div>AI/ML Supporting Design — ML systems built around human needs</div></div>
+      <div class="pitem"><div class="picon">🤝</div><div>Human-AI Collaboration — AI as partner for wicked problems</div></div>
+    </div>
+    <div class="sbs">
+      <div class="sbl">Application Domains</div>
+      <div class="pitem"><div class="picon">🖨</div><div>Additive Manufacturing & 3D Printing</div></div>
+      <div class="pitem"><div class="picon">🌊</div><div>Marine Renewable Energy</div></div>
+      <div class="pitem"><div class="picon">🚁</div><div>Unmanned Aerial Vehicles (Drones)</div></div>
+    </div>
+    <div class="sbs">
+      <div class="sbl">Legend</div>
+      <div style="display:flex;flex-direction:column;gap:5px;font-size:9px;color:var(--muted);">
+        <div style="display:flex;align-items:center;gap:7px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent1);opacity:.7"></div>Ideation</div>
+        <div style="display:flex;align-items:center;gap:7px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent2);opacity:.7"></div>Optimization</div>
+        <div style="display:flex;align-items:center;gap:7px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent3);opacity:.7"></div>Grammar</div>
+        <div style="display:flex;align-items:center;gap:7px;"><div style="width:10px;height:10px;border-radius:2px;background:var(--accent4);opacity:.7"></div>Decision Making</div>
+        <div style="display:flex;align-items:center;gap:7px;margin-top:3px;"><div style="width:10px;height:10px;border-radius:2px;border:1px dashed rgba(255,255,255,0.12)"></div>White space (no papers)</div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="tabs">
+      <button class="tabbtn active" onclick="setTab('overview',this)">Overview</button>
+      <button class="tabbtn" onclick="setTab('matrix',this)">Coverage Matrix</button>
+      <button class="tabbtn" onclick="setTab('whitespace',this)">White Spaces</button>
+      <button class="tabbtn" onclick="setTab('authors',this)">Author Profiles</button>
+      <button class="tabbtn" onclick="setTab('papers',this)">Papers</button>
+    </div>
+
+    <div class="tabp active" id="panel-overview">
+      <div class="sch">Research Pillars</div>
+      <div class="ovgrid">
+        <div class="ovc">
+          <div class="ovc-lbl"><div class="d" style="background:#a0a0ff"></div> Pillar 1</div>
+          <div class="ovt">People Doing Design</div>
+          <div class="ovd">Cognitive style, empathy, stress, team dynamics, fixation, bias, communication, prototyping behavior.</div>
+        </div>
+        <div class="ovc">
+          <div class="ovc-lbl"><div class="d" style="background:var(--accent3)"></div> Pillar 2</div>
+          <div class="ovt">AI/ML Supporting Design</div>
+          <div class="ovd">Neural operators, generative models, surrogate models, physics-informed networks, LLMs, agent-based systems.</div>
+        </div>
+        <div class="ovc">
+          <div class="ovc-lbl"><div class="d" style="background:var(--accent4)"></div> Pillar 3</div>
+          <div class="ovt">Human-AI Collaboration</div>
+          <div class="ovd">AI process management, adaptive teaming, cognitive assistants, trust, joint decision-making, hybrid teams.</div>
+        </div>
+      </div>
+
+      <div class="sch">Application Domains</div>
+      <div class="dompills">
+        <div class="dompill"><span>🖨</span> Additive Manufacturing</div>
+        <div class="dompill"><span>🌊</span> Marine Renewable Energy</div>
+        <div class="dompill"><span>🚁</span> UAVs / Drones</div>
+        <div class="dompill"><span>🏗</span> Civil / Arctic Infrastructure</div>
+        <div class="dompill"><span>📐</span> Engineering Design Education</div>
+        <div class="dompill"><span>🏦</span> Finance (emerging)</div>
+        <div class="dompill"><span>🏗</span> Built Environment / Smart Buildings</div>
+      </div>
+
+      <div class="sch">Current Team</div>
+      <div class="teamgrid">
+        <div class="tchip">Chris McComb<div class="tsep"></div><span class="trole">Director</span></div>
+        <div class="tchip">Martha Baldwin<div class="tsep"></div><span class="trole">PhD · AM/Lattice</span></div>
+        <div class="tchip">Scotty McGee<div class="tsep"></div><span class="trole">PhD · Teaming/AI</span></div>
+        <div class="tchip">Wenzhuo Xu<div class="tsep"></div><span class="trole">PhD · Neural Ops</span></div>
+        <div class="tchip">Aslan Noorghasemi<div class="tsep"></div><span class="trole">PhD · Data</span></div>
+        <div class="tchip">Zeda Xu<div class="tsep"></div><span class="trole">PhD · HCI/Design</span></div>
+        <div class="tchip">Jessica Ezemba<div class="tsep"></div><span class="trole">PhD · ML/Surrogate</span></div>
+        <div class="tchip">Chan-Eui Song<div class="tsep"></div><span class="trole">PhD</span></div>
+        <div class="tchip">Vasvi Agarwal<div class="tsep"></div><span class="trole">MS · LLM/Cog</span></div>
+        <div class="tchip">Natasha Giovanni<div class="tsep"></div><span class="trole">MS · AI Readiness</span></div>
+        <div class="tchip">Yimika Osunsanya<div class="tsep"></div><span class="trole">MS</span></div>
+        <div class="tchip">Leyi Zhang<div class="tsep"></div><span class="trole">MS</span></div>
+        <div class="tchip">Kai Herchenroether<div class="tsep"></div><span class="trole">UG</span></div>
+      </div>
+
+      <div class="sch">Publication Activity by Year</div>
+      <div id="barchart" style="margin-bottom:6px;"></div>
+
+      <div class="sch" style="margin-top:20px">Tools & Datasets Built by DRC</div>
+      <div class="dompills">
+        <div class="dompill"><span>🎱</span> KABOOM — cognitive style agent sim</div>
+        <div class="dompill"><span>✈</span> HyForm — UAV design platform</div>
+        <div class="dompill"><span>🏎</span> HUVER — UAV engineering repo</div>
+        <div class="dompill"><span>📦</span> KeepDelta — data differencing lib</div>
+        <div class="dompill"><span>🔲</span> AddLat2D — 2D lattice generator</div>
+        <div class="dompill"><span>📊</span> MSEval — material selection dataset</div>
+        <div class="dompill"><span>🎥</span> HM-SYNC — multimodal manufacturing dataset</div>
+        <div class="dompill"><span>💰</span> Show Me The Funding — NSF explorer</div>
+      </div>
+    </div>
+
+    <div class="tabp" id="panel-matrix">
+      <div class="sch">Publications per Year × Category — click a cell to drill into papers</div>
+      <div class="mxscroll"><div id="matrix"></div></div>
+      <div class="mxnote">
+        <div style="width:14px;height:14px;border:1px dashed rgba(255,255,255,0.1);border-radius:3px;flex-shrink:0;"></div>
+        Dashed cells = no publications in that year × category
+      </div>
+    </div>
+
+    <div class="tabp" id="panel-whitespace">
+      <div class="sch">12 Identified Research Opportunities <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted);font-size:16px;">— H = high priority, M = medium priority, ordered by strategic fit</span></div>
+      <div class="wsgrid" id="wsgrid"></div>
+    </div>
+
+    <div class="tabp" id="panel-authors">
+      <div class="author-toolbar">
+        <input class="field" id="author-search" type="search" placeholder="Search author name…" oninput="renderAuthorProfiles()">
+        <select class="field" id="author-filter-cat" onchange="renderAuthorProfiles()">
+          <option value="">All Categories</option>
+          <option value="ideation">Ideation</option>
+          <option value="optimization">Optimization</option>
+          <option value="grammar">Grammar</option>
+          <option value="decision">Decision Making</option>
+        </select>
+      </div>
+      <div class="author-grid" id="author-grid"></div>
+    </div>
+
+    <div class="tabp" id="panel-papers">
+      <div class="sch" id="papers-hd">All Papers</div>
+      <div class="plist" id="plist"></div>
+    </div>
+  </main>
 </div>
 
-<!-- Modal -->
-<div class="modal-backdrop" id="modal-backdrop" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-title" id="modal-title"></div>
-    <div class="modal-section">
-      <div class="modal-section-label">Authors</div>
-      <div id="modal-authors" style="font-size:0.85rem;color:#b8bcc8"></div>
-    </div>
-    <div class="modal-section" id="modal-meta-row" style="display:flex;gap:0.75rem;flex-wrap:wrap;align-items:center"></div>
-    <div class="modal-section" id="modal-cats-section">
-      <div class="modal-section-label">Categories</div>
-      <div class="tag-list" id="modal-cats"></div>
-    </div>
-    <div class="modal-section" id="modal-kw-section">
-      <div class="modal-section-label">Keywords (from OpenAlex BERT topics)</div>
-      <div class="tag-list" id="modal-kws"></div>
-    </div>
-    <div class="modal-section" id="modal-ds-section" style="display:none">
-      <div class="modal-section-label">Hugging Face dataset</div>
-      <div id="modal-dataset" style="font-size:0.82rem;color:#b8bcc8;line-height:1.45"></div>
-    </div>
-    <div class="modal-section" id="modal-bert-section" style="display:none">
-      <div class="modal-section-label">OpenAlex BERT topics (top scores)</div>
-      <div class="modal-abstract" id="modal-bert-topics" style="font-size:0.78rem;line-height:1.45;color:#9aa0b3"></div>
-    </div>
-    <div class="modal-section" id="modal-abstract-section">
-      <div class="modal-section-label">Abstract</div>
-      <div class="modal-abstract" id="modal-abstract"></div>
-    </div>
-    <div id="modal-link-section"></div>
-  </div>
-</div>
-
-<!-- ═══════════════ TAB: OVERVIEW ═══════════════ -->
-<div class="tab active" id="tab-overview">
-  <div id="overview-loading" class="loading"><div class="spinner"></div><span>Loading dataset…</span></div>
-  <div id="overview-content" style="display:none">
-    <div class="stats-grid">
-      <div class="stat-card" style="--c:var(--accent)">
-        <div class="stat-label">Total Papers</div>
-        <div class="stat-value" id="stat-total">—</div>
-        <div class="stat-sub">across both datasets</div>
-      </div>
-      <div class="stat-card" style="--c:var(--accent3)">
-        <div class="stat-label">CCM Lab</div>
-        <div class="stat-value" id="stat-ccm">—</div>
-        <div class="stat-sub" id="stat-ccm-years">—</div>
-      </div>
-      <div class="stat-card" style="--c:var(--accent2)">
-        <div class="stat-label">CMU Engineering</div>
-        <div class="stat-value" id="stat-cmu">—</div>
-        <div class="stat-sub" id="stat-cmu-years">—</div>
-      </div>
-      <div class="stat-card" style="--c:var(--accent4)">
-        <div class="stat-label">Most Cited</div>
-        <div class="stat-value" id="stat-cited">—</div>
-        <div class="stat-sub" id="stat-cited-title">—</div>
-      </div>
-    </div>
-
-    <div class="charts-row">
-      <div class="chart-card">
-        <div class="chart-title">Publications by Year</div>
-        <svg id="year-chart" height="200"></svg>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title">Category Distribution</div>
-        <div class="cat-grid" id="cat-bars" style="padding-top:0.5rem"></div>
-      </div>
-    </div>
-
-    <div class="charts-row">
-      <div class="chart-card">
-        <div class="chart-title">Top Keywords</div>
-        <svg id="kw-chart" height="220"></svg>
-      </div>
-      <div class="chart-card">
-        <div class="chart-title">Publications by Source</div>
-        <svg id="source-chart" height="220"></svg>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- ═══════════════ TAB: BROWSE ═══════════════ -->
-<div class="tab" id="tab-browse">
-  <div class="filters">
-    <div class="search-wrap">
-      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      <input type="text" id="search-input" placeholder="Search titles, authors, keywords…" oninput="filterPapers()">
-    </div>
-    <select id="filter-year" onchange="filterPapers()">
-      <option value="">All Years</option>
-    </select>
-    <select id="filter-cat" onchange="filterPapers()">
-      <option value="">All Categories</option>
-      <option value="ideation">Ideation</option>
-      <option value="optimmization">Optimmization</option>
-      <option value="grammar">Grammar</option>
-      <option value="decision_making">Decision Making</option>
-    </select>
-    <select id="filter-source" onchange="filterPapers()">
-      <option value="">All Sources</option>
-      <option value="CCM Lab">CCM Lab</option>
-      <option value="CMU Engineering">CMU Engineering</option>
-    </select>
-    <span class="results-count" id="results-count"></span>
-  </div>
-  <div class="papers-grid" id="papers-grid"></div>
-</div>
-
-<!-- ═══════════════ TAB: CLUSTER ═══════════════ -->
-<div class="tab" id="tab-cluster">
-  <div class="cluster-controls">
-    <select id="cluster-color" onchange="renderCluster()">
-      <option value="category">Color by Category</option>
-      <option value="source">Color by Source</option>
-      <option value="year">Color by Year</option>
-    </select>
-    <select id="cluster-filter-cat" onchange="renderCluster()">
-      <option value="">All Categories</option>
-      <option value="ideation">Ideation</option>
-      <option value="optimmization">Optimmization</option>
-      <option value="grammar">Grammar</option>
-      <option value="decision_making">Decision Making</option>
-    </select>
-    <div class="results-count" id="cluster-count"></div>
-  </div>
-  <div class="cluster-legend" id="cluster-legend"></div>
-  <svg id="cluster-svg" height="600"></svg>
-  <div style="margin-top:1rem;font-size:0.78rem;color:var(--muted)">
-    💡 Papers are positioned using keyword similarity — clusters reveal shared research themes. Sparse areas indicate potential research whitespaces. Hover over a point to preview; click to view full details.
-  </div>
-</div>
+<div class="tt" id="tt"><div class="tt-t" id="tt-t"></div><div id="tt-b"></div></div>
 
 <script>
-// ═══════════════════════════════════════════════════════════════
-// DATA LAYER
-// ═══════════════════════════════════════════════════════════════
-let ALL_PAPERS = [];
-let filtered   = [];
+const CATS = ['ideation', 'optimization', 'grammar', 'decision'];
+const CC = { ideation:'var(--accent1)', optimization:'var(--accent2)', grammar:'var(--accent3)', decision:'var(--accent4)' };
+const MXCLASS = { ideation:'mxi', optimization:'mxo', grammar:'mxg', decision:'mxd' };
+const PBCLASS = { ideation:'pbi', optimization:'pbo', grammar:'pbg', decision:'pbd' };
 
-const CAT_COLORS = {
-  ideation:       '#5b8dee',
-  optimmization:   '#50c9a0',
-  grammar:        '#e06c4e',
-  decision_making:'#c07ef0',
-  '':             '#7a8099',
-};
-const SOURCE_COLORS = {
-  'CCM Lab':        '#5b8dee',
-  'CMU Engineering':'#e06c4e',
-};
+let PAPERS = [];
+let AUTHOR_PROFILES = [];
+let WHITESPACE_MATCHES = [];
+let OPEN_AUTHOR = '';
 
-function paperSource(p) {
-  if (p.hf_dataset === 'ccm/publications') return 'CCM Lab';
-  if (p.hf_dataset === 'ccm/cmu-engineering-publications') return 'CMU Engineering';
-  return '';
+const WS = [
+  {cat:"cc",tag:"tc",tagLabel:"◈ Cross-Category · H1",title:"Grammar-Guided LLM Design Agents",desc:"The DRC has deep expertise in design grammars/process heuristics (Puentes, Raina, McComb 2017–2022) and LLMs for design (2023–2025). These two threads have never been connected.",opp:"Constrain LLM-based design generation with mined process grammars — ensuring outputs follow designer-valid action sequences. Uniquely combines the DRC's HMM/grammar heritage with its emerging LLM work, and could be applied across all three application domains.",score:"H1",sc:"sh"},
+  {cat:"cc",tag:"tc",tagLabel:"◈ Cross-Category · H2",title:"Ideation → Optimization Pipelines with Human-in-the-Loop",desc:"Ideation (team creativity, concept generation) and optimization (neural surrogates, topology) are entirely siloed in DRC's research. No work bridges human concept outputs into computational optimization.",opp:"Build end-to-end pipelines where ideation session outputs are automatically parameterized and fed into neural operator-based optimization with human feedback — directly connecting all three of the DRC's research pillars.",score:"H2",sc:"sh"},
+  {cat:"cx",tag:"tx",tagLabel:"◈ Domain Gap · H3",title:"Marine Renewable Energy — The Missing Domain",desc:"Marine renewable energy is a stated core domain on the DRC website, yet only a single 2013 conference paper (wave energy converter modeling) exists in this area across 10+ years of publications.",opp:"Apply DRC's neural operator and topology optimization tools to wave energy converter design. This represents both a genuine domain gap and a strong funding opportunity given climate-related research priorities.",score:"H3",sc:"sh"},
+  {cat:"cd",tag:"td",tagLabel:"◆ Decision · H4",title:"Longitudinal AI Trust Calibration in Design Teams",desc:"The DRC has studied AI trust as a snapshot (Maier et al. 2022, Zhang et al. 2021's cautionary tale). How trust evolves — including through failures — across weeks or project cycles is unstudied.",opp:"Run longitudinal studies tracking how repeated AI assistance shifts designers' autonomy and decision-making reliance over time. Builds on Gyory's AI process manager and Zhang's cautionary tale — and the current team has the infrastructure (HyForm, KABOOM) to run it.",score:"H4",sc:"sh"},
+  {cat:"cg",tag:"tg",tagLabel:"◆ Grammar Gap · H5",title:"Cross-Domain Design Grammar Transfer",desc:"Grammar and strategy transfer (Raina 2019) exists within domains (truss, HVAC). Transferring design process grammars across fundamentally different domains — mechanical to UAV mission planning, for instance — is unexplored.",opp:"Test whether DRC's HMM-derived process grammars are domain-universal or domain-specific. If universal, they become powerful priors for AI design agents across AM, drones, and marine energy.",score:"H5",sc:"sh"},
+  {cat:"ci",tag:"ti",tagLabel:"◆ Ideation Gap · M1",title:"Bias Detection & Mitigation in AI-Assisted Ideation",desc:"The DRC studies bias in design (Agyemang et al. 2023) and AI facilitation separately. No work addresses bias specifically introduced or amplified by AI tools during concept generation or selection.",opp:"Develop computational frameworks to detect AI-amplified anchoring, demographic, or fixation biases in LLM-assisted brainstorming — connecting the DRC's equity/bias research to its AI facilitation infrastructure.",score:"M1",sc:"sm"},
+  {cat:"co",tag:"to",tagLabel:"◆ Optimization Gap · M2",title:"Human Preference-Driven Neural Operator Optimization",desc:"DRC's neural operators (Xu, Chen 2025) accelerate simulation, but treat optimization as purely computational. Human designer judgment is never integrated into the optimization loop.",opp:"Build interactive optimization interfaces where designer preferences dynamically reshape neural operator surrogate objectives — directly enacting all three DRC pillars in a single research program.",score:"M2",sc:"sm"},
+  {cat:"cc",tag:"tc",tagLabel:"◈ Cross-Category · M3",title:"Grammar-Informed AI Process Management",desc:"The DRC's AI process managers (Gyory 2022) and grammar/sequence work (McComb 2017) are entirely separate. Process managers make decisions without knowing where teams are in their design grammar trajectory.",opp:"Use HMM-derived design process states as live context for AI managers — enabling adaptive facilitation that responds to which grammar phase (exploration, refinement, convergence) a team is currently in.",score:"M3",sc:"sm"},
+  {cat:"co",tag:"to",tagLabel:"◆ Optimization Gap · M4",title:"Sustainability Constraints in Topology Optimization",desc:"DRC's generative lattice and topology optimization work (Baldwin, Chen 2024–2025) focuses on mechanical performance. Sustainability objectives — carbon footprint, recyclability, end-of-life cost — are absent.",opp:"Extend multi-lattice topology optimization with embedded sustainability functions, particularly relevant for the DRC's AM domain and potentially marine energy applications.",score:"M4",sc:"sm"},
+  {cat:"cd",tag:"td",tagLabel:"◆ Decision Gap · M5",title:"Decision Making Under Epistemic Uncertainty in Early-Stage Design",desc:"DRC's decision support work focuses on well-defined tasks. Early-stage conceptual design — where requirements are ambiguous and design spaces are poorly characterized — is a gap.",opp:"Develop Bayesian or robust decision frameworks for early conceptual design under deep uncertainty. Builds on Rismiller's adversarial/robust design work and connects to the DRC's material selection and LLM research.",score:"M5",sc:"sm"},
+  {cat:"cx",tag:"tx",tagLabel:"◈ Domain Gap · M6",title:"Agentic AI for End-to-End UAV Mission Design",desc:"UAV/drone work exists (HyForm, HUVER, Song et al.) but focuses on component design performance. Agentic AI for full mission planning and system-level UAV design is untouched.",opp:"Develop multi-agent systems for the full UAV design-to-mission pipeline using DRC's RL and agent-based simulation expertise — HyForm and HUVER provide direct infrastructure for this.",score:"M6",sc:"sm"},
+  {cat:"ci",tag:"ti",tagLabel:"◆ Ideation Gap · M7",title:"Neurodivergent Cognition in AI-Assisted Design",desc:"The DRC studies cognitive style (Jablokow, Lapp) and empathy (Alzayed), but has no work on how neurodivergent designers interact with AI tools or team dynamics.",opp:"Investigate how neurodivergent cognitive profiles affect participation in AI-assisted ideation — connecting the DRC's KABOOM cognitive style infrastructure to inclusive design and accessible AI tool design.",score:"M7",sc:"sm"},
+];
+
+let activeCat = 'all';
+let activeYears = new Set();
+
+function filtered() {
+  return PAPERS.filter((p) => {
+    const catOk = activeCat === 'all' || p.cats.includes(activeCat);
+    const yearOk = activeYears.size === 0 || activeYears.has(p.year);
+    return catOk && yearOk;
+  });
 }
 
-const CAT_LABELS = {
-  ideation:'Ideation', optimmization:'Optimmization', grammar:'Grammar', decision_making:'Decision Making'
+window.onload = async function () {
+  await Promise.all([loadLiveData(), loadAuthorProfiles(), loadWhitespaceMatches()]);
+  buildYearPills();
+  renderWhitespace();
+  updateAll();
+  renderAuthorProfiles();
 };
 
-// ── Load CSV ──────────────────────────────────────────────────
-async function loadData() {
-  const csvPath = '../data/papers.csv';
+async function loadLiveData() {
+  const status = document.getElementById('data-status');
   try {
-    const resp = await fetch(csvPath);
+    const resp = await fetch('../data/papers.csv');
     if (!resp.ok) throw new Error('CSV not found');
     const text = await resp.text();
     const parsed = Papa.parse(text, { header: true, skipEmptyLines: true });
-    ALL_PAPERS = parsed.data.map((r, i) => ({
-      ...r,
-      _id:       i,
-      year:      parseInt(r.year) || null,
-      citations: parseInt(r.citations) || 0,
-      cats:      parseCats(r.categories || ''),
-      kwArr:     parseKws(r.keywords || ''),
-      _x: null, _y: null,
-    }));
+    PAPERS = dedupeByTitle(parsed.data.map(mapPaperRow)).filter((p) => p.title);
+    status.textContent = `Live dataset loaded: ${PAPERS.length} papers`;
+  } catch (err) {
+    PAPERS = [];
+    status.textContent = `Could not load live dataset: ${err.message}`;
+  }
+}
+
+async function loadAuthorProfiles() {
+  try {
+    const resp = await fetch('../data/author_profiles.json');
+    if (!resp.ok) throw new Error('author_profiles.json not found');
+    AUTHOR_PROFILES = await resp.json();
+  } catch (err) {
+    AUTHOR_PROFILES = [];
+  }
+}
+
+async function loadWhitespaceMatches() {
+  try {
+    const resp = await fetch('../data/whitespace_matches.json');
+    if (!resp.ok) throw new Error('whitespace_matches.json not found');
+    WHITESPACE_MATCHES = await resp.json();
+  } catch (err) {
+    WHITESPACE_MATCHES = [];
+  }
+}
+
+function dedupeByTitle(papers) {
+  const seen = new Set();
+  return papers.filter((paper) => {
+    const key = String(paper.title || '').trim().toLowerCase();
+    if (!key || seen.has(key)) return false;
+    seen.add(key);
     return true;
-  } catch (e) {
-    console.warn('CSV load failed, using sample data:', e.message);
-    ALL_PAPERS = getSampleData();
-    return false;
+  });
+}
+
+function mapPaperRow(row) {
+  return {
+    title: String(row.title || '').trim(),
+    authors: String(row.authors || '').trim() || 'Unknown authors',
+    year: parseInt(row.year, 10) || null,
+    venue: String(row.journal || row.data_source || row.hf_dataset || '').trim() || 'Unknown venue',
+    cats: mapCategories(row.categories, row.primary_category),
+    source: mapSource(row),
+  };
+}
+
+function mapSource(row) {
+  const dataset = String(row.hf_dataset || '').trim();
+  if (dataset === 'ccm/publications') return 'drc';
+  if (dataset === 'ccm/cmu-engineering-publications') return 'engineering';
+  return 'other';
+}
+
+function mapCategories(raw, primaryRaw) {
+  const tokens = String(raw || '')
+    .split('|')
+    .map((token) => normalizeCategoryToken(token))
+    .filter(Boolean);
+  if (tokens.length) return [...new Set(tokens)];
+  const fallback = normalizeCategoryToken(primaryRaw);
+  return fallback ? [fallback] : [];
+}
+
+function normalizeCategoryToken(raw) {
+  const normalized = String(raw || '').trim().toLowerCase().replace(/\s+/g, '_');
+  if (normalized === 'optimmization') return 'optimization';
+  if (normalized === 'decision_making') return 'decision';
+  if (normalized === 'ideation' || normalized === 'optimization' || normalized === 'grammar' || normalized === 'decision') {
+    return normalized;
   }
+  return '';
 }
 
-function parseCats(s) {
-  const c = String(s || '').trim().toLowerCase().replace(/\s+/g, '_');
-  const valid = Object.keys(CAT_COLORS).filter(k => k !== '');
-  return valid.includes(c) ? [c] : [];
-}
-function scholarAbsUrl(u) {
-  if (!u) return '';
-  const t = String(u).trim();
-  if (/^https?:\/\//i.test(t)) return t;
-  if (t.startsWith('/')) return 'https://scholar.google.com' + t;
-  return t;
-}
-
-function parseKws(s) {
-  if (!s) return [];
-  const t = String(s).trim();
-  if (t.includes('|')) {
-    return t.split('|').map(k => k.trim().toLowerCase()).filter(Boolean);
-  }
-  return t.split(',').map(k => k.trim().toLowerCase()).filter(Boolean);
-}
-
-// ── Fallback sample data (r[5] = hf_dataset id) ─────────────────
-function getSampleData() {
-  const titles = [
-    ["Conceptual Design Generation Using Large Language Models","Kevin Ma, Daniele Grandi, Christopher McComb","2023","ideation","llm, concept generation, design, creativity, nlp","ccm/publications","International Design Engineering Technical Conferences","36","https://asmedigitalcollection.asme.org/IDETC-CIE/proceedings-abstract/IDETC-CIE2023/87349/1170650","Concept generation is a creative step in the conceptual design phase..."],
-    ["When Faced with Increasing Complexity: The Effectiveness of AI Assistance for Drone Design","Binyang Song, Nicolas Soria Zurita, Christopher McComb","2022","decision_making","ai assistance, drone design, complexity, hidden markov models, team performance","ccm/publications","Journal of Mechanical Design","34","","As artificial intelligence (AI) assistance tools become more ubiquitous..."],
-    ["A Strategic Decision-making Architecture Toward Hybrid Teams","Alparslan Bayrak, Christopher McComb, Jonathan Cagan","2021","decision_making","decision support, game theory, hybrid teams, reinforcement learning, starcraft","ccm/publications","Decision Support Systems","26","","Advances in artificial intelligence create new opportunities..."],
-    ["Mining Design Heuristics for Additive Manufacturing Via Eye-Tracking","Priyesh Mehta, Christopher McComb","2020","optimmization","additive manufacturing, eye tracking, design heuristics, hidden markov model","ccm/publications","Journal of Mechanical Design","27","","In this research, we collected eye-tracking data..."],
-    ["Using Hidden Markov Models to Uncover States in Neuroimaging Data","Kosa Goucher-Lambert, Christopher McComb","2019","ideation","neuroimaging, fmri, hidden markov models, design cognition, brain activation","ccm/publications","ICED","32","","Recently, design researchers have begun to use neuroimaging..."],
-    ["Physics-Informed Generative Adversarial Networks for Fluid Simulations","Matthew Li, Christopher McComb","2022","optimmization","generative adversarial network, cfd, super resolution, physics-informed ml","ccm/publications","JCISE","28","","Computational fluid dynamics simulations are useful..."],
-    ["A Conceptual Framework for Multidisciplinary Design Research","Christopher McComb, Kathryn Jablokow","2022","grammar","multidisciplinary research, design theory, agent-based modeling, frameworks","ccm/publications","Design Studies","31","","The design community traditionally excels at multidisciplinary research..."],
-    ["Rapid Design of Engineered Systems Through Deep Neural Networks","Christopher McComb","2018","optimmization","deep learning, engineering design, neural networks, rapid design","ccm/publications","DCCS","26","","The design of a system commits a significant portion of the final cost..."],
-    ["Using Workplace Thriving Theory for Online Learning Engineering Students","Sandeep Krishnakumar, Christopher McComb","2022","decision_making","online learning, engineering education, covid-19, student perception","ccm/publications","Journal of Engineering Education","29","","During the onset of the COVID-19 crisis, universities rapidly pivoted..."],
-    ["Can Design Teams Be Empathically Creative?","Mohammad Alzayed, Christopher McComb","2020","ideation","empathy, team dynamics, concept generation, simulation, design teams","ccm/publications","IDETC","26","","Research on empathy has been surging in popularity..."],
-    ["Optimizing Multi-Material Structures with Topology Optimization","James Chen, Sarah Park","2021","optimmization","topology optimization, multi-material, structural mechanics, finite element","ccm/cmu-engineering-publications","Structural and Multidisciplinary Optimization","45","","Topology optimization has emerged as a powerful tool..."],
-    ["Natural Language Processing for Design Intent Recognition","Anna Liu, Robert Kim","2023","grammar","nlp, design intent, semantic parsing, engineering design, language models","ccm/cmu-engineering-publications","CAD","22","","Understanding design intent from textual descriptions..."],
-    ["Reinforcement Learning for Parametric Design Exploration","David Brown, Lisa Wang","2022","optimmization","reinforcement learning, parametric design, exploration, design automation","ccm/cmu-engineering-publications","ASME","18","","Parametric design exploration involves searching large solution spaces..."],
-    ["Shape Grammar Applications in Product Architecture","Emily Zhang, Michael Torres","2020","grammar","shape grammar, product architecture, design rules, modularity","ccm/cmu-engineering-publications","Research in Engineering Design","14","","Shape grammars provide a formal language for describing product families..."],
-    ["Human-AI Collaborative Decision Making in Engineering Teams","Jessica Lee, Tom Anderson","2023","decision_making","human-ai collaboration, engineering teams, cognitive load, trust","ccm/cmu-engineering-publications","Human Factors","31","","The integration of AI decision support tools in engineering workflows..."],
-  ];
-  return titles.map((r, i) => ({
-    _id: i, title:r[0], authors:r[1], year:parseInt(r[2]), categories:r[3],
-    cats:parseCats(r[3]), keywords:r[4], kwArr:parseKws(r[4]),
-    hf_dataset:r[5],
-    data_source: r[5] === 'ccm/cmu-engineering-publications' ? 'CMU Engineering publications' : 'CCM Lab publications',
-    journal:r[6], citations:parseInt(r[7]), url:r[8], abstract:r[9],
-    bert_topics: '',
-    bibtex: '',
-    citedby_url: '',
-    url_related_articles: '',
-    department:'', _x:null, _y:null,
-  }));
-}
-
-// ═══════════════════════════════════════════════════════════════
-// TAB NAVIGATION
-// ═══════════════════════════════════════════════════════════════
-function showTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  event.currentTarget.classList.add('active');
-  if (name === 'cluster') renderCluster();
-}
-
-// ═══════════════════════════════════════════════════════════════
-// OVERVIEW
-// ═══════════════════════════════════════════════════════════════
-function buildOverview() {
-  const papers = ALL_PAPERS;
-  const ccm    = papers.filter(p => paperSource(p) === 'CCM Lab');
-  const cmu    = papers.filter(p => paperSource(p) === 'CMU Engineering');
-  const sorted = [...papers].sort((a,b) => b.citations - a.citations);
-
-  document.getElementById('stat-total').textContent = papers.length.toLocaleString();
-  document.getElementById('stat-ccm').textContent   = ccm.length.toLocaleString();
-  document.getElementById('stat-cmu').textContent   = cmu.length.toLocaleString();
-
-  const ccmYears = ccm.filter(p=>p.year).map(p=>p.year);
-  const cmuYears = cmu.filter(p=>p.year).map(p=>p.year);
-  if (ccmYears.length) document.getElementById('stat-ccm-years').textContent = `${Math.min(...ccmYears)}–${Math.max(...ccmYears)}`;
-  if (cmuYears.length) document.getElementById('stat-cmu-years').textContent = `${Math.min(...cmuYears)}–${Math.max(...cmuYears)}`;
-
-  if (sorted.length) {
-    document.getElementById('stat-cited').textContent     = sorted[0].citations.toLocaleString();
-    document.getElementById('stat-cited-title').textContent = sorted[0].title.substring(0,40)+'…';
-  }
-
-  document.getElementById('paper-count-header').textContent = `${papers.length} papers loaded`;
-
-  buildYearChart();
-  buildCatBars();
-  buildKwChart();
-  buildSourceChart();
-
-  document.getElementById('overview-loading').style.display = 'none';
-  document.getElementById('overview-content').style.display = 'block';
-}
-
-function buildYearChart() {
-  const svg = d3.select('#year-chart');
-  const el  = document.getElementById('year-chart');
-  const W   = el.parentElement.clientWidth - 48;
-  const H   = 200;
-  svg.attr('viewBox', `0 0 ${W} ${H}`);
-
-  const yearMap = {};
-  ALL_PAPERS.forEach(p => { if (p.year && p.year > 1990 && p.year <= new Date().getFullYear()) { yearMap[p.year] = (yearMap[p.year]||0)+1; } });
-  const data = Object.entries(yearMap).map(([y,c])=>({year:+y,count:c})).sort((a,b)=>a.year-b.year);
-
-  const margin = {top:10, right:20, bottom:30, left:40};
-  const iW = W - margin.left - margin.right;
-  const iH = H - margin.top - margin.bottom;
-
-  const x = d3.scaleBand().domain(data.map(d=>d.year)).range([0,iW]).padding(0.25);
-  const y = d3.scaleLinear().domain([0, d3.max(data,d=>d.count)]).range([iH,0]);
-
-  const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
-
-  g.append('g').attr('transform',`translate(0,${iH})`)
-    .call(d3.axisBottom(x).tickValues(data.filter((_,i)=>i%3===0).map(d=>d.year)).tickSize(0))
-    .call(ax => { ax.select('.domain').remove(); ax.selectAll('text').attr('dy','1.2em').style('font-size','10px'); });
-
-  g.append('g').call(d3.axisLeft(y).ticks(4).tickSize(-iW))
-    .call(ax => { ax.select('.domain').remove(); ax.selectAll('.tick line').attr('stroke','#252a3a'); ax.selectAll('text').style('font-size','10px'); });
-
-  g.selectAll('.bar').data(data).join('rect')
-    .attr('class','bar')
-    .attr('x', d=>x(d.year)).attr('y', d=>y(d.count))
-    .attr('width', x.bandwidth()).attr('height', d=>iH-y(d.count))
-    .attr('fill', '#5b8dee').attr('rx', 3).attr('opacity', 0.8);
-}
-
-function buildCatBars() {
-  const cats = Object.keys(CAT_COLORS).filter(c=>c!=='');
-  const counts = {};
-  ALL_PAPERS.forEach(p => p.cats.forEach(c => { counts[c]=(counts[c]||0)+1; }));
-  const max = Math.max(...cats.map(c=>counts[c]||0));
-
-  const container = document.getElementById('cat-bars');
+function buildYearPills() {
+  const years = [...new Set(PAPERS.map((p) => p.year))].sort((a, b) => b - a);
+  const container = document.getElementById('year-pills');
   container.innerHTML = '';
-  cats.forEach(cat => {
-    const pct = max ? Math.round(((counts[cat]||0)/max)*100) : 0;
-    container.innerHTML += `
-      <div class="cat-bar-row" onclick="document.getElementById('filter-cat').value='${cat}';showTabDirect('browse');filterPapers();" style="cursor:pointer">
-        <div class="cat-bar-label">
-          <span style="color:${CAT_COLORS[cat]};font-weight:500;font-size:0.82rem">${CAT_LABELS[cat]}</span>
-          <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted)">${counts[cat]||0}</span>
+  years.forEach((year) => {
+    const button = document.createElement('button');
+    button.className = 'pill';
+    button.textContent = year;
+    button.onclick = () => toggleYear(year, button);
+    container.appendChild(button);
+  });
+}
+
+function toggleYear(year, btn) {
+  if (activeYears.has(year)) {
+    activeYears.delete(year);
+    btn.classList.remove('active');
+  } else {
+    activeYears.add(year);
+    btn.classList.add('active');
+  }
+  updateAll();
+}
+
+function setCat(cat, btn) {
+  activeCat = cat;
+  document.querySelectorAll('.catbtn').forEach((b) => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateAll();
+}
+
+function setTab(tab, btn) {
+  document.querySelectorAll('.tabbtn').forEach((b) => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tabp').forEach((panel) => panel.classList.remove('active'));
+  document.getElementById('panel-' + tab).classList.add('active');
+}
+
+function displayCategoryLabel(cat) {
+  const normalized = normalizeCategoryToken(cat);
+  if (normalized === 'ideation') return 'Ideation';
+  if (normalized === 'optimization') return 'Optimization';
+  if (normalized === 'grammar') return 'Grammar';
+  if (normalized === 'decision') return 'Decision Making';
+  return String(cat || '');
+}
+
+function categoryBadgeClass(cat) {
+  const normalized = normalizeCategoryToken(cat);
+  if (normalized === 'ideation') return 'pbi';
+  if (normalized === 'optimization') return 'pbo';
+  if (normalized === 'grammar') return 'pbg';
+  if (normalized === 'decision') return 'pbd';
+  return '';
+}
+
+function updateAll() {
+  updateCounts();
+  renderMatrix();
+  renderPapers();
+  renderBarChart();
+}
+
+function updateCounts() {
+  const fp = filtered();
+  document.getElementById('h-total').textContent = fp.length;
+  document.getElementById('h-drc').textContent = fp.filter((p) => p.source === 'drc').length;
+  document.getElementById('h-eng').textContent = fp.filter((p) => p.source === 'engineering').length;
+  document.getElementById('c-all').textContent = PAPERS.length;
+  document.getElementById('c-id').textContent = PAPERS.filter((p) => p.cats.includes('ideation')).length;
+  document.getElementById('c-op').textContent = PAPERS.filter((p) => p.cats.includes('optimization')).length;
+  document.getElementById('c-gr').textContent = PAPERS.filter((p) => p.cats.includes('grammar')).length;
+  document.getElementById('c-de').textContent = PAPERS.filter((p) => p.cats.includes('decision')).length;
+}
+
+function renderMatrix() {
+  const years = [...new Set(PAPERS.map((p) => p.year))]
+    .filter(Boolean)
+    .sort((a, b) => b - a)
+    .filter((year) => activeYears.size === 0 || activeYears.has(year));
+  const cols = '80px repeat(4,1fr)';
+  let html = `<div class="mxgrid" style="grid-template-columns:${cols}">`;
+  html += '<div class="mxh"></div>';
+  const colors = [CC.ideation, CC.optimization, CC.grammar, CC.decision];
+  CATS.forEach((cat, i) => { html += `<div class="mxh" style="color:${colors[i]}">${cat}</div>`; });
+  years.forEach((year) => {
+    html += `<div class="mxyr">${year}</div>`;
+    CATS.forEach((cat) => {
+      const count = PAPERS.filter((p) => p.year === year && p.cats.includes(cat)).length;
+      if (count === 0) {
+        html += `<div class="mxcell mxempty" title="No ${cat} papers in ${year}"><span style="font-size:9px;color:rgba(255,255,255,0.07)">-</span></div>`;
+      } else {
+        html += `<div class="mxcell ${MXCLASS[cat]}"
+          onmouseenter="showTT(event,'${year} · ${cat}','${count} paper${count > 1 ? 's' : ''}')"
+          onmouseleave="hideTT()"
+          onclick="drillDown('${cat}',${year})"><span class="mxn">${count}</span></div>`;
+      }
+    });
+  });
+  html += '</div>';
+  document.getElementById('matrix').innerHTML = html;
+}
+
+function drillDown(cat, year) {
+  activeCat = cat;
+  activeYears = new Set([year]);
+  document.querySelectorAll('.catbtn').forEach((b) => b.classList.remove('active'));
+  document.querySelector(`.catbtn[data-c="${cat}"]`).classList.add('active');
+  document.querySelectorAll('.pill').forEach((b) => {
+    if (parseInt(b.textContent, 10) === year) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+  updateAll();
+  setTab('papers', document.querySelectorAll('.tabbtn')[4]);
+}
+
+function renderWhitespace() {
+  const container = document.getElementById('wsgrid');
+  const matchByTitle = Object.fromEntries(WHITESPACE_MATCHES.map((item) => [item.title, item]));
+  container.innerHTML = WS.map((w) => `
+    <div class="wscard ${w.cat}">
+      <div class="score ${w.sc}">${w.score}</div>
+      <div class="wstag ${w.tag}">${w.tagLabel}</div>
+      <div class="wstitle">${w.title}</div>
+      <div class="wsdesc">${w.desc}</div>
+      <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${w.opp}</div>
+      ${renderWhitespaceAuthors(matchByTitle[w.title])}
+    </div>`).join('');
+}
+
+function renderWhitespaceAuthors(match) {
+  if (!match || !match.matched_authors || !match.matched_authors.length) return '';
+  return `<div class="ws-authors">
+    <div class="author-label">Related Authors</div>
+    ${match.matched_authors.slice(0, 4).map((item) => `<div class="ws-author-item"><strong>${item.author_name}</strong> · ${(item.match_score * 100).toFixed(0)}% match<br>${item.reason}</div>`).join('')}
+  </div>`;
+}
+
+function renderAuthorProfiles() {
+  const grid = document.getElementById('author-grid');
+  if (!grid) return;
+  const search = (document.getElementById('author-search')?.value || '').trim().toLowerCase();
+  const cat = document.getElementById('author-filter-cat')?.value || '';
+
+  const filteredProfiles = AUTHOR_PROFILES
+    .slice()
+    .sort((a, b) => a.author_name.localeCompare(b.author_name))
+    .filter((profile) => {
+    const nameOk = !search || profile.author_name.toLowerCase().includes(search);
+    const catOk = !cat || (profile.dominant_categories || []).map(normalizeCategoryToken).includes(cat);
+    return nameOk && catOk;
+  });
+
+  if (OPEN_AUTHOR && !filteredProfiles.some((profile) => profile.author_name === OPEN_AUTHOR)) {
+    OPEN_AUTHOR = '';
+  }
+
+  if (!AUTHOR_PROFILES.length) {
+    grid.innerHTML = '<div class="emptystate">No backend-generated author profile file found yet. Run the classification pipeline to create `data/author_profiles.json`.</div>';
+    return;
+  }
+
+  if (!filteredProfiles.length) {
+    grid.innerHTML = '<div class="emptystate">No author profiles match the current filters.</div>';
+    return;
+  }
+
+  grid.innerHTML = filteredProfiles.map((profile) => `
+    <article class="author-card ${OPEN_AUTHOR === profile.author_name ? 'open' : ''}">
+      <button class="author-summary" type="button" onclick='toggleAuthorProfile(${JSON.stringify(profile.author_name)})'>
+        <div class="author-head">
+          <div>
+            <div class="author-name">${escapeHtml(profile.author_name)}</div>
+            <div class="author-meta">
+              <div class="author-count">${profile.paper_count} paper${profile.paper_count === 1 ? '' : 's'}</div>
+              <div class="author-last">Last paper published: ${escapeHtml(String(profile.last_published || 'Unknown'))}</div>
+            </div>
+          </div>
         </div>
-        <div class="cat-bar-track">
-          <div class="cat-bar-fill" style="width:${pct}%;background:${CAT_COLORS[cat]}"></div>
+        <div class="author-description">${escapeHtml(profile.short_description || '')}</div>
+      </button>
+      <div class="author-details">
+        <div class="author-sections">
+        <div class="author-block author-block-card">
+          <div class="author-label">Dominant Categories</div>
+          <div class="chip-row">${(profile.dominant_categories || []).map((cat) => `<span class="pb ${categoryBadgeClass(cat)}">${displayCategoryLabel(cat)}</span>`).join('')}</div>
         </div>
-      </div>`;
-  });
-}
-
-function buildKwChart() {
-  const kwCounts = {};
-  ALL_PAPERS.forEach(p => p.kwArr.forEach(k => { if(k.length>2) kwCounts[k]=(kwCounts[k]||0)+1; }));
-  const top = Object.entries(kwCounts).sort((a,b)=>b[1]-a[1]).slice(0,12);
-
-  const svg = d3.select('#kw-chart');
-  const el  = document.getElementById('kw-chart');
-  const W   = el.parentElement.clientWidth - 48;
-  const H   = 220;
-  svg.attr('viewBox', `0 0 ${W} ${H}`);
-
-  const margin = {top:10,right:20,bottom:10,left:140};
-  const iW = W - margin.left - margin.right;
-  const iH = H - margin.top - margin.bottom;
-
-  const x = d3.scaleLinear().domain([0,d3.max(top,d=>d[1])]).range([0,iW]);
-  const y = d3.scaleBand().domain(top.map(d=>d[0])).range([0,iH]).padding(0.3);
-
-  const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
-
-  g.selectAll('.kbar').data(top).join('rect')
-    .attr('y', d=>y(d[0])).attr('height', y.bandwidth())
-    .attr('x', 0).attr('width', d=>x(d[1]))
-    .attr('fill','#5b8dee').attr('rx',3).attr('opacity',0.75);
-
-  g.selectAll('.klabel').data(top).join('text')
-    .attr('x', -8).attr('y', d=>y(d[0])+y.bandwidth()/2)
-    .attr('dy','0.35em').attr('text-anchor','end')
-    .style('font-size','10px').style('fill','#b8bcc8')
-    .text(d=>d[0]);
-
-  g.selectAll('.kval').data(top).join('text')
-    .attr('x', d=>x(d[1])+5).attr('y', d=>y(d[0])+y.bandwidth()/2)
-    .attr('dy','0.35em').style('font-size','10px').style('fill','#7a8099')
-    .text(d=>d[1]);
-}
-
-function buildSourceChart() {
-  const sources = {};
-  ALL_PAPERS.forEach(p => { const s = paperSource(p); if(s) sources[s]=(sources[s]||0)+1; });
-  const data = Object.entries(sources).map(([k,v])=>({label:k,value:v}));
-  const total = data.reduce((s,d)=>s+d.value,0);
-
-  const svg = d3.select('#source-chart');
-  const el  = document.getElementById('source-chart');
-  const W   = el.parentElement.clientWidth - 48;
-  const H   = 220;
-  svg.attr('viewBox', `0 0 ${W} ${H}`);
-
-  const r   = Math.min(W,H)/2 - 20;
-  const g   = svg.append('g').attr('transform',`translate(${W/2},${H/2})`);
-  const pie = d3.pie().value(d=>d.value)(data);
-  const arc = d3.arc().innerRadius(r*0.5).outerRadius(r);
-  const cols = ['#5b8dee','#e06c4e','#50c9a0','#c07ef0'];
-
-  g.selectAll('.slice').data(pie).join('path')
-    .attr('d',arc).attr('fill',(d,i)=>cols[i]).attr('stroke','#0d0f14').attr('stroke-width',2).attr('opacity',0.85);
-
-  // Labels
-  g.selectAll('.plabel').data(pie).join('text')
-    .attr('transform', d=>`translate(${d3.arc().innerRadius(r*0.75).outerRadius(r*0.75).centroid(d)})`)
-    .attr('text-anchor','middle').style('font-size','11px').style('fill','#e8eaf0')
-    .text(d=>`${Math.round(d.data.value/total*100)}%`);
-
-  // Legend below
-  const leg = svg.append('g').attr('transform',`translate(${W/2-80},${H-18})`);
-  data.forEach((d,i) => {
-    leg.append('rect').attr('x',i*130).attr('y',0).attr('width',10).attr('height',10).attr('rx',2).attr('fill',cols[i]);
-    leg.append('text').attr('x',i*130+14).attr('y',9).style('font-size','10px').style('fill','#b8bcc8').text(d.label);
-  });
-}
-
-// ═══════════════════════════════════════════════════════════════
-// BROWSE
-// ═══════════════════════════════════════════════════════════════
-function buildBrowse() {
-  const sel = document.getElementById('filter-year');
-  const years = [...new Set(ALL_PAPERS.map(p=>p.year).filter(Boolean))].sort((a,b)=>b-a);
-  years.forEach(y => sel.innerHTML += `<option value="${y}">${y}</option>`);
-  filterPapers();
-}
-
-function filterPapers() {
-  const q   = document.getElementById('search-input').value.toLowerCase();
-  const yr  = document.getElementById('filter-year').value;
-  const cat = document.getElementById('filter-cat').value;
-  const src = document.getElementById('filter-source').value;
-
-  filtered = ALL_PAPERS.filter(p => {
-    if (yr  && String(p.year) !== yr) return false;
-    if (src && paperSource(p) !== src) return false;
-    if (cat && !p.cats.includes(cat)) return false;
-    if (q) {
-      const hay = `${p.title} ${p.authors} ${p.keywords} ${p.abstract} ${p.bert_topics || ''} ${p.data_source || ''} ${p.hf_dataset || ''} ${p.citedby_url || ''}`.toLowerCase();
-      if (!hay.includes(q)) return false;
-    }
-    return true;
-  });
-
-  document.getElementById('results-count').textContent = `${filtered.length} of ${ALL_PAPERS.length} papers`;
-  renderCards(filtered.slice(0, 200)); // cap render at 200 for performance
-}
-
-function renderCards(papers) {
-  const grid = document.getElementById('papers-grid');
-  if (!papers.length) { grid.innerHTML = '<div class="empty">No papers match your filters.</div>'; return; }
-
-  grid.innerHTML = papers.map(p => {
-    const catTags = p.cats.map(c => `<span class="tag tag-cat ${c}">${CAT_LABELS[c]||c}</span>`).join('');
-    const kwTags  = p.kwArr.slice(0,4).map(k => `<span class="tag tag-kw">${k}</span>`).join('');
-    const mainCat = p.cats[0] || '';
-    const color   = CAT_COLORS[mainCat] || 'var(--accent)';
-    return `
-    <div class="paper-card" style="--c:${color};--border2:${color}44" onclick="openModal(${p._id})">
-      <div class="paper-title">${escHtml(p.title)}</div>
-      <div class="paper-meta">
-        ${p.year ? `<span class="paper-year">${p.year}</span>` : ''}
-        <span class="paper-source">${escHtml(paperSource(p))}</span>
-        ${p.citations > 0 ? `<span class="paper-citations">⭐ ${p.citations} citations</span>` : ''}
+        <div class="author-block author-block-card">
+          <div class="author-label">Recurring Topics</div>
+          <div class="chip-row">${(profile.recurring_topics || []).map((topic) => `<span class="soft-chip">${escapeHtml(topic)}</span>`).join('')}</div>
+        </div>
+        <div class="author-block author-block-card">
+          <div class="author-label">Inferred Interests</div>
+          <div class="author-copy">${(profile.inferred_interests || []).map(escapeHtml).join(' · ') || '—'}</div>
+        </div>
+        <div class="author-block author-block-card">
+          <div class="author-label">Related Whitespace Opportunities</div>
+          <div class="author-list">${(profile.related_whitespace_opportunities || []).slice(0, 4).map((item) => `<div class="author-line"><strong>${escapeHtml(item.title)}</strong> · ${(item.match_score * 100).toFixed(0)}% match<br>${escapeHtml(item.reason)}</div>`).join('') || '<div class="author-line">No strong whitespace matches yet.</div>'}</div>
+        </div>
+        <div class="author-block author-block-card">
+          <div class="author-label">Papers</div>
+          <div class="paper-list">${(profile.papers || []).slice(0, 8).map((paper) => `<div class="paper-mini"><div class="paper-mini-title">${escapeHtml(paper.title)}</div><div class="paper-mini-meta">${escapeHtml(String(paper.year || ''))} · ${(paper.categories || []).map(displayCategoryLabel).join(', ') || 'Uncategorized'} · ${(paper.topics || []).slice(0, 3).map(escapeHtml).join(', ')}</div></div>`).join('')}</div>
+        </div>
       </div>
-      <div class="paper-authors">${escHtml(p.authors||'')}</div>
-      <div class="tag-list">${catTags}${kwTags}</div>
+      </div>
+    </article>`).join('');
+}
+
+function toggleAuthorProfile(authorName) {
+  OPEN_AUTHOR = OPEN_AUTHOR === authorName ? '' : authorName;
+  renderAuthorProfiles();
+}
+
+function renderPapers() {
+  const fp = filtered().sort((a, b) => b.year - a.year);
+  let label = 'All Papers';
+  if (activeCat !== 'all') label = activeCat.charAt(0).toUpperCase() + activeCat.slice(1) + ' Papers';
+  if (activeYears.size > 0) label += ` (${[...activeYears].sort().join(', ')})`;
+  document.getElementById('papers-hd').textContent = `${label} — ${fp.length} result${fp.length !== 1 ? 's' : ''}`;
+  if (fp.length === 0) {
+    document.getElementById('plist').innerHTML = '<div class="emptystate">No papers match current filters.</div>';
+    return;
+  }
+  document.getElementById('plist').innerHTML = fp.map((p) => {
+    const dotColor = CC[activeCat !== 'all' ? activeCat : p.cats[0]] || 'var(--muted)';
+    const badges = p.cats.map((c) => `<span class="pb ${PBCLASS[c]}">${c}</span>`).join('');
+    return `<div class="prow">
+      <div class="ppip" style="background:${dotColor}"></div>
+      <div>
+        <div class="ptitle">${p.title}</div>
+        <div class="pauth">${p.authors} · ${p.venue}</div>
+        <div class="pbadges">${badges}</div>
+      </div>
+      <div class="pyr">${p.year}</div>
     </div>`;
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════════════════
-// MODAL
-// ═══════════════════════════════════════════════════════════════
-function openModal(id) {
-  const p = ALL_PAPERS.find(x=>x._id===id);
-  if (!p) return;
-
-  document.getElementById('modal-title').textContent   = p.title;
-  document.getElementById('modal-authors').textContent = p.authors || '—';
-
-  // Meta row
-  const meta = document.getElementById('modal-meta-row');
-  meta.innerHTML = '';
-  if (p.year)     meta.innerHTML += `<span class="paper-year">${p.year}</span>`;
-  if (paperSource(p)) meta.innerHTML += `<span class="paper-source" style="font-size:0.82rem;color:var(--muted)">${escHtml(paperSource(p))}</span>`;
-  if (p.journal)  meta.innerHTML += `<span class="paper-journal" style="font-size:0.8rem;color:var(--muted)">${escHtml(p.journal)}</span>`;
-  if (p.citations>0) meta.innerHTML += `<span style="font-size:0.8rem;color:var(--muted)">⭐ ${p.citations} citations</span>`;
-
-  // Categories
-  const cats = document.getElementById('modal-cats');
-  cats.innerHTML = p.cats.map(c=>`<span class="tag tag-cat ${c}">${CAT_LABELS[c]||c}</span>`).join('') || '<span style="color:var(--muted);font-size:0.82rem">—</span>';
-
-  // Keywords
-  const kws = document.getElementById('modal-kws');
-  kws.innerHTML = p.kwArr.map(k=>`<span class="tag tag-kw">${k}</span>`).join('') || '<span style="color:var(--muted);font-size:0.82rem">—</span>';
-
-  const dsSec = document.getElementById('modal-ds-section');
-  const dsEl = document.getElementById('modal-dataset');
-  if (p.hf_dataset || p.data_source) {
-    dsSec.style.display = '';
-    dsEl.innerHTML = escHtml([p.hf_dataset, p.data_source].filter(Boolean).join(' — '));
-  } else {
-    dsSec.style.display = 'none';
-  }
-
-  const bertSec = document.getElementById('modal-bert-section');
-  const bertEl = document.getElementById('modal-bert-topics');
-  if (p.bert_topics) {
-    bertSec.style.display = '';
-    bertEl.textContent = p.bert_topics;
-  } else {
-    bertSec.style.display = 'none';
-  }
-
-  // Abstract
-  const abs = document.getElementById('modal-abstract');
-  if (p.abstract) {
-    abs.textContent = p.abstract;
-    document.getElementById('modal-abstract-section').style.display='';
-  } else {
-    document.getElementById('modal-abstract-section').style.display='none';
-  }
-
-  // Links (publisher / Scholar cited-by / related)
-  const link = document.getElementById('modal-link-section');
-  const parts = [];
-  const pu = p.url ? String(p.url).trim() : '';
-  if (pu) {
-    parts.push(`<a class="modal-link" href="${escHtml(scholarAbsUrl(pu))}" target="_blank" rel="noopener">
-    <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-    View paper
-  </a>`);
-  }
-  const cb = p.citedby_url ? scholarAbsUrl(p.citedby_url) : '';
-  if (cb) {
-    parts.push(`<a class="modal-link" href="${escHtml(cb)}" target="_blank" rel="noopener" style="margin-left:0.5rem">Cited by</a>`);
-  }
-  const rel = p.url_related_articles ? scholarAbsUrl(p.url_related_articles) : '';
-  if (rel) {
-    parts.push(`<a class="modal-link" href="${escHtml(rel)}" target="_blank" rel="noopener" style="margin-left:0.5rem">Related articles</a>`);
-  }
-  link.innerHTML = parts.join('') || '';
-
-  document.getElementById('modal-backdrop').classList.add('open');
+function escapeHtml(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
-function closeModal(e) {
-  if (!e || e.target === document.getElementById('modal-backdrop') || e.currentTarget.classList?.contains('modal-close')) {
-    document.getElementById('modal-backdrop').classList.remove('open');
+function renderBarChart() {
+  const years = [...new Set(PAPERS.map((p) => p.year))].filter(Boolean).sort((a, b) => a - b);
+  if (!years.length) {
+    document.getElementById('barchart').innerHTML = '<div class="emptystate">No live publication data available.</div>';
+    return;
   }
-}
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal({target:document.getElementById('modal-backdrop')}); });
-
-// ═══════════════════════════════════════════════════════════════
-// CLUSTER VIEW
-// ═══════════════════════════════════════════════════════════════
-function computePositions(papers) {
-  // Build keyword co-occurrence positions via simple deterministic layout
-  // We use keyword vectors → simple 2D PCA-like projection
-  const kwSet = {};
-  papers.forEach(p => p.kwArr.forEach(k => { if(!(k in kwSet)) kwSet[k]=Object.keys(kwSet).length; }));
-  const dim = Math.min(Object.keys(kwSet).length, 50);
-
-  // Assign each paper a vector then reduce to 2D using random projection
-  const seed = 42;
-  function lcg(s) { return ((s * 1664525 + 1013904223) >>> 0) / 4294967296; }
-
-  // Two random projection vectors of length `dim`
-  let s1 = seed, s2 = seed + 1;
-  const proj1 = Array.from({length:dim}, () => { s1 = (s1*1664525+1013904223)>>>0; return s1/4294967296*2-1; });
-  const proj2 = Array.from({length:dim}, () => { s2 = (s2*1664525+1013904223)>>>0; return s2/4294967296*2-1; });
-
-  papers.forEach(p => {
-    const vec = new Float32Array(dim);
-    p.kwArr.forEach(k => { const i = kwSet[k]; if(i<dim) vec[i]++; });
-    // Also encode category
-    p.cats.forEach(c => {
-      const ci = ['ideation','optimmization','grammar','decision_making'].indexOf(c);
-      if(ci>=0 && ci<dim) vec[ci] += 2;
-    });
-    // Normalise
-    const norm = Math.sqrt(vec.reduce((s,v)=>s+v*v,0)) || 1;
-    p._x = vec.reduce((s,v,i)=>s+v/norm*proj1[i],0);
-    p._y = vec.reduce((s,v,i)=>s+v/norm*proj2[i],0);
-  });
-
-  // Add jitter for papers at exact same position
-  const posMap = {};
-  papers.forEach(p => {
-    const key = `${p._x.toFixed(3)},${p._y.toFixed(3)}`;
-    if (posMap[key] === undefined) posMap[key]=0; else posMap[key]++;
-    const angle = posMap[key]*0.6;
-    const radius = posMap[key]*0.03;
-    p._x += Math.cos(angle)*radius;
-    p._y += Math.sin(angle)*radius;
-  });
-}
-
-function renderCluster() {
-  const colorBy   = document.getElementById('cluster-color').value;
-  const catFilter = document.getElementById('cluster-filter-cat').value;
-
-  let papers = ALL_PAPERS.filter(p => p.year > 0 || p.year === null);
-  if (catFilter) papers = papers.filter(p => p.cats.includes(catFilter));
-
-  // Compute positions if needed
-  const needsCompute = papers.some(p => p._x === null);
-  if (needsCompute) computePositions(ALL_PAPERS);
-
-  document.getElementById('cluster-count').textContent = `${papers.length} papers`;
-
-  const svg = d3.select('#cluster-svg');
-  const el  = document.getElementById('cluster-svg');
-  const W   = el.clientWidth || 900;
-  const H   = 600;
-  svg.attr('viewBox', `0 0 ${W} ${H}`).selectAll('*').remove();
-
-  const margin = {top:20, right:20, bottom:20, left:20};
-  const iW = W - margin.left - margin.right;
-  const iH = H - margin.top - margin.bottom;
-
-  const xs = papers.map(p=>p._x);
-  const ys = papers.map(p=>p._y);
-  const xExt = d3.extent(xs);
-  const yExt = d3.extent(ys);
-  const pad  = 0.1;
-  const xR   = xExt[1]-xExt[0] || 1;
-  const yR   = yExt[1]-yExt[0] || 1;
-
-  const xScale = d3.scaleLinear().domain([xExt[0]-xR*pad, xExt[1]+xR*pad]).range([0,iW]);
-  const yScale = d3.scaleLinear().domain([yExt[0]-yR*pad, yExt[1]+yR*pad]).range([iH,0]);
-
-  const yearMin = d3.min(papers, p=>p.year)||2000;
-  const yearMax = d3.max(papers, p=>p.year)||2025;
-  const yearColor = d3.scaleSequential(d3.interpolateViridis).domain([yearMin, yearMax]);
-
-  function getColor(p) {
-    if (colorBy==='category') return p.cats.length ? CAT_COLORS[p.cats[0]] : '#7a8099';
-    if (colorBy==='source')   return SOURCE_COLORS[paperSource(p)] || '#7a8099';
-    if (colorBy==='year')     return p.year ? yearColor(p.year) : '#7a8099';
-    return '#7a8099';
-  }
-
-  const g = svg.append('g').attr('transform',`translate(${margin.left},${margin.top})`);
-
-  // Grid lines
-  g.append('g').selectAll('.vl').data(xScale.ticks(6)).join('line')
-    .attr('x1',d=>xScale(d)).attr('x2',d=>xScale(d)).attr('y1',0).attr('y2',iH)
-    .attr('stroke','#1a1e2b').attr('stroke-width',1);
-  g.append('g').selectAll('.hl').data(yScale.ticks(6)).join('line')
-    .attr('x1',0).attr('x2',iW).attr('y1',d=>yScale(d)).attr('y2',d=>yScale(d))
-    .attr('stroke','#1a1e2b').attr('stroke-width',1);
-
-  // Points
-  const tooltip = document.getElementById('tooltip');
-  const ttTitle = document.getElementById('tt-title');
-  const ttYear  = document.getElementById('tt-year');
-
-  g.selectAll('.dot').data(papers).join('circle')
-    .attr('class','dot')
-    .attr('cx', p=>xScale(p._x)).attr('cy', p=>yScale(p._y))
-    .attr('r', p=> Math.min(7, 3 + Math.log1p(p.citations||0)*0.6))
-    .attr('fill', p=>getColor(p)).attr('opacity', 0.75)
-    .attr('stroke', '#0d0f14').attr('stroke-width', 1)
-    .style('cursor','pointer')
-    .on('mouseover', (event, p) => {
-      tooltip.classList.add('show');
-      ttTitle.textContent = p.title;
-      ttYear.textContent  = `${p.year||'?'} · ${paperSource(p)||''} · ${p.cats.map(c=>CAT_LABELS[c]).join(', ')||'—'}`;
-    })
-    .on('mousemove', (event) => {
-      tooltip.style.left = (event.clientX + 12) + 'px';
-      tooltip.style.top  = (event.clientY - 10) + 'px';
-    })
-    .on('mouseout', () => tooltip.classList.remove('show'))
-    .on('click', (event, p) => openModal(p._id));
-
-  // Legend
-  buildClusterLegend(colorBy, yearMin, yearMax, yearColor);
-}
-
-function buildClusterLegend(colorBy, yearMin, yearMax, yearColor) {
-  const leg = document.getElementById('cluster-legend');
-  leg.innerHTML = '';
-
-  if (colorBy === 'category') {
-    Object.entries(CAT_LABELS).forEach(([k,v]) => {
-      leg.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${CAT_COLORS[k]}"></div>${v}</div>`;
-    });
-  } else if (colorBy === 'source') {
-    Object.entries(SOURCE_COLORS).forEach(([k,v]) => {
-      leg.innerHTML += `<div class="legend-item"><div class="legend-dot" style="background:${v}"></div>${k}</div>`;
-    });
-  } else if (colorBy === 'year') {
-    leg.innerHTML = `<div class="legend-item" style="gap:0.75rem">
-      <div style="background:linear-gradient(to right,${yearColor(yearMin)},${yearColor(yearMax)});width:80px;height:10px;border-radius:5px"></div>
-      <span>${yearMin} → ${yearMax}</span>
+  const maxCount = Math.max(...years.map((year) => PAPERS.filter((p) => p.year === year).length));
+  let html = '<div style="display:flex;align-items:flex-end;gap:3px;height:72px;margin-bottom:4px;">';
+  years.forEach((year) => {
+    const total = PAPERS.filter((p) => p.year === year).length;
+    const heightPercent = Math.max((total / maxCount) * 100, 3);
+    const active = activeYears.size === 0 || activeYears.has(year);
+    html += `<div style="display:flex;flex-direction:column;align-items:center;flex:1;cursor:pointer;opacity:${active ? 1 : 0.3};transition:opacity 0.15s"
+      onclick="drillYear(${year})"
+      onmouseenter="showTT(event,'${year}','${total} papers')"
+      onmouseleave="hideTT()">
+      <div style="width:100%;height:${heightPercent}%;background:linear-gradient(180deg,var(--accent1),var(--accent4));border-radius:3px 3px 0 0;min-height:2px;"></div>
     </div>`;
-  }
+  });
+  html += '</div><div style="display:flex;gap:3px;">';
+  years.forEach((year) => { html += `<div style="flex:1;text-align:center;font-size:7px;color:var(--muted)">'${String(year).slice(2)}</div>`; });
+  html += '</div>';
+  document.getElementById('barchart').innerHTML = html;
 }
 
-function showTabDirect(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  document.getElementById('tab-' + name).classList.add('active');
-  document.querySelectorAll('.nav-btn')[{overview:0,browse:1,cluster:2}[name]].classList.add('active');
+function drillYear(year) {
+  if (activeYears.has(year)) activeYears.delete(year);
+  else activeYears.add(year);
+  document.querySelectorAll('.pill').forEach((b) => {
+    if (parseInt(b.textContent, 10) === year) b.classList.toggle('active', activeYears.has(year));
+  });
+  updateAll();
 }
 
-// ═══════════════════════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════════════════════
-function escHtml(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function showTT(e, title, body) {
+  const tt = document.getElementById('tt');
+  document.getElementById('tt-t').textContent = title;
+  document.getElementById('tt-b').textContent = body;
+  tt.classList.add('v');
+  moveTT(e);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════════════════════
-(async () => {
-  const loaded = await loadData();
-  buildOverview();
-  buildBrowse();
-  if (!loaded) {
-    document.querySelector('.status-dot span').textContent = `${ALL_PAPERS.length} sample papers (run pipeline for full data)`;
-    document.querySelector('.dot').style.background = '#e06c4e';
-  }
-})();
+function hideTT() {
+  document.getElementById('tt').classList.remove('v');
+}
+
+document.addEventListener('mousemove', moveTT);
+
+function moveTT(e) {
+  const tooltip = document.getElementById('tt');
+  if (!tooltip.classList.contains('v')) return;
+  tooltip.style.left = (e.clientX + 14) + 'px';
+  tooltip.style.top = (e.clientY - 8) + 'px';
+}
 </script>
 </body>
 </html>
