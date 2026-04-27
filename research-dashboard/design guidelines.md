@@ -1,247 +1,581 @@
-# DRC Research Dashboard Design Guidelines
+# DRC Research Dashboard — Design Guidelines
 
-This document is the UI rule book for the Research Whitespace Explorer. It is based on the current implementation in [`/Users/mana/Documents/Work/Design Research Collective/DesignResearchCollective/research-dashboard/dashboard/index.html`](/Users/mana/Documents/Work/Design Research Collective/DesignResearchCollective/research-dashboard/dashboard/index.html).
+**Research Whitespace Explorer · v2.0**  
+Source of truth: `research-dashboard/dashboard/index.html`  
+Update this file whenever tokens, type styles, spacing, or components change.
 
-## Purpose
+---
 
-Use this guide to keep the dashboard visually consistent as new features, tabs, cards, filters, and data views are added.
+## 1. Design Principles
 
-Core goals:
-- Preserve the current dark, research-oriented visual identity.
-- Keep all text readable.
-- Maintain compact, professional spacing.
-- Reuse the existing color and typography system before introducing anything new.
+| Principle | In practice |
+|---|---|
+| **Data forward** | Research content is the product. Chrome frames it; it never competes. |
+| **Dark & quiet** | Deep surfaces, high-contrast text. Color reserved for meaning only. |
+| **Consistent hierarchy** | Spacing, weight, and contrast do the hierarchical work — not color. |
+| **16px floor** | No text smaller than 16px anywhere, ever. |
+| **Reuse before extending** | Always reach for an existing variable before introducing anything new. |
 
-## Design Principles
+---
 
-- Keep the interface dark, quiet, and data-forward.
-- Use color mainly for category meaning, status emphasis, and subtle hierarchy.
-- Prefer clear structure over decorative styling.
-- Maintain a minimum readable font size of `16px`.
-- Use rounded corners, thin borders, and soft layered surfaces instead of heavy shadows or bright fills.
+## 2. Color System
 
-## Color System
+### 2.1 Surface Tokens
 
-### Base Tokens
+Use these in order to create depth. Never skip a level when layering panels inside panels.
 
-- `--bg`: `#080810`
-- `--surface`: `#111118`
-- `--surface2`: `#18181f`
-- `--surface3`: `#1f202a`
-- `--border`: `#252530`
-- `--text`: `#dddde8`
-- `--text-soft`: `#b6b7c9`
-- `--muted`: `#5a5a70`
-- `--white`: `#f0f0f8`
+| Token | Value | Role |
+|---|---|---|
+| `--bg` | `#080810` | Page background only |
+| `--surface` | `#111118` | Cards, primary panels |
+| `--surface2` | `#18181f` | Nested cards, secondary panels |
+| `--surface3` | `#1f202a` | Inputs, chip fills, hover backgrounds |
+| `--border` | `#252530` | All structural borders — always 1px |
 
-### Accent Tokens
+### 2.2 Text Tokens
 
-- `--accent1`: `#7c6af7`
-- `--accent2`: `#f7796a`
-- `--accent3`: `#5af7c0`
-- `--accent4`: `#f7c55a`
+Three levels only. Never use `--muted` for any readable content.
 
-### Category Mapping
+| Token | Value | Role |
+|---|---|---|
+| `--text` | `#dddde8` | Primary content, all headings |
+| `--text-soft` | `#b6b7c9` | Descriptions, metadata, labels, support copy |
+| `--muted` | `#5a5a70` | Placeholder text, disabled states, UI hints only |
+| `--white` | `#f0f0f8` | Emphasis moments within dark surfaces |
 
-- `Ideation`: `--accent1`
-- `Optimization`: `--accent2`
-- `Grammar`: `--accent3`
-- `Decision Making`: `--accent4`
+### 2.3 Accent Tokens
 
-### Color Usage Rules
+Accents encode **category meaning** — they are not decorative. Apply them consistently to every chip, tag, counter, and highlight. Do not introduce a fifth accent without updating the full category map below.
 
-- Use `--bg` for page background.
-- Use `--surface`, `--surface2`, and `--surface3` for panels, cards, and layered UI.
-- Use `--border` for separators, chip outlines, cards, and control boundaries.
-- Use `--text` for primary content.
-- Use `--text-soft` for secondary labels, descriptions, metadata, and support text.
-- Use `--muted` sparingly for de-emphasized UI hints only.
-- Use accent colors for category chips, counters, tags, and hover/emphasis states.
-- Do not introduce new brand colors unless the existing four accent colors cannot cover the need.
+| Token | Value | Assigned Category |
+|---|---|---|
+| `--accent1` | `#7c6af7` | Ideation |
+| `--accent2` | `#f7796a` | Optimization |
+| `--accent3` | `#5af7c0` | Grammar |
+| `--accent4` | `#f7c55a` | Decision Making |
 
-## Typography
+### 2.4 Accent Construction Rules
 
-### Font Families
+Accents are **never used at full opacity as fills**. They appear at:
 
-- Primary body / UI mono: `DM Mono, monospace`
-- Primary UI sans: `DM Sans, Arial, Helvetica, sans-serif`
-- Display / numeric emphasis: `Syne, sans-serif`
+- **Chip / tag background:** 8% opacity (`rgba(accent, 0.08)`)
+- **Chip / tag border:** 30% opacity (`rgba(accent, 0.30)`)
+- **Chip / tag text:** 100% opacity (full accent color)
+- **Numeric highlights / scores:** 100% opacity, `--accent3` only
+- **Top-edge card accent bar:** 100%, 3px height
+- **Hover emphasis borders:** 40% opacity
 
-### Type Roles
+Never use an accent as a card background or large fill — it overpowers the layout and makes other categories hard to read.
 
-- Body copy: `DM Mono`
-- Navigation / buttons / filters: `DM Sans` or `DM Mono` depending on the existing component
-- Major heading: `DM Sans`
-- Numeric highlights and some display headings: `Syne`
+---
 
-### Font Size Rules
+## 3. Typography
 
-- Minimum font size anywhere in the product: `16px`
-- Primary body size: `16px`
-- Metadata and support text floor: `16px`
-- Section labels and utility labels: `16px`
-- Large title: `clamp(23px, 2.6vw, 34px)`
-- Prominent counters: `20px`
+### 3.1 Font Families
 
-### Type Style Rules
+Three families. Each has a specific role. Do not substitute or mix beyond what is described.
 
-- Body line height: `1.6`
-- Descriptive copy line height: `1.7` to `1.75`
-- Large title line height: `0.98`
-- Use uppercase labels sparingly for utility headings and section labels.
-- Use tighter tracking only for small utility labels, never for long paragraphs.
+| Family | CSS Value | Role |
+|---|---|---|
+| **DM Mono** | `'DM Mono', monospace` | Body text, card descriptions, sidebar copy, metadata, all data-dense reading |
+| **DM Sans** | `'DM Sans', Arial, Helvetica, sans-serif` | Navigation, tabs, buttons, filter labels, section headings, form controls |
+| **Syne** | `'Syne', sans-serif` | Page/dashboard title, numeric highlights, score displays |
 
-## Layout
+**Rule:** If it's being *read* (paragraphs, descriptions, author bios, whitespace opportunity text), use **DM Mono**. If it's being *acted on* (tabs, buttons, nav, filters), use **DM Sans**. If it's a *number or title on display*, use **Syne**.
 
-### Main Structure
+---
 
-- Desktop layout uses a two-column grid:
-  - sidebar: `236px`
-  - content: remaining width
-- Header sits above the grid and contains:
-  - eyebrow
-  - main title
-  - header counters
-  - data status line
+### 3.2 Complete Type Scale
 
-### Spacing Rhythm
+Every text element in the product maps to exactly one of these styles. Do not invent intermediate sizes.
 
-- Prefer spacing increments in the `6px` to `28px` range.
-- Common gaps:
-  - `6px`
-  - `8px`
-  - `10px`
-  - `12px`
-  - `14px`
-  - `16px`
-  - `18px`
-  - `20px`
-  - `22px`
-  - `28px`
+---
 
-### Border Radius
+#### Style 1 — Dashboard Title
 
-- Small chips / pills: `999px`
-- Small panels: `6px` to `8px`
-- Standard cards / controls: `10px` to `12px`
-- Header counter group: `14px`
+Used for the main page heading only. One per view.
 
-## Component Rules
+```
+Font:         Syne
+Weight:       700
+Size:         clamp(23px, 2.6vw, 34px)
+Line height:  0.98
+Letter spacing: -0.02em
+Color:        --text
+Transform:    none
+```
 
-### Header
+---
 
-- Keep the header compact.
-- Use a subtle top-to-bottom tint and a thin accent gradient divider.
-- Keep the title visually dominant.
-- Keep counters inline with the title area when space allows.
+#### Style 2 — Section Heading
 
-### Sidebar
+Top-level section labels within a page (e.g. "Whitespace Opportunities", "Author Overview").
 
-- Sidebar sections should use a label, a divider, and tightly grouped content.
-- Sidebar text must remain at least `16px`.
-- Use mono text in the sidebar unless a strong reason exists not to.
+```
+Font:         DM Sans
+Weight:       600
+Size:         18px
+Line height:  1.3
+Letter spacing: 0
+Color:        --text
+Transform:    none
+```
 
-### Tabs
+---
 
-- Tabs use `DM Sans`.
-- Tabs should be readable, compact, and scroll horizontally on small screens.
-- Active tab uses the accent underline pattern already established.
+#### Style 3 — Card Title
 
-### Buttons and Filters
+The primary title inside a paper card, whitespace card, or author card.
 
-- Keep controls dark with subtle borders.
-- Rounded corners should stay soft, not sharp.
-- Hover states should increase contrast slightly without glowing.
-- Search and select controls should match card surfaces.
+```
+Font:         DM Sans
+Weight:       600
+Size:         16px
+Line height:  1.35
+Letter spacing: 0
+Color:        --text
+Transform:    none
+Max lines:    2 (truncate with ellipsis on overflow)
+```
 
-### Cards
+---
 
-- Cards use `--surface` background and `--border`.
-- Avoid oversized empty space.
-- Cards should be content-driven wherever possible.
-- Use subtle shadow only to lift cards slightly from the background.
+#### Style 4 — Body / Description Text
 
-### Author Cards
+All descriptive paragraph text inside cards, sidebars, and expanded views. The most-used style in the dashboard.
 
-- Summary cards should be fit-content height.
-- Summary card content:
-  - author name
-  - paper count
-  - latest publication year
-  - short description
-- Expanded author cards may span full row width.
-- Keep summary content tight and readable.
+```
+Font:         DM Mono
+Weight:       400
+Size:         16px
+Line height:  1.7
+Letter spacing: 0
+Color:        --text-soft
+Transform:    none
+```
 
-### Whitespace Cards
+**Do not reduce to 14px or 13px even in compact cards.** The 16px floor is non-negotiable.
 
-- Use category-colored top edge accents.
-- Use restrained emphasis for priority score markers.
-- Keep description and opportunity sections clearly separated.
+---
 
-### Chips and Pills
+#### Style 5 — Metadata / Support Text
 
-- Use pills for years, tags, categories, and topic-like metadata.
-- Maintain rounded pill shape.
-- Use accent-backed pills only when meaning is category-based.
-- Use neutral outlined pills for filters and non-category metadata.
+Author names, publication years, citation counts, paper IDs, and other secondary data points within cards.
 
-## Motion and Interaction
+```
+Font:         DM Mono
+Weight:       400
+Size:         16px
+Line height:  1.6
+Letter spacing: 0
+Color:        --text-soft
+Transform:    none
+```
 
-- Hover transitions should stay subtle and quick.
-- Use short transitions around `0.12s` to `0.15s`.
-- Avoid dramatic animations.
-- Scale or lift interactions should be restrained.
+Note: metadata uses the same size as body (16px) but typically sits in the chip row or below the card title, separated by spacing rather than font-size reduction.
 
-## Borders, Shadows, and Surfaces
+---
 
-- Default border color: `--border`
-- Prefer 1px borders for structure.
-- Use layered surface contrast before increasing shadow depth.
-- Standard card shadow:
-  - `0 12px 32px rgba(0,0,0,0.18)`
+#### Style 6 — Numeric Highlight / Score
 
-## Responsive Rules
+Whitespace opportunity scores, paper counts in headers, and other prominent single numbers.
 
-- On smaller screens, stack the main layout into one column.
-- Sidebar becomes top content instead of a sticky side rail.
-- Tabs remain horizontally scrollable.
-- Author cards may move from multi-column to two-column, then to one-column layouts.
-- Preserve readable text sizing on mobile. Do not reduce below `16px`.
+```
+Font:         Syne
+Weight:       700
+Size:         20px
+Line height:  1.0
+Letter spacing: -0.01em
+Color:        --accent3   (scores)  OR  --text  (neutral counts)
+Transform:    none
+```
 
-## Accessibility Rules
+Use `--accent3` for scored/ranked numbers (whitespace priority score, relevance). Use `--text` for neutral counts (total papers, author count).
 
-- Minimum font size: `16px`
-- Primary text should always use `--text` or stronger.
-- Secondary text should usually use `--text-soft`, not `--muted`.
-- Category colors must not be the only signal; pair them with labels and layout.
-- Keep interactive targets padded enough to be easily tapped.
+---
 
-## Do
+#### Style 7 — Section Label / Utility Heading
 
-- Reuse existing CSS variables first.
-- Reuse existing font families first.
-- Keep cards compact and readable.
-- Keep hierarchy obvious through spacing, weight, and contrast.
-- Keep category colors consistent throughout the product.
+Small uppercase labels used to introduce sidebar sections, filter groups, and card sub-sections (e.g. "Filter by Category", "Opportunity", "Co-authors").
 
-## Avoid
+```
+Font:         DM Sans
+Weight:       600
+Size:         11px  —  the only allowed exception to the 16px floor
+              (utility labels only — never for reading text)
+Line height:  1.4
+Letter spacing: 0.10em – 0.14em
+Color:        --muted
+Transform:    uppercase
+```
 
-- Do not add new colors casually.
-- Do not use font sizes below `16px`.
-- Do not introduce bright white boxes or light themes inside the dashboard.
-- Do not create oversized hero sections or empty card space.
-- Do not mix too many different visual patterns for cards or filters.
+**This is the only style permitted below 16px.** It exists solely for non-reading utility labels. Never use it for descriptions, card content, or any text the user needs to read. Maximum 3 words per label.
 
-## Implementation Reference
+---
 
-If the UI evolves, update this file whenever any of these change:
-- root color tokens
-- font families
-- font size scale
-- spacing rhythm
-- card patterns
-- responsive rules
-- accessibility constraints
+#### Style 8 — Tab / Navigation Label
 
-Current source of truth:
-- [`/Users/mana/Documents/Work/Design Research Collective/DesignResearchCollective/research-dashboard/dashboard/index.html`](/Users/mana/Documents/Work/Design Research Collective/DesignResearchCollective/research-dashboard/dashboard/index.html)
+Horizontal tab labels and primary nav items.
+
+```
+Font:         DM Sans
+Weight:       500
+Size:         16px
+Line height:  1.0
+Letter spacing: 0
+Color:        --text-soft  (inactive)
+              --text       (active)
+Transform:    none
+```
+
+Active tab gets `--text` color plus the accent underline. No bold shift on active — weight stays at 500.
+
+---
+
+#### Style 9 — Button / Filter Control
+
+Primary action buttons, filter dropdowns, select controls, search input placeholder text.
+
+```
+Font:         DM Sans
+Weight:       500
+Size:         16px
+Line height:  1.0
+Letter spacing: 0
+Color:        --text-soft  (default state)
+              --text       (hover / focus state)
+Transform:    none
+```
+
+---
+
+#### Style 10 — Chip / Pill Label
+
+Category chips, year pills, author tags, and topic chips.
+
+```
+Font:         DM Sans
+Weight:       500
+Size:         12px
+Line height:  1.0
+Letter spacing: 0
+Color:        [accent color]   (category chips)
+              --muted          (neutral/filter chips)
+Transform:    none
+Padding:      3px 9px
+Border radius: 999px
+```
+
+Chips are the **only other exception** to the 16px floor. They are decorative-functional labels in a tightly constrained pill shape, not reading text.
+
+---
+
+### 3.3 Type Pairing Logic
+
+When a card has both a title and description, the contrast between them comes from **font family + weight + color**, not size:
+
+```
+Card Title:      DM Sans   600   16px   --text
+Card Description: DM Mono   400   16px   --text-soft
+```
+
+The visual separation is achieved entirely by family and color. This is intentional — reducing the description font size to create hierarchy would violate the 16px floor and make dense research content harder to read.
+
+---
+
+### 3.4 Line Height Reference
+
+| Context | Line height |
+|---|---|
+| Dashboard title | `0.98` |
+| Section heading | `1.3` |
+| Card title (2 lines) | `1.35` |
+| Body / description | `1.7` |
+| Metadata / support | `1.6` |
+| Tab / button | `1.0` |
+| Chip / pill | `1.0` |
+
+---
+
+### 3.5 Letter Spacing Reference
+
+| Context | Letter spacing |
+|---|---|
+| Dashboard title | `-0.02em` |
+| Numeric highlight | `-0.01em` |
+| All other headings | `0` |
+| All body text | `0` |
+| Section labels (uppercase) | `0.10em – 0.14em` |
+
+**Never track body text or card titles.** Tight tracking on monospaced text (DM Mono) in particular creates unreadable dense blocks.
+
+---
+
+### 3.6 Font Weight Reference
+
+| Weight | Used for |
+|---|---|
+| `400` | All DM Mono body, metadata, descriptions |
+| `500` | DM Sans navigation, tabs, buttons, chips |
+| `600` | DM Sans section headings, card titles, utility labels |
+| `700` | Syne dashboard title, numeric scores |
+
+No other weights. Do not use `300` (too light on dark backgrounds), `800`, or `900`.
+
+---
+
+### 3.7 What Not To Do — Typography
+
+- **Never** reduce any reading text below `16px`, regardless of card compactness.
+- **Never** apply `DM Mono` to buttons, tabs, or navigation items.
+- **Never** apply `Syne` to body text, descriptions, or labels.
+- **Never** use `DM Sans` for descriptive paragraphs — it reads as marketing copy.
+- **Never** use letter spacing on body or heading text (only utility labels).
+- **Never** use a font weight outside the four defined above.
+- **Never** set dashboard title to a fixed px value — always use `clamp(23px, 2.6vw, 34px)`.
+
+---
+
+## 4. Layout & Spacing
+
+### 4.1 Main Grid
+
+- Desktop: two-column — `236px` fixed sidebar + fluid content area.
+- Mobile: single column — sidebar stacks above content. Tabs scroll horizontally.
+- Header spans full width above the grid: contains eyebrow, title, counters, and data status line.
+
+### 4.2 Spacing Scale
+
+Always pick from these values. Do not use arbitrary pixel values.
+
+| Value | Use |
+|---|---|
+| `6px` | Icon-to-text gap, tight chip padding |
+| `8px` | Chip internal horizontal padding |
+| `10px` | Between metadata items in a row |
+| `12px` | Between elements within a card |
+| `14px` | Sidebar list item gaps |
+| `16px` | Card side padding, standard control height gap |
+| `18px` | Between card rows in a grid |
+| `20px` | Sidebar section gap, header element spacing |
+| `22px` | Between card title and description |
+| `28px` | Section-to-section gap |
+
+### 4.3 Border Radius
+
+| Value | Use |
+|---|---|
+| `999px` | All chips and pills |
+| `6px – 8px` | Small utility panels, input controls |
+| `10px – 12px` | Standard cards, filter controls |
+| `14px` | Header counter group |
+
+### 4.4 Borders
+
+- Always `1px solid var(--border)`.
+- Never use 2px or heavier structural borders.
+- Use `--border` at rest. On hover, shift to `--surface3` as the border color.
+- Card accent bar (whitespace cards): `3px` top edge, accent color at 100%.
+
+### 4.5 Shadows
+
+Standard card shadow only:
+
+```
+box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+```
+
+Do not increase depth beyond this. Prefer layered surface contrast over shadow depth.
+
+---
+
+## 5. Component Rules
+
+### 5.1 Header
+
+- Keep compact. One tint gradient (top to bottom, subtle) plus a thin accent divider below.
+- Title (Style 1) visually dominant.
+- Counters inline with title area using Style 6 numerics.
+- Data status line below title using Style 5 metadata text.
+
+### 5.2 Sidebar
+
+- Section introduced with Style 7 label + `1px solid var(--border)` divider.
+- Content in DM Mono (Style 4 or Style 5).
+- All text ≥ 16px.
+- Sticky rail on desktop; stacks above content on mobile.
+
+### 5.3 Tabs
+
+- Use Style 8 (DM Sans 500 16px).
+- Horizontal scroll on small screens — never wrap to second row.
+- Active state: `--text` color + 2px bottom accent line using category or primary accent.
+- Inactive: `--text-soft`, no underline.
+
+### 5.4 Buttons & Filter Controls
+
+- Style 9 (DM Sans 500 16px).
+- Background: `--surface3`. Border: `1px solid var(--border)`.
+- Hover: border shifts to `rgba(accent, 0.4)`, background lightens to `--surface2` edge.
+- No glow, no box-shadow change, no scale transform on hover.
+- Border radius: `8px` for buttons, `10px` for large filter controls.
+- Minimum height: 36px (accessibility tap target).
+
+### 5.5 Paper Cards
+
+```
+Background:   --surface
+Border:       1px solid var(--border)
+Radius:       10px
+Padding:      14px 16px
+
+Layout (top to bottom):
+  1. [Card Title — Style 3]     [Score — Style 6, right-aligned]
+  2. [Category chip] [Year pill] [Author pill]
+  3. [Description — Style 4]
+
+Score: Syne 700 18px, --accent3
+Title max-width: subtract score width + 10px gap
+```
+
+### 5.6 Whitespace Opportunity Cards
+
+```
+Background:   --surface2
+Border:       1px solid var(--border)
+Radius:       10px
+Top accent:   3px solid [category accent]
+Padding:      14px 16px  (below accent bar)
+
+Layout (top to bottom):
+  1. [Category chip — left]     [Score — right]
+  2. [Card Title — Style 3]
+  3. [Description — Style 4]
+  4. [Section label: "OPPORTUNITY" — Style 7]
+  5. [Opportunity text — Style 4]
+
+Sections 3 and 5 use the same Style 4 but are separated by the Style 7 label.
+```
+
+### 5.7 Author Cards (Summary)
+
+```
+Background:   --surface2
+Border:       1px solid var(--border)
+Radius:       10px
+Padding:      14px 16px
+Height:       fit-content
+
+Content:
+  - Author name (Style 3, --text)
+  - Paper count (Style 6 numeric, --text)
+  - Latest year (Style 5, --text-soft)
+  - Short description (Style 4, --text-soft, max 2 lines)
+```
+
+Expanded author cards span full row width and may include full bio, co-author network, and year distribution.
+
+### 5.8 Chips & Pills
+
+```
+Category chip:   DM Sans 500 12px · accent color text · 8% accent fill · 30% accent border · 999px radius · 3px 9px padding
+Year pill:       DM Sans 500 12px · --muted text · --surface3 fill · --border border · 999px radius · 3px 9px padding
+Filter chip:     DM Sans 500 12px · --muted text · --surface3 fill · --border border · 999px radius · 3px 9px padding
+```
+
+Never mix chip styles within the same row — category chips and neutral chips have distinct visual weight.
+
+---
+
+## 6. Motion & Interaction
+
+| Property | Value |
+|---|---|
+| Hover transition duration | `0.12s ease` |
+| Filter / expand transition | `0.15s ease` |
+| Hover border treatment | Shift from `--border` to `rgba(accent, 0.4)` |
+| Hover fill treatment | Background lightens by one surface step |
+| Scale on hover | Never |
+| Glow / neon on hover | Never |
+| Box-shadow change on hover | Never |
+
+Hover states signal interactivity through **border and background color shift only** — no shadows, no rings, no lifts. These effects read as error states in dark UIs.
+
+---
+
+## 7. Accessibility
+
+| Requirement | Value |
+|---|---|
+| Minimum font size | `16px` (utility labels and chips are the only exceptions) |
+| Primary text contrast | `--text` on `--surface` ≥ 7:1 |
+| Secondary text contrast | `--text-soft` on `--surface` ≥ 4.5:1 |
+| Category color rule | Always paired with a text label — never color alone |
+| Interactive target minimum | `36px` tall |
+| `--muted` text use | Placeholders and hints only — never for readable content |
+| Responsive font floor | Never reduce below `16px` on mobile |
+
+---
+
+## 8. Do & Don't
+
+### Do
+
+- Reuse existing CSS variables before introducing anything new.
+- Use `1px solid var(--border)` for all structural borders.
+- Keep category accent colors consistent across every chip, tag, and highlight.
+- Use `--text-soft` for descriptions, metadata, and secondary labels.
+- Keep cards content-driven and compact — no oversized empty space.
+- Apply accent colors at 8% opacity for chip fills.
+- Always pair category color with its text label.
+- Update this document whenever any token, type style, or component pattern changes.
+
+### Don't
+
+- Add new colors without updating the full category mapping.
+- Use any font size below `16px` for reading text.
+- Use `--muted` for any text the user needs to read.
+- Introduce a light-mode surface inside the dark dashboard.
+- Use full-opacity accent fills as card or panel backgrounds.
+- Use box-shadow deeper than `0 12px 32px rgba(0,0,0,0.18)`.
+- Create hero sections or oversized empty card space.
+- Mix too many card pattern variants — new card types need to justify themselves against the existing two (paper card, whitespace card).
+- Apply `DM Mono` to navigation, buttons, or tabs.
+- Apply `Syne` to body or description text.
+- Use font weights outside `400 / 500 / 600 / 700`.
+- Use letter spacing on body text or card titles.
+
+---
+
+## 9. Quick Token Reference
+
+```css
+/* Surfaces */
+--bg:        #080810;
+--surface:   #111118;
+--surface2:  #18181f;
+--surface3:  #1f202a;
+--border:    #252530;
+
+/* Text */
+--text:       #dddde8;
+--text-soft:  #b6b7c9;
+--muted:      #5a5a70;
+--white:      #f0f0f8;
+
+/* Accents */
+--accent1: #7c6af7;   /* Ideation */
+--accent2: #f7796a;   /* Optimization */
+--accent3: #5af7c0;   /* Grammar */
+--accent4: #f7c55a;   /* Decision Making */
+
+/* Fonts */
+--font-mono: 'DM Mono', monospace;
+--font-sans: 'DM Sans', Arial, Helvetica, sans-serif;
+--font-display: 'Syne', sans-serif;
+```
+
+---
+
+*DRC Research Dashboard · Design Guidelines v2.0*  
+*Last updated: April 2026*

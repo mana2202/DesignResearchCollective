@@ -22,6 +22,12 @@
     --text-soft: #b6b7c9;
     --surface3: #1f202a;
   }
+  html {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+  }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: var(--bg);
@@ -30,7 +36,9 @@
     font-size: 16px;
     line-height: 1.6;
     min-height: 100vh;
-    overflow-x: hidden;
+    width: max(100%, fit-content);
+    overflow-x: auto;
+    overflow-y: auto;
   }
 
   header {
@@ -84,7 +92,14 @@
     white-space: nowrap;
   }
 
-  .layout { display: grid; grid-template-columns: 236px 1fr; min-height: calc(100vh - 140px); }
+  .layout {
+    display: grid;
+    grid-template-columns: 236px minmax(0, 1fr);
+    min-height: calc(100vh - 140px);
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
 
   .sidebar {
     border-right: 1px solid var(--border);
@@ -124,12 +139,22 @@
   .pitem:last-child { border-bottom: none; }
   .picon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
 
-  .content { padding: 22px 28px 28px; }
+  .content {
+    padding: 22px 28px 28px;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
   .tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 22px; overflow-x: auto; gap: 6px; }
   .tabbtn { padding: 12px 14px; background: transparent; border: none; border-bottom: 2px solid transparent; color: var(--text-soft); cursor: pointer; font-family: 'DM Sans', 'DM Mono', sans-serif; font-size: 16px; font-weight: 500; letter-spacing: 0.01em; transition: all 0.12s; margin-bottom: -1px; white-space: nowrap; }
   .tabbtn:hover { color: var(--text); }
   .tabbtn.active { color: var(--white); border-bottom-color: var(--accent1); }
-  .tabp { display: none; }
+  .tabp {
+    display: none;
+    min-width: 0;
+    overflow-x: auto;
+    overflow-y: visible;
+  }
   .tabp.active { display: block; }
 
   .sch { font-size: 16px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
@@ -978,20 +1003,20 @@ function renderBarChart() {
     return;
   }
   const maxCount = Math.max(...years.map((year) => PAPERS.filter((p) => p.year === year).length));
-  let html = '<div style="display:flex;align-items:flex-end;gap:3px;height:72px;margin-bottom:4px;">';
+  let html = '<div style="display:flex;align-items:flex-end;gap:4px;height:140px;margin-bottom:10px;">';
   years.forEach((year) => {
     const total = PAPERS.filter((p) => p.year === year).length;
     const heightPercent = Math.max((total / maxCount) * 100, 3);
     const active = activeYears.size === 0 || activeYears.has(year);
-    html += `<div style="display:flex;flex-direction:column;align-items:center;flex:1;cursor:pointer;opacity:${active ? 1 : 0.3};transition:opacity 0.15s"
+    html += `<div style="display:flex;flex-direction:column;justify-content:flex-end;align-items:center;flex:1;height:100%;cursor:pointer;opacity:${active ? 1 : 0.3};transition:opacity 0.15s"
       onclick="drillYear(${year})"
       onmouseenter="showTT(event,'${year}','${total} papers')"
       onmouseleave="hideTT()">
-      <div style="width:100%;height:${heightPercent}%;background:linear-gradient(180deg,var(--accent1),var(--accent4));border-radius:3px 3px 0 0;min-height:2px;"></div>
+      <div style="width:100%;height:${heightPercent}%;background:linear-gradient(180deg,var(--accent1),var(--accent4));border:1px solid rgba(255,255,255,0.08);border-bottom:none;border-radius:8px 8px 0 0;min-height:4px;box-shadow:0 6px 16px rgba(0,0,0,0.18);"></div>
     </div>`;
   });
-  html += '</div><div style="display:flex;gap:3px;">';
-  years.forEach((year) => { html += `<div style="flex:1;text-align:center;font-size:7px;color:var(--muted)">'${String(year).slice(2)}</div>`; });
+  html += '</div><div style="display:flex;gap:4px;">';
+  years.forEach((year) => { html += `<div style="flex:1;text-align:center;font-size:16px;color:var(--muted);line-height:1;">'${String(year).slice(2)}</div>`; });
   html += '</div>';
   document.getElementById('barchart').innerHTML = html;
 }
