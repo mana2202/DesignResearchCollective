@@ -63,7 +63,12 @@ No API keys are required for classification.
 
 Open `dashboard/index.html` in a browser (double-click or “Open with Live Server”). The page loads `../data/papers.csv` via `fetch`, so some browsers require opening from a local server or adjusting file access; serving the folder with any static server works.
 
-For **GitHub Pages**, point the site at the folder that contains `dashboard/` and `data/` (or adjust `csvPath` in `index.html` to match your published layout).
+For **GitHub Pages**, this repo now includes:
+
+- `research-dashboard/index.html` as the published entry page
+- `.github/workflows/deploy-github-pages.yml` to deploy the `research-dashboard/` folder on pushes to `main`
+
+Once GitHub Pages is enabled to deploy from **GitHub Actions**, the site root will open the dashboard automatically and the relative `data/` fetches will continue to work unchanged.
 
 ---
 
