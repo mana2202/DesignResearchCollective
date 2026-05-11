@@ -619,14 +619,14 @@
 
   <main class="content">
     <div class="tabs">
-      <button class="tabbtn active" onclick="setTab('overview',this)">Overview</button>
-      <button class="tabbtn" onclick="setTab('matrix',this)">Coverage Matrix</button>
-      <button class="tabbtn" onclick="setTab('whitespace',this)">White Spaces</button>
+      <button class="tabbtn active" onclick="setTab('whitespace',this)">White Spaces</button>
       <button class="tabbtn" onclick="setTab('authors',this)">Author Profiles</button>
       <button class="tabbtn" onclick="setTab('papers',this)">Papers</button>
+      <button class="tabbtn" onclick="setTab('matrix',this)">Coverage Matrix</button>
+      <button class="tabbtn" onclick="setTab('overview',this)">About</button>
     </div>
 
-    <div class="tabp active" id="panel-overview">
+    <div class="tabp" id="panel-overview">
       <div class="sch">Publication Activity by Year</div>
       <div id="barchart" class="chart-shell"></div>
 
@@ -692,7 +692,7 @@
       </div>
     </div>
 
-    <div class="tabp" id="panel-whitespace">
+    <div class="tabp active" id="panel-whitespace">
       <div class="sch">12 Identified Research Opportunities <span class="sch-subnote">— H = high priority, M = medium priority, ordered by strategic fit</span></div>
       <div class="wsgrid" id="wsgrid"></div>
     </div>
@@ -993,12 +993,12 @@ function renderAuthorProfiles() {
 
   const filteredProfiles = AUTHOR_PROFILES
     .slice()
-    .sort((a, b) => a.author_name.localeCompare(b.author_name))
     .filter((profile) => {
     const nameOk = !search || profile.author_name.toLowerCase().includes(search);
     const catOk = !cat || (profile.dominant_categories || []).map(normalizeCategoryToken).includes(cat);
     return nameOk && catOk;
-  });
+  })
+    .sort((a, b) => a.author_name.localeCompare(b.author_name));
 
   if (OPEN_AUTHOR && !filteredProfiles.some((profile) => profile.author_name === OPEN_AUTHOR)) {
     OPEN_AUTHOR = '';
