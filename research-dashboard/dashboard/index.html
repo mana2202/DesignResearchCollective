@@ -518,8 +518,8 @@
   .legend-swatch.empty { background: transparent; border: 1px dashed var(--border); }
   .sch-subnote { font-family: var(--font-ui); font-size: 13px; font-weight: 400; line-height: 1.5; letter-spacing: 0; text-transform: none; color: var(--text-tertiary); }
   .chart-shell { margin-bottom: 6px; }
-  .chart-scroll { overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
-  .chart-content { min-width: 960px; }
+  .chart-scroll { display: flex; justify-content: flex-end; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
+  .chart-content { width: max-content; min-width: 100%; }
   .chart-bars { display:flex; align-items:flex-end; gap:4px; height:140px; margin-bottom:10px; }
   .chart-col { display:flex; flex-direction:column; justify-content:flex-end; align-items:center; flex:1; height:100%; cursor:pointer; transition:opacity 0.15s; }
   .chart-bar { width:100%; background:linear-gradient(180deg,var(--primary),var(--primary-hover)); border:1px solid var(--border); border-bottom:none; border-radius:8px 8px 0 0; min-height:4px; box-shadow:0 6px 16px rgba(0,0,0,0.18); }
