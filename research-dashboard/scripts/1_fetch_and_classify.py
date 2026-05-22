@@ -14,6 +14,7 @@ Optional (faster test runs):
 
 from __future__ import annotations
 
+import json
 import os
 import re
 from typing import Any
@@ -80,6 +81,12 @@ def normalize_scholar_href(s: str) -> str:
     if s.startswith("/"):
         return "https://scholar.google.com" + s
     return s
+
+
+def ensure_json_file(path: str, payload: Any) -> None:
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=2, ensure_ascii=False)
 
 
 def format_openalex_input(title: str, abstract: str) -> str:
@@ -253,14 +260,27 @@ def main() -> None:
     for n in range(1, 5):
         print(f"    {n} category: {int((counts == n).sum())}")
     print(f"    Misc / empty: {int((counts == 0).sum())}")
-    profile_count, avg_papers, match_count = write_author_outputs(
-        df.to_dict(orient="records"),
-        AUTHOR_PROFILES_PATH,
-        WHITESPACE_MATCHES_PATH,
-    )
-    print(f"\n👤  Authored profiles: {profile_count}")
-    print(f"    Average papers per author: {avg_papers}")
-    print(f"    Whitespace-author matches: {match_count}")
+    try:
+        profile_count, avg_papers, match_count = write_author_outputs(
+            df.to_dict(orient="records"),
+            AUTHOR_PROFILES_PATH,
+            WHITESPACE_MATCHES_PATH,
+        )
+        print(f"\n👤  Generated data/author_profiles.json with {profile_count} author profiles.")
+        if profile_count == 0:
+            print("⚠️  No author data available. Wrote empty [] to data/author_profiles.json.")
+        else:
+            print(f"    Average papers per author: {avg_papers}")
+        print(f"    Whitespace-author matches: {match_count}")
+    except Exception as exc:
+        # The dashboard should never depend on runtime generation in the browser.
+        # If author-profile building fails, still emit empty JSON artifacts so the
+        # backend pipeline always leaves the expected files behind.
+        ensure_json_file(AUTHOR_PROFILES_PATH, [])
+        ensure_json_file(WHITESPACE_MATCHES_PATH, [])
+        print("\n⚠️  Failed to build author profiles from classified papers.")
+        print(f"    Reason: {exc}")
+        print("    Wrote empty [] to data/author_profiles.json and data/whitespace_matches.json.")
     print(df[["title", "year", "hf_dataset", "primary_category", "categories"]].head(5).to_string())
 
 

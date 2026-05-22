@@ -37,6 +37,15 @@ PRIORITY_THRESHOLDS = {
     "medium": 0.45,
 }
 
+AUTHOR_MATCH_WEIGHTS = {
+    "recent_drc_relevance_score": 0.25,
+    "category_topic_match_score": 0.35,
+    "representative_paper_score": 0.25,
+    "bridge_to_gap_score": 0.15,
+}
+
+AUTHOR_MATCH_THRESHOLD = 0.42
+
 CORE_DRC_SIGNAL_TOKENS = {
     "design", "grammar", "process", "ideation", "optimization", "decision", "human-ai",
     "trust", "uav", "drone", "manufacturing", "topology", "neural", "operator", "llm",
@@ -115,6 +124,18 @@ def clamp01(value: float) -> float:
 
 def average(values: list[float]) -> float:
     return sum(values) / len(values) if values else 0.0
+
+
+def year_weight(year_num: int, recent_year_cutoff: int) -> float:
+    if not year_num:
+        return 0.15
+    if year_num >= recent_year_cutoff:
+        return 1.0
+    if year_num >= recent_year_cutoff - 3:
+        return 0.75
+    if year_num >= recent_year_cutoff - 8:
+        return 0.45
+    return 0.2
 
 
 def extract_author_topics(papers: list[dict[str, Any]]) -> list[str]:
@@ -252,11 +273,25 @@ def build_corpus_stats(papers: list[dict[str, Any]], profiles: list[dict[str, An
     }
 
 
+def build_whitespace_tokens(whitespace: dict[str, Any]) -> set[str]:
+    return set(
+        tokenize_text(
+            " ".join(
+                whitespace["keywords"]
+                + whitespace["impact_signals"]
+                + whitespace["drc_focus_signals"]
+                + whitespace["feasibility_signals"]
+                + [whitespace["title"], whitespace["description"], whitespace["opportunity"]]
+            )
+        )
+    )
+
+
 def whitespace_supporting_papers(
     whitespace: dict[str, Any],
     papers: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    keyword_tokens = set(tokenize_text(" ".join(whitespace["keywords"] + whitespace["impact_signals"] + whitespace["drc_focus_signals"])))
+    keyword_tokens = build_whitespace_tokens(whitespace)
     related_categories = set(whitespace["related_categories"])
     supporting: list[dict[str, Any]] = []
 
@@ -279,6 +314,181 @@ def whitespace_supporting_papers(
             )
 
     return supporting
+
+
+def author_representative_papers(
+    whitespace: dict[str, Any],
+    profile: dict[str, Any],
+    recent_year_cutoff: int,
+) -> list[dict[str, Any]]:
+    whitespace_tokens = build_whitespace_tokens(whitespace)
+    related_categories = set(whitespace["related_categories"])
+    representatives: list[dict[str, Any]] = []
+
+    for paper in profile.get("_papers_full", []):
+        topic_tokens = set(tokenize_text(" ".join(paper["topics"])))
+        paper_tokens = set(paper["tokens"])
+        category_overlap = related_categories & set(paper["categories"])
+        topic_overlap = whitespace_tokens & (paper_tokens | topic_tokens)
+        recency = year_weight(paper["year_num"], recent_year_cutoff)
+
+        # Representative papers favor direct overlap plus recency, without rewarding sheer volume.
+        direct_match_score = (
+            len(category_overlap) * 0.34
+            + min(len(topic_overlap), 6) * 0.08
+            + recency * 0.18
+        )
+        if direct_match_score < 0.42:
+            continue
+
+        reasons: list[str] = []
+        if category_overlap:
+            reasons.append("category overlap in " + ", ".join(CATEGORY_LABELS.get(cat, cat) for cat in sorted(category_overlap)))
+        if topic_overlap:
+            reasons.append("topic overlap in " + ", ".join(sorted(topic_overlap)[:4]))
+        if recency >= 0.75:
+            reasons.append(f"recent contribution in {paper['year'] or 'recent work'}")
+
+        representatives.append(
+            {
+                "title": paper["title"],
+                "year": paper["year"],
+                "reason": "; ".join(reasons) if reasons else "Directly supports this whitespace opportunity.",
+                "_score": round(direct_match_score, 3),
+                "_category_overlap": len(category_overlap),
+                "_topic_overlap": len(topic_overlap),
+            }
+        )
+
+    representatives.sort(
+        key=lambda item: (-item["_score"], -(item["_category_overlap"] + item["_topic_overlap"]), item["title"].lower())
+    )
+    return representatives[:3]
+
+
+def compute_recent_drc_relevance_score(
+    profile: dict[str, Any],
+    whitespace: dict[str, Any],
+    recent_year_cutoff: int,
+) -> float:
+    whitespace_tokens = build_whitespace_tokens(whitespace)
+    related_categories = set(whitespace["related_categories"])
+    weighted_scores: list[float] = []
+
+    for paper in profile.get("_papers_full", []):
+        token_overlap = whitespace_tokens & set(paper["tokens"])
+        category_overlap = related_categories & set(paper["categories"])
+        if not token_overlap and not category_overlap:
+            continue
+        recency = year_weight(paper["year_num"], recent_year_cutoff)
+        overlap_score = clamp01(len(token_overlap) / 6 + len(category_overlap) / 3)
+        weighted_scores.append(clamp01(0.55 * recency + 0.45 * overlap_score))
+
+    if not weighted_scores:
+        return 0.0
+    return round(clamp01(sum(weighted_scores[:5]) / min(len(weighted_scores), 5)), 3)
+
+
+def compute_category_topic_match_score(
+    profile: dict[str, Any],
+    whitespace: dict[str, Any],
+) -> float:
+    related_categories = set(whitespace["related_categories"])
+    whitespace_tokens = build_whitespace_tokens(whitespace)
+    dominant_categories = set(profile.get("dominant_categories", []))
+    recurring_topics = set(tokenize_text(" ".join(profile.get("recurring_topics", []) + profile.get("inferred_interests", []))))
+    category_overlap_score = clamp01(len(related_categories & dominant_categories) / max(len(related_categories), 1))
+    topic_overlap_score = clamp01(len(whitespace_tokens & recurring_topics) / 6)
+    return round(clamp01(0.6 * category_overlap_score + 0.4 * topic_overlap_score), 3)
+
+
+def compute_representative_paper_score(representative_papers: list[dict[str, Any]]) -> float:
+    if not representative_papers:
+        return 0.0
+    base = average([paper["_score"] for paper in representative_papers[:3]])
+    count_bonus = 0.08 if len(representative_papers) >= 2 else 0.0
+    return round(clamp01(base + count_bonus), 3)
+
+
+def compute_bridge_to_gap_score(
+    profile: dict[str, Any],
+    whitespace: dict[str, Any],
+    representative_papers: list[dict[str, Any]],
+) -> tuple[float, str]:
+    whitespace_tokens = build_whitespace_tokens(whitespace)
+    recurring_topics = set(tokenize_text(" ".join(profile.get("recurring_topics", []))))
+    inferred_interests = set(tokenize_text(" ".join(profile.get("inferred_interests", []))))
+    related_categories = set(whitespace["related_categories"])
+    dominant_categories = set(profile.get("dominant_categories", []))
+
+    direct_overlap = whitespace_tokens & recurring_topics
+    adjacent_overlap = whitespace_tokens & inferred_interests
+    category_bridge = related_categories & dominant_categories
+
+    score = clamp01(
+        0.45 * clamp01(len(direct_overlap) / 4)
+        + 0.30 * clamp01(len(adjacent_overlap) / 4)
+        + 0.25 * clamp01(len(category_bridge) / max(len(related_categories), 1))
+    )
+
+    if representative_papers:
+        reason = (
+            f"This author bridges {', '.join(sorted(category_bridge)[:2]).replace('_', ' ') or 'adjacent DRC themes'} "
+            f"with whitespace-relevant topics such as {', '.join(sorted((direct_overlap or adjacent_overlap))[:3]) or 'the target gap'}, "
+            "making them a plausible contributor to this opportunity."
+        )
+    else:
+        reason = "This author has only limited adjacent overlap with the whitespace opportunity."
+    return round(score, 3), reason
+
+
+def compute_author_whitespace_match(
+    profile: dict[str, Any],
+    whitespace: dict[str, Any],
+    recent_year_cutoff: int,
+) -> dict[str, Any] | None:
+    representative_papers = author_representative_papers(whitespace, profile, recent_year_cutoff)
+    match_factors = {
+        "recent_drc_relevance_score": compute_recent_drc_relevance_score(profile, whitespace, recent_year_cutoff),
+        "category_topic_match_score": compute_category_topic_match_score(profile, whitespace),
+        "representative_paper_score": compute_representative_paper_score(representative_papers),
+    }
+    bridge_score, bridge_reason = compute_bridge_to_gap_score(profile, whitespace, representative_papers)
+    match_factors["bridge_to_gap_score"] = bridge_score
+
+    # Deterministic author-to-whitespace scoring that stays independent from whitespace priority.
+    author_whitespace_match_score = round(
+        sum(match_factors[key] * AUTHOR_MATCH_WEIGHTS[key] for key in AUTHOR_MATCH_WEIGHTS),
+        3,
+    )
+    if author_whitespace_match_score < AUTHOR_MATCH_THRESHOLD:
+        return None
+
+    concise_reason_parts: list[str] = []
+    if match_factors["category_topic_match_score"] >= 0.6:
+        concise_reason_parts.append("strong category/topic overlap")
+    if match_factors["recent_drc_relevance_score"] >= 0.6:
+        concise_reason_parts.append("recent DRC-relevant work")
+    if representative_papers:
+        concise_reason_parts.append(f"{len(representative_papers)} representative paper{'s' if len(representative_papers) != 1 else ''}")
+    concise_reason = ", ".join(concise_reason_parts) if concise_reason_parts else "adjacent expertise aligned to this gap"
+
+    return {
+        "author_name": profile["author_name"],
+        "author_whitespace_match_score": author_whitespace_match_score,
+        "match_score": author_whitespace_match_score,
+        "match_factors": match_factors,
+        "representative_papers": [
+            {
+                "title": paper["title"],
+                "year": paper["year"],
+                "reason": paper["reason"],
+            }
+            for paper in representative_papers
+        ],
+        "bridge_reason": bridge_reason,
+        "reason": concise_reason,
+    }
 
 
 def compute_current_trends_score(
@@ -518,6 +728,7 @@ def build_author_profiles(records: list[dict[str, Any]]) -> tuple[list[dict[str,
             "recommended_topics_to_participate_in": [],
             "related_whitespace_opportunities": [],
             "_topic_tokens": tokenize_text(" ".join(recurring_topics + inferred_interests)),
+            "_papers_full": sorted_papers,
         })
 
     whitespace_matches = match_authors_to_whitespace(profiles)
@@ -532,59 +743,45 @@ def build_author_profiles(records: list[dict[str, Any]]) -> tuple[list[dict[str,
             profile["related_whitespace_opportunities"].append({
                 "title": whitespace["title"],
                 "priority_label": whitespace["priority_label"],
+                "author_whitespace_match_score": match["author_whitespace_match_score"],
                 "match_score": match["match_score"],
                 "reason": match["reason"],
+                "bridge_reason": match.get("bridge_reason", ""),
+                "representative_papers": match.get("representative_papers", []),
+                "match_factors": match.get("match_factors", {}),
             })
 
     for profile in profiles:
         profile["recommended_topics_to_participate_in"] = list(dict.fromkeys(profile["recommended_topics_to_participate_in"]))[:6]
         profile["related_whitespace_opportunities"] = sorted(
             profile["related_whitespace_opportunities"],
-            key=lambda item: item["match_score"],
+            key=lambda item: item["author_whitespace_match_score"],
             reverse=True,
         )[:5]
         profile.pop("_topic_tokens", None)
+        profile.pop("_papers_full", None)
 
     return profiles, scored_whitespace
 
 
 def match_authors_to_whitespace(profiles: list[dict[str, Any]]) -> list[dict[str, Any]]:
     whitespace_matches: list[dict[str, Any]] = []
+    recent_year_cutoff = max(
+        (
+            paper["year_num"]
+            for profile in profiles
+            for paper in profile.get("_papers_full", [])
+        ),
+        default=0,
+    ) - 4
 
     for whitespace in WHITESPACE_OPPORTUNITIES:
-        ws_tokens = tokenize_text(" ".join(whitespace["keywords"] + [whitespace["title"], whitespace["description"]]))
         matched_authors: list[dict[str, Any]] = []
 
         for profile in profiles:
-            author_topics = set(profile.get("_topic_tokens", []))
-            category_overlap = set(profile["dominant_categories"]) & set(whitespace["related_categories"])
-            keyword_overlap = author_topics & set(ws_tokens)
-            repeated_interest_overlap = set(tokenize_text(" ".join(profile["inferred_interests"]))) & set(ws_tokens)
-
-            # Explainable deterministic score:
-            # - category overlap is weighted most strongly
-            # - topic overlap contributes steadily
-            # - inferred-interest overlap adds an extra boost
-            raw_score = (
-                len(category_overlap) * 0.32
-                + min(len(keyword_overlap), 4) * 0.12
-                + min(len(repeated_interest_overlap), 3) * 0.08
-            )
-            match_score = min(round(raw_score, 2), 0.99)
-
-            if match_score >= 0.38:
-                reasons: list[str] = []
-                if category_overlap:
-                    reasons.append("category overlap in " + ", ".join(cat.replace("_", " ") for cat in sorted(category_overlap)))
-                if keyword_overlap:
-                    reasons.append("topic overlap in " + ", ".join(sorted(keyword_overlap)[:4]))
-                if repeated_interest_overlap:
-                    reasons.append("recurring interest overlap in " + ", ".join(sorted(repeated_interest_overlap)[:3]))
-                matched_authors.append({
-                    "author_name": profile["author_name"],
-                    "match_score": match_score,
-                    "reason": "; ".join(reasons),
-                })
+            match = compute_author_whitespace_match(profile, whitespace, recent_year_cutoff)
+            if match:
+                matched_authors.append(match)
 
         whitespace_matches.append({
             "title": whitespace["title"],
@@ -592,7 +789,7 @@ def match_authors_to_whitespace(profiles: list[dict[str, Any]]) -> list[dict[str
             "related_categories": whitespace["related_categories"],
             "matched_authors": sorted(
                 matched_authors,
-                key=lambda item: (-item["match_score"], item["author_name"].lower()),
+                key=lambda item: (-item["author_whitespace_match_score"], item["author_name"].lower()),
             )[:8],
         })
 

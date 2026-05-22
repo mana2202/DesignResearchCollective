@@ -316,6 +316,18 @@
   .wsfactor-grid { display: grid; gap: 6px; }
   .wsfactor { display: flex; justify-content: space-between; gap: 12px; font-family: var(--font-ui); font-size: 12px; line-height: 1.45; color: var(--text-tertiary); }
   .wsfactor strong { color: var(--text); font-weight: 600; }
+  .wsmatch { margin-top: 8px; }
+  .wsmatch-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-family: var(--font-ui); font-size: 12px; color: var(--text-tertiary); }
+  .wsmatch-score { color: var(--text); font-weight: 700; }
+  .wsmatch-reason { margin-top: 4px; font-family: var(--font-ui); font-size: 13px; line-height: 1.5; color: var(--text-secondary); }
+  .wsmatch-details { margin-top: 6px; }
+  .wsmatch-details summary { cursor: pointer; list-style: none; font-family: var(--font-ui); font-size: 11px; font-weight: 600; color: var(--text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; }
+  .wsmatch-details summary::-webkit-details-marker { display: none; }
+  .wsmatch-details summary::after { content: ' +'; }
+  .wsmatch-details[open] summary::after { content: ' -'; }
+  .wsmatch-meta { margin-top: 8px; display: grid; gap: 6px; }
+  .wsmatch-paper { padding: 8px 9px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); }
+  .wsmatch-paper strong { color: var(--text); }
 
   .plist { display: grid; gap: 6px; }
   .prow { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: start; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; transition: border-color 0.12s, transform 0.12s; }
@@ -1070,8 +1082,43 @@ function renderWhitespaceAuthors(item) {
   if (!item || !item.matched_authors || !item.matched_authors.length) return '';
   return `<div class="ws-authors">
     <div class="author-label">Related Authors</div>
-    ${item.matched_authors.slice(0, 4).map((match) => `<div class="ws-author-item"><strong>${escapeHtml(match.author_name)}</strong> · ${(match.match_score * 100).toFixed(0)}% match<br>${escapeHtml(match.reason)}</div>`).join('')}
+    ${item.matched_authors.slice(0, 4).map((match) => `
+      <div class="ws-author-item">
+        <strong>${escapeHtml(match.author_name)}</strong>
+        <div class="wsmatch">
+          <div class="wsmatch-top">
+            <span>${escapeHtml(match.reason || 'Relevant to this whitespace opportunity')}</span>
+            <span class="wsmatch-score">${(Number(match.author_whitespace_match_score || match.match_score || 0) * 100).toFixed(0)}%</span>
+          </div>
+          <div class="wsmatch-reason">${escapeHtml(match.bridge_reason || '')}</div>
+          ${renderWhitespaceAuthorDetails(match)}
+        </div>
+      </div>
+    `).join('')}
   </div>`;
+}
+
+function renderWhitespaceAuthorDetails(match) {
+  const factors = match.match_factors || {};
+  const representativePapers = match.representative_papers || [];
+  if (!Object.keys(factors).length && !representativePapers.length) return '';
+  return `<details class="wsmatch-details">
+    <summary>Match details</summary>
+    <div class="wsmatch-meta">
+      ${Object.keys(factors).length ? `
+        <div class="wsfactor"><span>Recent DRC relevance</span><strong>${Number(factors.recent_drc_relevance_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Category/topic match</span><strong>${Number(factors.category_topic_match_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Representative papers</span><strong>${Number(factors.representative_paper_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Bridge to gap</span><strong>${Number(factors.bridge_to_gap_score || 0).toFixed(2)}</strong></div>
+      ` : ''}
+      ${representativePapers.map((paper) => `
+        <div class="wsmatch-paper">
+          <strong>${escapeHtml(paper.title)}</strong> · ${escapeHtml(String(paper.year || 'Unknown'))}<br>
+          ${escapeHtml(paper.reason || '')}
+        </div>
+      `).join('')}
+    </div>
+  </details>`;
 }
 
 function renderAuthorProfiles() {
