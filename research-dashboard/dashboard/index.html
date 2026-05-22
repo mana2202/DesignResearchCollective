@@ -124,42 +124,9 @@
   }
 
   .layout {
-    display: grid;
-    grid-template-columns: 236px minmax(0, 1fr);
     min-height: calc(100vh - 140px);
     min-width: 0;
-    overflow-x: auto;
-    overflow-y: visible;
   }
-
-  .sidebar {
-    border-right: 1px solid var(--border);
-    padding: 22px 18px;
-    position: sticky;
-    top: 0;
-    height: calc(100vh - 140px);
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--border) transparent;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0));
-  }
-  .sbs { margin-bottom: 22px; }
-  .sbl { font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 10px; padding-bottom: 7px; border-bottom: 1px solid var(--border); }
-
-  .catbtn { display: flex; align-items: center; gap: 9px; width: 100%; padding: 12px 14px; background: var(--surface3); border: 1px solid var(--border); border-radius: 12px; color: var(--text-secondary); cursor: pointer; font-family: var(--font-ui); font-size: 14px; font-weight: 500; line-height: 1; text-align: left; margin-bottom: 6px; transition: all 0.12s; }
-  .catbtn:hover { color: var(--text); background: var(--surface2); border-color: var(--primary-border); transform: translateY(-1px); }
-  .catbtn.active { color: var(--text); background: linear-gradient(180deg, var(--primary-subtle), rgba(255,255,255,0.02)); border-color: var(--primary-border); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.03); }
-  .cdot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-  .cdot-all { background: linear-gradient(135deg, var(--accent1), var(--accent3)); }
-  .cdot-ideation { background: var(--accent1); }
-  .cdot-optimization { background: var(--accent2); }
-  .cdot-grammar { background: var(--accent3); }
-  .cdot-decision { background: var(--accent4); }
-  .ccount { margin-left: auto; font-family: var(--font-ui); font-size: 13px; color: var(--text-tertiary); }
-
-  .pillgroup { display: flex; flex-wrap: wrap; gap: 6px; }
-  .pill { padding: 3px 8px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1; }
-  .pill:hover, .pill.active { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
 
   .pitem { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; }
   .pitem:last-child { border-bottom: none; }
@@ -343,14 +310,60 @@
   .pbd { background: rgba(247,197,90,0.18); color: var(--accent4); }
   .pyr { font-family: var(--font-ui); font-size: 13px; color: var(--text-tertiary); white-space: nowrap; margin-top: 2px; }
 
+  .author-layout {
+    display: grid;
+    grid-template-columns: 280px minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .author-sidebar {
+    min-width: 0;
+  }
   .author-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
-  .author-filter-panel { display: grid; gap: 14px; margin-bottom: 18px; }
+  .author-filter-panel {
+    display: grid;
+    gap: 14px;
+    position: sticky;
+    top: 20px;
+    padding: 16px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    border: 1px solid var(--border);
+  }
   .author-filter-top { display: flex; gap: 10px; flex-wrap: wrap; }
   .author-filter-grid { display: grid; gap: 10px; }
   .author-filter-card { padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
   .author-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
   .author-filter-title { font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); }
   .author-filter-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .checkbox-list {
+    display: grid;
+    gap: 8px;
+  }
+  .checkbox-chip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface3);
+    color: var(--text-secondary);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .checkbox-chip:hover,
+  .checkbox-chip.active {
+    color: var(--text);
+    border-color: var(--primary-border);
+    background: var(--primary-subtle);
+  }
+  .checkbox-chip input {
+    margin: 0;
+    accent-color: var(--primary);
+  }
   .filter-chip { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1.2; }
   .filter-chip:hover, .filter-chip.active { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
   .active-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
@@ -372,6 +385,9 @@
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
   }
   .field::placeholder { color: var(--text-tertiary); font-size: 13px; }
+  .author-results {
+    min-width: 0;
+  }
   .author-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
@@ -565,8 +581,6 @@
   .chart-label { flex:1; text-align:center; font-family: var(--font-ui); font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--text-tertiary); }
 
   @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; }
-    .sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 16px 20px; }
     .ovgrid { grid-template-columns: 1fr; }
     header { padding: 18px 20px 14px; }
     .content { padding: 18px 20px 24px; }
@@ -595,7 +609,13 @@
     .tabbtn { padding: 10px 12px; font-size: 14px; }
     .wsgrid { grid-template-columns: 1fr; }
     .author-head { flex-direction: column; align-items: flex-start; }
+    .author-layout { grid-template-columns: 1fr; }
     .author-toolbar, .author-filter-top { flex-direction: column; }
+    .author-filter-panel {
+      position: static;
+      top: auto;
+      padding: 14px;
+    }
     .author-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .author-summary {
       padding: 12px;
@@ -640,21 +660,6 @@
 </header>
 
 <div class="layout">
-  <aside class="sidebar">
-    <div class="sbs">
-      <div class="sbl">Category</div>
-      <button class="catbtn active" data-c="all" onclick="setCat('all',this)"><span class="cdot cdot-all"></span> All <span class="ccount" id="c-all">0</span></button>
-      <button class="catbtn" data-c="ideation" onclick="setCat('ideation',this)"><span class="cdot cdot-ideation"></span> Ideation <span class="ccount" id="c-id">0</span></button>
-      <button class="catbtn" data-c="optimization" onclick="setCat('optimization',this)"><span class="cdot cdot-optimization"></span> Optimization <span class="ccount" id="c-op">0</span></button>
-      <button class="catbtn" data-c="grammar" onclick="setCat('grammar',this)"><span class="cdot cdot-grammar"></span> Grammar <span class="ccount" id="c-gr">0</span></button>
-      <button class="catbtn" data-c="decision" onclick="setCat('decision',this)"><span class="cdot cdot-decision"></span> Decision Making <span class="ccount" id="c-de">0</span></button>
-    </div>
-    <div class="sbs">
-      <div class="sbl">Year</div>
-      <div class="pillgroup" id="year-pills"></div>
-    </div>
-  </aside>
-
   <main class="content">
     <div class="tabs">
       <button class="tabbtn active" onclick="setTab('whitespace',this)">White Spaces</button>
@@ -736,15 +741,21 @@
     </div>
 
     <div class="tabp" id="panel-authors">
-      <div class="author-filter-panel">
-        <div class="author-filter-top">
-          <input class="field" id="author-search" type="search" placeholder="Search author name…" oninput="renderAuthorProfiles()">
-          <input class="field" id="author-topic-search" type="search" placeholder="Search research topics / themes…" oninput="setAuthorTopicQuery(this.value)">
+      <div class="author-layout">
+        <aside class="author-sidebar">
+          <div class="author-filter-panel">
+            <div class="author-filter-top">
+              <input class="field" id="author-search" type="search" placeholder="Search author name…" oninput="renderAuthorProfiles()">
+              <input class="field" id="author-topic-search" type="search" placeholder="Search research topics / themes…" oninput="setAuthorTopicQuery(this.value)">
+            </div>
+            <div class="active-filter-bar" id="author-active-filters"></div>
+            <div class="author-filter-grid" id="author-filter-groups"></div>
+          </div>
+        </aside>
+        <div class="author-results">
+          <div class="author-grid" id="author-grid"></div>
         </div>
-        <div class="active-filter-bar" id="author-active-filters"></div>
-        <div class="author-filter-grid" id="author-filter-groups"></div>
       </div>
-      <div class="author-grid" id="author-grid"></div>
     </div>
 
     <div class="tabp" id="panel-papers">
@@ -768,7 +779,7 @@ let WHITESPACE_MATCHES = [];
 let OPEN_AUTHOR = '';
 const AUTHOR_TOPIC_LIMIT = 40;
 const AUTHOR_FILTER_GROUPS = [
-  { key: 'affiliation', label: 'Research Affiliation', options: ['DRC Researchers', 'External Engineering Researchers', 'Both'] },
+  { key: 'affiliation', label: 'Research Affiliation', options: ['DRC Researchers', 'External Engineering Researchers'] },
   { key: 'categories', label: 'Research Categories', options: ['ideation', 'optimmization', 'grammar', 'decision_making'] },
   { key: 'whitespace', label: 'Whitespace Relevance', options: ['Strong whitespace match', 'Medium whitespace match', 'Emerging relevance', 'No whitespace connection'] },
   { key: 'roles', label: 'Collaboration Role / Research Function', options: ['Theory / Framework Building', 'Methods & Tooling', 'Evaluation & Validation', 'Human Studies', 'Systems / Infrastructure', 'AI & ML', 'Visualization', 'Simulation', 'Decision Support', 'Sustainability', 'Cross-disciplinary Bridge'] },
@@ -917,6 +928,7 @@ function normalizeCategoryToken(raw) {
 function buildYearPills() {
   const years = [...new Set(PAPERS.map((p) => p.year))].sort((a, b) => b - a);
   const container = document.getElementById('year-pills');
+  if (!container) return;
   container.innerHTML = '';
   years.forEach((year) => {
     const button = document.createElement('button');
@@ -941,7 +953,7 @@ function toggleYear(year, btn) {
 function setCat(cat, btn) {
   activeCat = cat;
   document.querySelectorAll('.catbtn').forEach((b) => b.classList.remove('active'));
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
   updateAll();
 }
 
@@ -982,11 +994,17 @@ function updateCounts() {
   document.getElementById('h-total').textContent = fp.length;
   document.getElementById('h-drc').textContent = fp.filter((p) => p.source === 'drc').length;
   document.getElementById('h-eng').textContent = fp.filter((p) => p.source === 'engineering').length;
-  document.getElementById('c-all').textContent = PAPERS.length;
-  document.getElementById('c-id').textContent = PAPERS.filter((p) => p.cats.includes('ideation')).length;
-  document.getElementById('c-op').textContent = PAPERS.filter((p) => p.cats.includes('optimization')).length;
-  document.getElementById('c-gr').textContent = PAPERS.filter((p) => p.cats.includes('grammar')).length;
-  document.getElementById('c-de').textContent = PAPERS.filter((p) => p.cats.includes('decision')).length;
+  const counts = {
+    'c-all': PAPERS.length,
+    'c-id': PAPERS.filter((p) => p.cats.includes('ideation')).length,
+    'c-op': PAPERS.filter((p) => p.cats.includes('optimization')).length,
+    'c-gr': PAPERS.filter((p) => p.cats.includes('grammar')).length,
+    'c-de': PAPERS.filter((p) => p.cats.includes('decision')).length,
+  };
+  Object.entries(counts).forEach(([id, value]) => {
+    const node = document.getElementById(id);
+    if (node) node.textContent = value;
+  });
 }
 
 function renderMatrix() {
@@ -1020,7 +1038,8 @@ function drillDown(cat, year) {
   activeCat = cat;
   activeYears = new Set([year]);
   document.querySelectorAll('.catbtn').forEach((b) => b.classList.remove('active'));
-  document.querySelector(`.catbtn[data-c="${cat}"]`).classList.add('active');
+  const categoryButton = document.querySelector(`.catbtn[data-c="${cat}"]`);
+  if (categoryButton) categoryButton.classList.add('active');
   document.querySelectorAll('.pill').forEach((b) => {
     if (parseInt(b.textContent, 10) === year) b.classList.add('active');
     else b.classList.remove('active');
@@ -1216,13 +1235,28 @@ function renderAuthorFilters() {
       <div class="author-filter-row">
         <div class="author-filter-title">${group.label}</div>
       </div>
-      <div class="chip-row">
-        ${group.options.map((option) => `
-          <button type="button" class="filter-chip ${authorFilterState[group.key].has(option) ? 'active' : ''}" onclick='toggleAuthorFilter(${JSON.stringify(group.key)}, ${JSON.stringify(option)})'>
-            ${escapeHtml(displayFilterValue(group.key, option))}
-          </button>
-        `).join('')}
-      </div>
+      ${group.key === 'affiliation' ? `
+        <div class="checkbox-list">
+          ${group.options.map((option) => `
+            <label class="checkbox-chip ${authorFilterState[group.key].has(option) ? 'active' : ''}">
+              <input
+                type="checkbox"
+                ${authorFilterState[group.key].has(option) ? 'checked' : ''}
+                onchange='toggleAuthorFilter(${JSON.stringify(group.key)}, ${JSON.stringify(option)})'
+              >
+              <span>${escapeHtml(displayFilterValue(group.key, option))}</span>
+            </label>
+          `).join('')}
+        </div>
+      ` : `
+        <div class="chip-row">
+          ${group.options.map((option) => `
+            <button type="button" class="filter-chip ${authorFilterState[group.key].has(option) ? 'active' : ''}" onclick='toggleAuthorFilter(${JSON.stringify(group.key)}, ${JSON.stringify(option)})'>
+              ${escapeHtml(displayFilterValue(group.key, option))}
+            </button>
+          `).join('')}
+        </div>
+      `}
     </div>
   `).join('') + `
     <div class="author-filter-card">
@@ -1261,8 +1295,14 @@ function matchesMultiSelect(selectedSet, candidateValues) {
 }
 
 function buildAuthorDerivedTags(profile) {
+  const affiliationValues = [];
+  if (profile.affiliation_bucket === 'Both') {
+    affiliationValues.push('DRC Researchers', 'External Engineering Researchers');
+  } else if (profile.affiliation_bucket) {
+    affiliationValues.push(profile.affiliation_bucket);
+  }
   return {
-    affiliation: [profile.affiliation_bucket].filter(Boolean),
+    affiliation: affiliationValues,
     categories: (profile.research_categories || profile.dominant_categories || []),
     topics: (profile.recurring_topics || []),
     whitespace: [profile.whitespace_relevance_bucket].filter(Boolean),
