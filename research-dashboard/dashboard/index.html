@@ -344,6 +344,21 @@
   .pyr { font-family: var(--font-ui); font-size: 13px; color: var(--text-tertiary); white-space: nowrap; margin-top: 2px; }
 
   .author-toolbar { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+  .author-filter-panel { display: grid; gap: 14px; margin-bottom: 18px; }
+  .author-filter-top { display: flex; gap: 10px; flex-wrap: wrap; }
+  .author-filter-grid { display: grid; gap: 10px; }
+  .author-filter-card { padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
+  .author-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .author-filter-title { font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); }
+  .author-filter-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .filter-chip { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1.2; }
+  .filter-chip:hover, .filter-chip.active { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
+  .active-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .active-filter-label { font-family: var(--font-ui); font-size: 12px; color: var(--text-tertiary); }
+  .filter-topic-list { display: flex; flex-wrap: wrap; gap: 6px; max-height: 110px; overflow-y: auto; padding-right: 4px; }
+  .filter-topic-empty { font-family: var(--font-ui); font-size: 13px; color: var(--text-tertiary); line-height: 1.5; }
+  .filter-reset { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface3); color: var(--text-secondary); font-family: var(--font-ui); font-size: 13px; cursor: pointer; }
+  .filter-reset:hover { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
   .field {
     background: var(--surface3);
     border: 1px solid var(--border);
@@ -580,7 +595,7 @@
     .tabbtn { padding: 10px 12px; font-size: 14px; }
     .wsgrid { grid-template-columns: 1fr; }
     .author-head { flex-direction: column; align-items: flex-start; }
-    .author-toolbar { flex-direction: column; }
+    .author-toolbar, .author-filter-top { flex-direction: column; }
     .author-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .author-summary {
       padding: 12px;
@@ -721,15 +736,13 @@
     </div>
 
     <div class="tabp" id="panel-authors">
-      <div class="author-toolbar">
-        <input class="field" id="author-search" type="search" placeholder="Search author name…" oninput="renderAuthorProfiles()">
-        <select class="field" id="author-filter-cat" onchange="renderAuthorProfiles()">
-          <option value="">All Categories</option>
-          <option value="ideation">Ideation</option>
-          <option value="optimization">Optimization</option>
-          <option value="grammar">Grammar</option>
-          <option value="decision">Decision Making</option>
-        </select>
+      <div class="author-filter-panel">
+        <div class="author-filter-top">
+          <input class="field" id="author-search" type="search" placeholder="Search author name…" oninput="renderAuthorProfiles()">
+          <input class="field" id="author-topic-search" type="search" placeholder="Search research topics / themes…" oninput="setAuthorTopicQuery(this.value)">
+        </div>
+        <div class="active-filter-bar" id="author-active-filters"></div>
+        <div class="author-filter-grid" id="author-filter-groups"></div>
       </div>
       <div class="author-grid" id="author-grid"></div>
     </div>
@@ -753,6 +766,28 @@ let PAPERS = [];
 let AUTHOR_PROFILES = [];
 let WHITESPACE_MATCHES = [];
 let OPEN_AUTHOR = '';
+const AUTHOR_TOPIC_LIMIT = 40;
+const AUTHOR_FILTER_GROUPS = [
+  { key: 'affiliation', label: 'Research Affiliation', options: ['DRC Researchers', 'External Engineering Researchers', 'Both'] },
+  { key: 'categories', label: 'Research Categories', options: ['ideation', 'optimmization', 'grammar', 'decision_making'] },
+  { key: 'whitespace', label: 'Whitespace Relevance', options: ['Strong whitespace match', 'Medium whitespace match', 'Emerging relevance', 'No whitespace connection'] },
+  { key: 'roles', label: 'Collaboration Role / Research Function', options: ['Theory / Framework Building', 'Methods & Tooling', 'Evaluation & Validation', 'Human Studies', 'Systems / Infrastructure', 'AI & ML', 'Visualization', 'Simulation', 'Decision Support', 'Sustainability', 'Cross-disciplinary Bridge'] },
+  { key: 'activity', label: 'Activity / Recency', options: ['Active in last 1 year', 'Active in last 3 years', 'Established researcher', 'Emerging researcher'] },
+  { key: 'breadth', label: 'Research Breadth', options: ['Specialist', 'Interdisciplinary', 'Cross-category bridge researcher'] },
+  { key: 'methods', label: 'Data / Method Access', options: ['Has datasets', 'Simulation-heavy', 'AI/ML methods', 'Experimental methods', 'Design studies', 'Field studies', 'Review/meta-analysis'] },
+];
+// Filter state is stored as sets so each group supports true multi-select.
+const authorFilterState = {
+  affiliation: new Set(),
+  categories: new Set(),
+  topics: new Set(),
+  whitespace: new Set(),
+  roles: new Set(),
+  activity: new Set(),
+  breadth: new Set(),
+  methods: new Set(),
+  topicQuery: '',
+};
 
 const WS = [
   {cat:"cc",tag:"tc",tagLabel:"◈ Cross-Category · H1",title:"Grammar-Guided LLM Design Agents",desc:"The DRC has deep expertise in design grammars/process heuristics (Puentes, Raina, McComb 2017–2022) and LLMs for design (2023–2025). These two threads have never been connected.",opp:"Constrain LLM-based design generation with mined process grammars — ensuring outputs follow designer-valid action sequences. Uniquely combines the DRC's HMM/grammar heritage with its emerging LLM work, and could be applied across all three application domains.",score:"H1",sc:"sh"},
@@ -808,8 +843,10 @@ async function loadAuthorProfiles() {
     const resp = await fetch('../data/author_profiles.json');
     if (!resp.ok) throw new Error('author_profiles.json not found');
     AUTHOR_PROFILES = await resp.json();
+    renderAuthorFilters();
   } catch (err) {
     AUTHOR_PROFILES = [];
+    renderAuthorFilters();
   }
 }
 
@@ -1121,19 +1158,145 @@ function renderWhitespaceAuthorDetails(match) {
   </details>`;
 }
 
+function displayFilterValue(groupKey, value) {
+  if (groupKey === 'categories') return displayCategoryLabel(value);
+  return value;
+}
+
+function setAuthorTopicQuery(value) {
+  authorFilterState.topicQuery = String(value || '').trim().toLowerCase();
+  renderAuthorFilters();
+  renderAuthorProfiles();
+}
+
+function toggleAuthorFilter(groupKey, value) {
+  const bucket = authorFilterState[groupKey];
+  if (!(bucket instanceof Set)) return;
+  if (bucket.has(value)) bucket.delete(value);
+  else bucket.add(value);
+  renderAuthorFilters();
+  renderAuthorProfiles();
+}
+
+function clearAuthorFilters() {
+  Object.entries(authorFilterState).forEach(([key, value]) => {
+    if (value instanceof Set) value.clear();
+  });
+  authorFilterState.topicQuery = '';
+  const topicInput = document.getElementById('author-topic-search');
+  if (topicInput) topicInput.value = '';
+  renderAuthorFilters();
+  renderAuthorProfiles();
+}
+
+function uniqueSortedTopics(profiles) {
+  const topicCounts = new Map();
+  profiles.forEach((profile) => {
+    (profile.recurring_topics || []).forEach((topic) => {
+      topicCounts.set(topic, (topicCounts.get(topic) || 0) + 1);
+    });
+  });
+  return [...topicCounts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([topic]) => topic);
+}
+
+function renderAuthorFilters() {
+  const groupsContainer = document.getElementById('author-filter-groups');
+  const activeContainer = document.getElementById('author-active-filters');
+  if (!groupsContainer || !activeContainer) return;
+
+  const allTopics = uniqueSortedTopics(AUTHOR_PROFILES);
+  const visibleTopics = allTopics
+    .filter((topic) => !authorFilterState.topicQuery || topic.toLowerCase().includes(authorFilterState.topicQuery))
+    .slice(0, AUTHOR_TOPIC_LIMIT);
+
+  groupsContainer.innerHTML = AUTHOR_FILTER_GROUPS.map((group) => `
+    <div class="author-filter-card">
+      <div class="author-filter-row">
+        <div class="author-filter-title">${group.label}</div>
+      </div>
+      <div class="chip-row">
+        ${group.options.map((option) => `
+          <button type="button" class="filter-chip ${authorFilterState[group.key].has(option) ? 'active' : ''}" onclick='toggleAuthorFilter(${JSON.stringify(group.key)}, ${JSON.stringify(option)})'>
+            ${escapeHtml(displayFilterValue(group.key, option))}
+          </button>
+        `).join('')}
+      </div>
+    </div>
+  `).join('') + `
+    <div class="author-filter-card">
+      <div class="author-filter-row">
+        <div class="author-filter-title">Research Topics / Themes</div>
+      </div>
+      <div class="filter-topic-list">
+        ${visibleTopics.length ? visibleTopics.map((topic) => `
+          <button type="button" class="filter-chip ${authorFilterState.topics.has(topic) ? 'active' : ''}" onclick='toggleAuthorFilter("topics", ${JSON.stringify(topic)})'>
+            ${escapeHtml(topic)}
+          </button>
+        `).join('') : '<div class="filter-topic-empty">No topics match the current search.</div>'}
+      </div>
+    </div>
+  `;
+
+  const activeEntries = [];
+  Object.entries(authorFilterState).forEach(([key, value]) => {
+    if (!(value instanceof Set)) return;
+    [...value].forEach((item) => activeEntries.push({ key, value: item }));
+  });
+
+  activeContainer.innerHTML = activeEntries.length
+    ? `<span class="active-filter-label">Active filters</span>${activeEntries.map((entry) => `
+        <button type="button" class="filter-chip active" onclick='toggleAuthorFilter(${JSON.stringify(entry.key)}, ${JSON.stringify(entry.value)})'>
+          ${escapeHtml(displayFilterValue(entry.key, entry.value))}
+        </button>
+      `).join('')}<button type="button" class="filter-reset" onclick="clearAuthorFilters()">Clear all</button>`
+    : `<span class="active-filter-label">No active filters</span><button type="button" class="filter-reset" onclick="clearAuthorFilters()">Reset</button>`;
+}
+
+function matchesMultiSelect(selectedSet, candidateValues) {
+  if (!selectedSet.size) return true;
+  const values = new Set(candidateValues || []);
+  return [...selectedSet].some((value) => values.has(value));
+}
+
+function buildAuthorDerivedTags(profile) {
+  return {
+    affiliation: [profile.affiliation_bucket].filter(Boolean),
+    categories: (profile.research_categories || profile.dominant_categories || []),
+    topics: (profile.recurring_topics || []),
+    whitespace: [profile.whitespace_relevance_bucket].filter(Boolean),
+    roles: (profile.collaboration_roles || []),
+    activity: (profile.activity_tags || []),
+    breadth: (profile.breadth_tags || []),
+    methods: (profile.method_access_tags || []),
+  };
+}
+
 function renderAuthorProfiles() {
   const grid = document.getElementById('author-grid');
   if (!grid) return;
   const search = (document.getElementById('author-search')?.value || '').trim().toLowerCase();
-  const cat = document.getElementById('author-filter-cat')?.value || '';
 
   const filteredProfiles = AUTHOR_PROFILES
     .slice()
     .filter((profile) => {
-    const nameOk = !search || profile.author_name.toLowerCase().includes(search);
-    const catOk = !cat || (profile.dominant_categories || []).map(normalizeCategoryToken).includes(cat);
-    return nameOk && catOk;
-  })
+      const nameOk = !search || profile.author_name.toLowerCase().includes(search);
+      if (!nameOk) return false;
+      const tags = buildAuthorDerivedTags(profile);
+      // Filters combine across groups with AND logic, while each individual group
+      // behaves as a multi-select OR.
+      return (
+        matchesMultiSelect(authorFilterState.affiliation, tags.affiliation) &&
+        matchesMultiSelect(authorFilterState.categories, tags.categories) &&
+        matchesMultiSelect(authorFilterState.topics, tags.topics) &&
+        matchesMultiSelect(authorFilterState.whitespace, tags.whitespace) &&
+        matchesMultiSelect(authorFilterState.roles, tags.roles) &&
+        matchesMultiSelect(authorFilterState.activity, tags.activity) &&
+        matchesMultiSelect(authorFilterState.breadth, tags.breadth) &&
+        matchesMultiSelect(authorFilterState.methods, tags.methods)
+      );
+    })
     .sort((a, b) => a.author_name.localeCompare(b.author_name));
 
   if (OPEN_AUTHOR && !filteredProfiles.some((profile) => profile.author_name === OPEN_AUTHOR)) {

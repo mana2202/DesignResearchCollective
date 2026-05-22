@@ -53,6 +53,30 @@ CORE_DRC_SIGNAL_TOKENS = {
     "multi-agent", "workflow", "simulation",
 }
 
+COLLABORATION_ROLE_RULES = {
+    "Theory / Framework Building": {"framework", "theory", "grammar", "conceptual", "strategy", "rule-based"},
+    "Methods & Tooling": {"tool", "pipeline", "method", "workflow", "platform", "library", "benchmark"},
+    "Evaluation & Validation": {"evaluation", "validation", "benchmark", "assessment", "metrics", "testing"},
+    "Human Studies": {"trust", "team", "collaboration", "empathy", "bias", "participation", "human"},
+    "Systems / Infrastructure": {"system", "infrastructure", "platform", "network", "process", "deployment"},
+    "AI & ML": {"ai", "ml", "llm", "neural", "learning", "agentic", "multi-agent"},
+    "Visualization": {"visual", "visualization", "mapping", "dashboard", "graph", "explorer"},
+    "Simulation": {"simulation", "surrogate", "modeling", "operator", "digital", "scenario"},
+    "Decision Support": {"decision", "tradeoff", "uncertainty", "recommend", "support", "optimization"},
+    "Sustainability": {"sustainability", "carbon", "renewable", "recyclability", "climate", "lifecycle"},
+    "Cross-disciplinary Bridge": {"cross-domain", "interdisciplinary", "bridge", "hybrid", "human-ai"},
+}
+
+METHOD_ACCESS_RULES = {
+    "Has datasets": {"dataset", "benchmark", "repository", "corpus", "data"},
+    "Simulation-heavy": {"simulation", "surrogate", "operator", "modeling", "topology"},
+    "AI/ML methods": {"ai", "ml", "llm", "neural", "learning", "agentic"},
+    "Experimental methods": {"experiment", "prototype", "lab", "fabrication", "testing"},
+    "Design studies": {"design study", "concept generation", "ideation", "workflow", "design teams"},
+    "Field studies": {"field", "longitudinal", "deployment", "stakeholder", "real-world"},
+    "Review/meta-analysis": {"review", "survey", "meta", "analysis", "bibliometric"},
+}
+
 
 def split_categories(raw: str) -> list[str]:
     return [part.strip() for part in str(raw or "").split("|") if part.strip()]
@@ -124,6 +148,10 @@ def clamp01(value: float) -> float:
 
 def average(values: list[float]) -> float:
     return sum(values) / len(values) if values else 0.0
+
+
+def collect_text_tokens(*parts: str) -> set[str]:
+    return set(tokenize_text(" ".join(part for part in parts if part)))
 
 
 def year_weight(year_num: int, recent_year_cutoff: int) -> float:
@@ -236,8 +264,64 @@ def record_to_paper(row: dict[str, Any]) -> dict[str, Any]:
         "abstract": str(row.get("abstract", "")).strip(),
         "journal": str(row.get("journal", "")).strip(),
         "hf_dataset": str(row.get("hf_dataset", "")).strip(),
+        "data_source": str(row.get("data_source", "")).strip(),
         "tokens": tokenize_text(text_blob),
     }
+
+
+def derive_affiliation_bucket(papers: list[dict[str, Any]]) -> str:
+    sources = {paper.get("hf_dataset", "") for paper in papers}
+    has_drc = "ccm/publications" in sources
+    has_engineering = "ccm/cmu-engineering-publications" in sources
+    if has_drc and has_engineering:
+        return "Both"
+    if has_drc:
+        return "DRC Researchers"
+    if has_engineering:
+        return "External Engineering Researchers"
+    return "Both"
+
+
+def derive_whitespace_relevance_bucket(related_whitespace_opportunities: list[dict[str, Any]]) -> str:
+    top_score = max((item.get("author_whitespace_match_score", item.get("match_score", 0)) for item in related_whitespace_opportunities), default=0)
+    if top_score >= 0.75:
+        return "Strong whitespace match"
+    if top_score >= 0.58:
+        return "Medium whitespace match"
+    if top_score >= 0.42:
+        return "Emerging relevance"
+    return "No whitespace connection"
+
+
+def derive_activity_tags(last_published: str, paper_count: int, papers: list[dict[str, Any]]) -> list[str]:
+    tags: list[str] = []
+    year_num = int(last_published) if str(last_published).isdigit() else 0
+    max_year = max((paper["year_num"] for paper in papers), default=0)
+    if year_num and max_year - year_num <= 1:
+        tags.append("Active in last 1 year")
+    if year_num and max_year - year_num <= 3:
+        tags.append("Active in last 3 years")
+    if paper_count >= 8 or len({paper["year_num"] for paper in papers if paper["year_num"]}) >= 6:
+        tags.append("Established researcher")
+    if paper_count <= 5 and year_num and max_year - year_num <= 3:
+        tags.append("Emerging researcher")
+    return tags or ["Established researcher"]
+
+
+def derive_breadth_tags(dominant_categories: list[str], papers: list[dict[str, Any]]) -> list[str]:
+    all_categories = {category for paper in papers for category in paper["categories"]}
+    tags: list[str] = []
+    if len(all_categories) <= 1:
+        tags.append("Specialist")
+    if len(all_categories) >= 2:
+        tags.append("Interdisciplinary")
+    if len(all_categories) >= 3 or len(dominant_categories) >= 3:
+        tags.append("Cross-category bridge researcher")
+    return tags or ["Specialist"]
+
+
+def derive_rule_tags(source_tokens: set[str], rules: dict[str, set[str]]) -> list[str]:
+    return [label for label, rule_tokens in rules.items() if source_tokens & rule_tokens]
 
 
 def build_corpus_stats(papers: list[dict[str, Any]], profiles: list[dict[str, Any]]) -> dict[str, Any]:
@@ -758,6 +842,24 @@ def build_author_profiles(records: list[dict[str, Any]]) -> tuple[list[dict[str,
             key=lambda item: item["author_whitespace_match_score"],
             reverse=True,
         )[:5]
+        papers_full = profile.get("_papers_full", [])
+        source_tokens = collect_text_tokens(
+            " ".join(profile.get("recurring_topics", [])),
+            " ".join(profile.get("inferred_interests", [])),
+            " ".join(paper["title"] for paper in papers_full),
+            " ".join(paper.get("abstract", "") for paper in papers_full),
+            " ".join(topic for paper in papers_full for topic in paper.get("topics", [])),
+        )
+        all_categories = sorted({category for paper in papers_full for category in paper["categories"]})
+        profile["affiliation_bucket"] = derive_affiliation_bucket(papers_full)
+        profile["research_categories"] = all_categories
+        profile["whitespace_relevance_bucket"] = derive_whitespace_relevance_bucket(profile["related_whitespace_opportunities"])
+        profile["activity_tags"] = derive_activity_tags(profile["last_published"], profile["paper_count"], papers_full)
+        profile["breadth_tags"] = derive_breadth_tags(profile["dominant_categories"], papers_full)
+        collaboration_roles = derive_rule_tags(source_tokens, COLLABORATION_ROLE_RULES)
+        method_access_tags = derive_rule_tags(source_tokens, METHOD_ACCESS_RULES)
+        profile["collaboration_roles"] = collaboration_roles or ["Methods & Tooling"]
+        profile["method_access_tags"] = method_access_tags or ["Design studies"]
         profile.pop("_topic_tokens", None)
         profile.pop("_papers_full", None)
 
