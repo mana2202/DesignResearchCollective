@@ -458,6 +458,11 @@ def build_scored_whitespace_entries(
             "Medium": "sm",
             "Low": "sl",
         }[entry["priority_label"]]
+        # Legacy aliases keep the frontend compatible with older card field names.
+        entry["cat"] = entry["card_category"]
+        entry["tag"] = entry["card_tag"]
+        entry["desc"] = entry["description"]
+        entry["opp"] = entry["opportunity"]
         entry["matched_authors"] = entry["matched_authors"][:8]
 
     print(

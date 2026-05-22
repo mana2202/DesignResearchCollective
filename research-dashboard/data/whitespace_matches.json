@@ -98,7 +98,11 @@
     "priority_rank": 1,
     "score": "H1",
     "tagLabel": "Cross-Category · High",
-    "sc": "sh"
+    "sc": "sh",
+    "cat": "cc",
+    "tag": "tc",
+    "desc": "Ideation and optimization work are both strong, but they are still largely siloed rather than linked in end-to-end workflows.",
+    "opp": "Build end-to-end pipelines where ideation outputs are parameterized and fed into optimization loops with human feedback. This would directly connect DRC ideation, optimization, and decision-support work."
   },
   {
     "title": "Marine Renewable Energy — The Missing Domain",
@@ -198,7 +202,11 @@
     "priority_rank": 1,
     "score": "M1",
     "tagLabel": "Domain Gap · Medium",
-    "sc": "sm"
+    "sc": "sm",
+    "cat": "cx",
+    "tag": "tx",
+    "desc": "Marine renewable energy appears as a strategic domain but is lightly represented in the publication history.",
+    "opp": "Apply DRC optimization and simulation methods to marine renewable energy design. This addresses a real domain gap while aligning with climate and infrastructure priorities."
   },
   {
     "title": "Longitudinal AI Trust Calibration in Design Teams",
@@ -297,7 +305,11 @@
     "priority_rank": 2,
     "score": "M2",
     "tagLabel": "Decision Gap · Medium",
-    "sc": "sm"
+    "sc": "sm",
+    "cat": "cd",
+    "tag": "td",
+    "desc": "The DRC has studied AI trust in snapshots, but not how trust evolves over repeated interactions and failures over time.",
+    "opp": "Run longitudinal studies tracking how repeated AI assistance shifts designer autonomy and reliance. This extends trust work from one-off evaluations to project-scale human-AI collaboration."
   },
   {
     "title": "Bias Detection and Mitigation in AI-Assisted Ideation",
@@ -396,7 +408,11 @@
     "priority_rank": 3,
     "score": "M3",
     "tagLabel": "Ideation Gap · Medium",
-    "sc": "sm"
+    "sc": "sm",
+    "cat": "ci",
+    "tag": "ti",
+    "desc": "Bias in design and AI facilitation are present in the portfolio, but AI-amplified bias during ideation is still underexplored.",
+    "opp": "Develop methods to detect and mitigate anchoring, fixation, and demographic bias introduced during AI-assisted brainstorming. This links DRC equity work to current AI design infrastructure."
   },
   {
     "title": "Agentic AI for End-to-End UAV Mission Design",
@@ -496,7 +512,11 @@
     "priority_rank": 4,
     "score": "M4",
     "tagLabel": "Domain Gap · Medium",
-    "sc": "sm"
+    "sc": "sm",
+    "cat": "cx",
+    "tag": "tx",
+    "desc": "UAV work exists, but full mission-level agentic design remains relatively unexplored.",
+    "opp": "Build agentic or multi-agent systems that span the UAV design-to-mission pipeline, connecting DRC workflow, optimization, and human-AI expertise to a clear application domain."
   },
   {
     "title": "Decision Making Under Epistemic Uncertainty in Early-Stage Design",
@@ -593,7 +613,11 @@
     "priority_rank": 5,
     "score": "M5",
     "tagLabel": "Decision Gap · Medium",
-    "sc": "sm"
+    "sc": "sm",
+    "cat": "cd",
+    "tag": "td",
+    "desc": "Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
+    "opp": "Develop Bayesian or robust decision-support methods for early conceptual design under ambiguity. This extends existing DRC decision-support work into less structured design settings."
   },
   {
     "title": "Grammar-Guided LLM Design Agents",
@@ -695,7 +719,11 @@
     "priority_rank": 1,
     "score": "L1",
     "tagLabel": "Cross-Category · Low",
-    "sc": "sl"
+    "sc": "sl",
+    "cat": "cc",
+    "tag": "tc",
+    "desc": "The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
+    "opp": "Constrain LLM-based design generation with mined process grammars, ensuring outputs follow designer-valid action sequences. This connects the DRC's HMM/grammar heritage with its emerging LLM work and can extend across multiple application domains."
   },
   {
     "title": "Grammar-Informed AI Process Management",
@@ -792,7 +820,11 @@
     "priority_rank": 2,
     "score": "L2",
     "tagLabel": "Cross-Category · Low",
-    "sc": "sl"
+    "sc": "sl",
+    "cat": "cc",
+    "tag": "tc",
+    "desc": "AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
+    "opp": "Use grammar-derived design state as context for AI process managers so they can adapt to exploration, refinement, and convergence phases in real time."
   },
   {
     "title": "Neurodivergent Cognition in AI-Assisted Design",
@@ -889,7 +921,11 @@
     "priority_rank": 3,
     "score": "L3",
     "tagLabel": "Ideation Gap · Low",
-    "sc": "sl"
+    "sc": "sl",
+    "cat": "ci",
+    "tag": "ti",
+    "desc": "Cognitive style and empathy are represented, but neurodivergent experiences with AI-assisted design tools are not.",
+    "opp": "Study how neurodivergent designers engage with AI-assisted design tools and team settings, connecting cognitive-style research to inclusive human-AI design practice."
   },
   {
     "title": "Human Preference-Driven Neural Operator Optimization",
@@ -986,7 +1022,11 @@
     "priority_rank": 4,
     "score": "L4",
     "tagLabel": "Optimization Gap · Low",
-    "sc": "sl"
+    "sc": "sl",
+    "cat": "co",
+    "tag": "to",
+    "desc": "Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
+    "opp": "Build optimization systems where designer preferences actively reshape surrogate objectives. This would ground DRC computational optimization in usable human-in-the-loop workflows."
   },
   {
     "title": "Sustainability Constraints in Topology Optimization",
@@ -1082,7 +1122,11 @@
     "priority_rank": 5,
     "score": "L5",
     "tagLabel": "Optimization Gap · Low",
-    "sc": "sl"
+    "sc": "sl",
+    "cat": "co",
+    "tag": "to",
+    "desc": "Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
+    "opp": "Extend topology and lattice optimization to include sustainability objectives such as carbon footprint, lifecycle cost, and recyclability."
   },
   {
     "title": "Cross-Domain Design Grammar Transfer",
@@ -1180,6 +1224,10 @@
     "priority_rank": 6,
     "score": "L6",
     "tagLabel": "Grammar Gap · Low",
-    "sc": "sl"
+    "sc": "sl",
+    "cat": "cg",
+    "tag": "tg",
+    "desc": "Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
+    "opp": "Test whether mined design grammars transfer across domains such as additive manufacturing, UAV systems, and other engineering contexts. If they do, they become strong priors for AI-assisted design systems."
   }
 ]

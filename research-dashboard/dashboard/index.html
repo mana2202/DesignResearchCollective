@@ -981,23 +981,38 @@ function drillDown(cat, year) {
   if (papersButton) setTab('papers', papersButton);
 }
 
+function firstDefined(...values) {
+  return values.find((value) => value !== undefined && value !== null && value !== '');
+}
+
+function normalizeWhitespaceItem(item) {
+  const priorityLabel = firstDefined(item.priority_label, item.priority, item.score, 'Unlabeled');
+  const cardLabel = firstDefined(item.card_label, item.tagLabel, 'Whitespace Opportunity');
+  const categoryTag = firstDefined(item.card_tag, item.tag, 'tc');
+  const cardCategory = firstDefined(item.card_category, item.cat, 'cc');
+  const description = firstDefined(item.description, item.desc, '');
+  const opportunity = firstDefined(item.opportunity, item.opp, '');
+  const explicitTagLabel = firstDefined(item.tagLabel);
+  return {
+    cat: cardCategory,
+    tag: categoryTag,
+    tagLabel: explicitTagLabel || `${cardLabel} · ${priorityLabel}`,
+    title: firstDefined(item.title, 'Untitled whitespace'),
+    desc: description,
+    opp: opportunity,
+    priorityLabel,
+    overallPriorityScore: item.overall_priority_score,
+    priorityFactors: item.priority_factors || {},
+    priorityReason: firstDefined(item.priority_reason, ''),
+    sc: firstDefined(item.sc, priorityClass(priorityLabel)),
+    matched_authors: item.matched_authors || [],
+  };
+}
+
 function renderWhitespace() {
   const container = document.getElementById('wsgrid');
   const items = WHITESPACE_MATCHES.length
-    ? WHITESPACE_MATCHES.map((item) => ({
-      cat: item.card_category,
-      tag: item.card_tag,
-      tagLabel: item.tagLabel || `${item.card_label} · ${item.priority_label}`,
-      title: item.title,
-      desc: item.description,
-      opp: item.opportunity,
-      priorityLabel: item.priority_label || item.priority,
-      overallPriorityScore: item.overall_priority_score,
-      priorityFactors: item.priority_factors || {},
-      priorityReason: item.priority_reason || '',
-      sc: item.sc || priorityClass(item.priority_label || item.priority),
-      matched_authors: item.matched_authors || [],
-    }))
+    ? WHITESPACE_MATCHES.map((item) => normalizeWhitespaceItem(item))
     : WS.map((item) => ({
       cat: item.cat,
       tag: item.tag,
