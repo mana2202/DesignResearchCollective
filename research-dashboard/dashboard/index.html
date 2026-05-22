@@ -81,7 +81,7 @@
   h1 em { font-style: normal; background: linear-gradient(125deg, var(--accent1) 0%, var(--accent2) 55%, var(--accent3) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .hero-row {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 20px;
     margin-top: 2px;
@@ -302,9 +302,20 @@
   .wsdesc { font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
   .wsopp { background: var(--surface2); border-radius: 7px; padding: 10px 11px; font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; border-left: 2px solid var(--border); }
   .wsopp-h { font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; display: block; }
-  .score { position: absolute; top: 12px; right: 12px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-size: 18px; font-weight: 700; line-height: 1; }
+  .score { position: absolute; top: 12px; right: 12px; min-width: 24px; height: 24px; padding: 0 8px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; }
   .sh { background: rgba(232,184,75,0.15); color: var(--status-warning); border: 1px solid rgba(232,184,75,0.3); }
   .sm { background: rgba(61,217,164,0.1); color: var(--status-positive); border: 1px solid rgba(61,217,164,0.2); }
+  .sl { background: rgba(240,131,110,0.12); color: var(--status-critical); border: 1px solid rgba(240,131,110,0.25); }
+  .wsmeta { margin-top: 10px; }
+  .wsmeta summary { cursor: pointer; list-style: none; font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; }
+  .wsmeta summary::-webkit-details-marker { display: none; }
+  .wsmeta summary::after { content: ' +'; }
+  .wsmeta[open] summary::after { content: ' -'; }
+  .wsmeta-body { margin-top: 8px; padding: 10px 11px; border-radius: 10px; background: rgba(255,255,255,0.025); border: 1px solid var(--border); }
+  .wsreason { font-family: var(--font-ui); font-size: 13px; line-height: 1.55; color: var(--text-secondary); margin-bottom: 8px; }
+  .wsfactor-grid { display: grid; gap: 6px; }
+  .wsfactor { display: flex; justify-content: space-between; gap: 12px; font-family: var(--font-ui); font-size: 12px; line-height: 1.45; color: var(--text-tertiary); }
+  .wsfactor strong { color: var(--text); font-weight: 600; }
 
   .plist { display: grid; gap: 6px; }
   .prow { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: start; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; transition: border-color 0.12s, transform 0.12s; }
@@ -693,7 +704,7 @@
     </div>
 
     <div class="tabp active" id="panel-whitespace">
-      <div class="sch">12 Identified Research Opportunities <span class="sch-subnote">— H = high priority, M = medium priority, ordered by strategic fit</span></div>
+      <div class="sch">12 Identified Research Opportunities <span class="sch-subnote">— priority blends trends, DRC fit, impact, evidence, and readiness</span></div>
       <div class="wsgrid" id="wsgrid"></div>
     </div>
 
@@ -795,6 +806,12 @@ async function loadWhitespaceMatches() {
     const resp = await fetch('../data/whitespace_matches.json');
     if (!resp.ok) throw new Error('whitespace_matches.json not found');
     WHITESPACE_MATCHES = await resp.json();
+    const summary = WHITESPACE_MATCHES.reduce((counts, item) => {
+      const label = item.priority_label || item.priority || 'Unknown';
+      counts[label] = (counts[label] || 0) + 1;
+      return counts;
+    }, {});
+    console.log('Whitespace priority summary:', summary);
   } catch (err) {
     WHITESPACE_MATCHES = [];
   }
@@ -960,28 +977,85 @@ function drillDown(cat, year) {
     else b.classList.remove('active');
   });
   updateAll();
-  setTab('papers', document.querySelectorAll('.tabbtn')[4]);
+  const papersButton = [...document.querySelectorAll('.tabbtn')].find((button) => button.textContent.trim() === 'Papers');
+  if (papersButton) setTab('papers', papersButton);
 }
 
 function renderWhitespace() {
   const container = document.getElementById('wsgrid');
-  const matchByTitle = Object.fromEntries(WHITESPACE_MATCHES.map((item) => [item.title, item]));
-  container.innerHTML = WS.map((w) => `
+  const items = WHITESPACE_MATCHES.length
+    ? WHITESPACE_MATCHES.map((item) => ({
+      cat: item.card_category,
+      tag: item.card_tag,
+      tagLabel: item.tagLabel || `${item.card_label} · ${item.priority_label}`,
+      title: item.title,
+      desc: item.description,
+      opp: item.opportunity,
+      priorityLabel: item.priority_label || item.priority,
+      overallPriorityScore: item.overall_priority_score,
+      priorityFactors: item.priority_factors || {},
+      priorityReason: item.priority_reason || '',
+      sc: item.sc || priorityClass(item.priority_label || item.priority),
+      matched_authors: item.matched_authors || [],
+    }))
+    : WS.map((item) => ({
+      cat: item.cat,
+      tag: item.tag,
+      tagLabel: item.tagLabel,
+      title: item.title,
+      desc: item.desc,
+      opp: item.opp,
+      priorityLabel: item.score,
+      overallPriorityScore: null,
+      priorityFactors: null,
+      priorityReason: '',
+      sc: item.sc,
+      matched_authors: [],
+    }));
+
+  container.innerHTML = items.map((w) => `
     <div class="wscard ${w.cat}">
-      <div class="score ${w.sc}">${w.score}</div>
-      <div class="wstag ${w.tag}">${w.tagLabel}</div>
-      <div class="wstitle">${w.title}</div>
-      <div class="wsdesc">${w.desc}</div>
-      <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${w.opp}</div>
-      ${renderWhitespaceAuthors(matchByTitle[w.title])}
+      <div class="score ${w.sc}">${escapeHtml(w.priorityLabel)}</div>
+      <div class="wstag ${w.tag}">${escapeHtml(w.tagLabel)}</div>
+      <div class="wstitle">${escapeHtml(w.title)}</div>
+      <div class="wsdesc">${escapeHtml(w.desc)}</div>
+      <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(w.opp)}</div>
+      ${renderWhitespacePriority(w)}
+      ${renderWhitespaceAuthors(w)}
     </div>`).join('');
 }
 
-function renderWhitespaceAuthors(match) {
-  if (!match || !match.matched_authors || !match.matched_authors.length) return '';
+function priorityClass(label) {
+  if (label === 'High') return 'sh';
+  if (label === 'Medium') return 'sm';
+  if (label === 'Low') return 'sl';
+  return 'sm';
+}
+
+function renderWhitespacePriority(item) {
+  if (item.overallPriorityScore == null || !item.priorityFactors) return '';
+  const factors = item.priorityFactors;
+  return `<details class="wsmeta">
+    <summary>Priority details</summary>
+    <div class="wsmeta-body">
+      <div class="wsreason">${escapeHtml(item.priorityReason)}</div>
+      <div class="wsfactor-grid">
+        <div class="wsfactor"><span>Overall priority score</span><strong>${Number(item.overallPriorityScore).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Current trends</span><strong>${Number(factors.current_trends_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>DRC interest</span><strong>${Number(factors.drc_interest_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Impact</span><strong>${Number(factors.impact_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Evidence strength</span><strong>${Number(factors.evidence_strength_score || 0).toFixed(2)}</strong></div>
+        <div class="wsfactor"><span>Feasibility / readiness</span><strong>${Number(factors.feasibility_readiness_score || 0).toFixed(2)}</strong></div>
+      </div>
+    </div>
+  </details>`;
+}
+
+function renderWhitespaceAuthors(item) {
+  if (!item || !item.matched_authors || !item.matched_authors.length) return '';
   return `<div class="ws-authors">
     <div class="author-label">Related Authors</div>
-    ${match.matched_authors.slice(0, 4).map((item) => `<div class="ws-author-item"><strong>${item.author_name}</strong> · ${(item.match_score * 100).toFixed(0)}% match<br>${item.reason}</div>`).join('')}
+    ${item.matched_authors.slice(0, 4).map((match) => `<div class="ws-author-item"><strong>${escapeHtml(match.author_name)}</strong> · ${(match.match_score * 100).toFixed(0)}% match<br>${escapeHtml(match.reason)}</div>`).join('')}
   </div>`;
 }
 

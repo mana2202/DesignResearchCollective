@@ -1,11 +1,44 @@
 from __future__ import annotations
 
+from typing import Any
+
+
+def whitespace_entry(
+    *,
+    title: str,
+    description: str,
+    opportunity: str,
+    related_categories: list[str],
+    keywords: list[str],
+    card_category: str,
+    card_tag: str,
+    card_label: str,
+    impact_signals: list[str],
+    drc_focus_signals: list[str],
+    feasibility_signals: list[str],
+) -> dict[str, Any]:
+    return {
+        "title": title,
+        "description": description,
+        "opportunity": opportunity,
+        "related_categories": related_categories,
+        "keywords": keywords,
+        "card_category": card_category,
+        "card_tag": card_tag,
+        "card_label": card_label,
+        "impact_signals": impact_signals,
+        "drc_focus_signals": drc_focus_signals,
+        "feasibility_signals": feasibility_signals,
+    }
+
+
 WHITESPACE_OPPORTUNITIES = [
-    {
-        "title": "Grammar-Guided LLM Design Agents",
-        "description": "The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
-        "related_categories": ["grammar", "ideation", "decision_making"],
-        "keywords": [
+    whitespace_entry(
+        title="Grammar-Guided LLM Design Agents",
+        description="The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
+        opportunity="Constrain LLM-based design generation with mined process grammars, ensuring outputs follow designer-valid action sequences. This connects the DRC's HMM/grammar heritage with its emerging LLM work and can extend across multiple application domains.",
+        related_categories=["grammar", "ideation", "decision_making"],
+        keywords=[
             "grammar",
             "design grammar",
             "rule-based",
@@ -13,13 +46,22 @@ WHITESPACE_OPPORTUNITIES = [
             "language model",
             "concept generation",
             "designer-valid action sequences",
+            "process heuristics",
+            "generative ai",
         ],
-    },
-    {
-        "title": "Ideation to Optimization Pipelines with Human-in-the-Loop",
-        "description": "Ideation and optimization work are both strong, but they are still largely siloed rather than linked in end-to-end workflows.",
-        "related_categories": ["ideation", "optimmization", "decision_making"],
-        "keywords": [
+        card_category="cc",
+        card_tag="tc",
+        card_label="Cross-Category",
+        impact_signals=["human-ai", "methods", "scalable methods", "design workflow"],
+        drc_focus_signals=["grammar", "llm", "process", "design agents"],
+        feasibility_signals=["llm", "grammar", "authors", "student", "dataset"],
+    ),
+    whitespace_entry(
+        title="Ideation to Optimization Pipelines with Human-in-the-Loop",
+        description="Ideation and optimization work are both strong, but they are still largely siloed rather than linked in end-to-end workflows.",
+        opportunity="Build end-to-end pipelines where ideation outputs are parameterized and fed into optimization loops with human feedback. This would directly connect DRC ideation, optimization, and decision-support work.",
+        related_categories=["ideation", "optimmization", "decision_making"],
+        keywords=[
             "ideation",
             "optimization",
             "human-in-the-loop",
@@ -27,13 +69,21 @@ WHITESPACE_OPPORTUNITIES = [
             "design pipeline",
             "feedback",
             "neural operator",
+            "workflow",
         ],
-    },
-    {
-        "title": "Marine Renewable Energy — The Missing Domain",
-        "description": "Marine renewable energy appears as a strategic domain but is lightly represented in the publication history.",
-        "related_categories": ["optimmization", "decision_making"],
-        "keywords": [
+        card_category="cc",
+        card_tag="tc",
+        card_label="Cross-Category",
+        impact_signals=["human-ai", "workflow", "evaluation", "real-world application"],
+        drc_focus_signals=["ideation", "optimization", "human-in-the-loop", "neural operator"],
+        feasibility_signals=["pipeline", "authors", "methods", "feedback", "student"],
+    ),
+    whitespace_entry(
+        title="Marine Renewable Energy — The Missing Domain",
+        description="Marine renewable energy appears as a strategic domain but is lightly represented in the publication history.",
+        opportunity="Apply DRC optimization and simulation methods to marine renewable energy design. This addresses a real domain gap while aligning with climate and infrastructure priorities.",
+        related_categories=["optimmization", "decision_making"],
+        keywords=[
             "marine renewable energy",
             "wave energy",
             "ocean",
@@ -41,13 +91,21 @@ WHITESPACE_OPPORTUNITIES = [
             "simulation",
             "climate",
             "infrastructure",
+            "renewable",
         ],
-    },
-    {
-        "title": "Longitudinal AI Trust Calibration in Design Teams",
-        "description": "The DRC has studied AI trust in snapshots, but not how trust evolves over repeated interactions and failures over time.",
-        "related_categories": ["decision_making", "ideation"],
-        "keywords": [
+        card_category="cx",
+        card_tag="tx",
+        card_label="Domain Gap",
+        impact_signals=["sustainability", "climate", "real-world application", "infrastructure"],
+        drc_focus_signals=["energy", "simulation", "optimization", "marine"],
+        feasibility_signals=["simulation", "optimization", "authors", "dataset", "project"],
+    ),
+    whitespace_entry(
+        title="Longitudinal AI Trust Calibration in Design Teams",
+        description="The DRC has studied AI trust in snapshots, but not how trust evolves over repeated interactions and failures over time.",
+        opportunity="Run longitudinal studies tracking how repeated AI assistance shifts designer autonomy and reliance. This extends trust work from one-off evaluations to project-scale human-AI collaboration.",
+        related_categories=["decision_making", "ideation"],
+        keywords=[
             "trust",
             "human-ai",
             "design teams",
@@ -56,12 +114,19 @@ WHITESPACE_OPPORTUNITIES = [
             "longitudinal",
             "adaptive teaming",
         ],
-    },
-    {
-        "title": "Cross-Domain Design Grammar Transfer",
-        "description": "Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
-        "related_categories": ["grammar", "ideation"],
-        "keywords": [
+        card_category="cd",
+        card_tag="td",
+        card_label="Decision Gap",
+        impact_signals=["human-ai", "decision-making", "evaluation", "design teams"],
+        drc_focus_signals=["trust", "collaboration", "process management", "ai"],
+        feasibility_signals=["teams", "authors", "study", "methods", "student"],
+    ),
+    whitespace_entry(
+        title="Cross-Domain Design Grammar Transfer",
+        description="Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
+        opportunity="Test whether mined design grammars transfer across domains such as additive manufacturing, UAV systems, and other engineering contexts. If they do, they become strong priors for AI-assisted design systems.",
+        related_categories=["grammar", "ideation"],
+        keywords=[
             "grammar",
             "strategy transfer",
             "cross-domain",
@@ -70,12 +135,19 @@ WHITESPACE_OPPORTUNITIES = [
             "parametric",
             "design agents",
         ],
-    },
-    {
-        "title": "Bias Detection and Mitigation in AI-Assisted Ideation",
-        "description": "Bias in design and AI facilitation are present in the portfolio, but AI-amplified bias during ideation is still underexplored.",
-        "related_categories": ["ideation", "decision_making"],
-        "keywords": [
+        card_category="cg",
+        card_tag="tg",
+        card_label="Grammar Gap",
+        impact_signals=["methods", "scalable methods", "cross-domain", "design workflow"],
+        drc_focus_signals=["grammar", "strategy transfer", "parametric"],
+        feasibility_signals=["authors", "methods", "uav", "student", "project"],
+    ),
+    whitespace_entry(
+        title="Bias Detection and Mitigation in AI-Assisted Ideation",
+        description="Bias in design and AI facilitation are present in the portfolio, but AI-amplified bias during ideation is still underexplored.",
+        opportunity="Develop methods to detect and mitigate anchoring, fixation, and demographic bias introduced during AI-assisted brainstorming. This links DRC equity work to current AI design infrastructure.",
+        related_categories=["ideation", "decision_making"],
+        keywords=[
             "bias",
             "ideation",
             "ai-assisted",
@@ -84,12 +156,19 @@ WHITESPACE_OPPORTUNITIES = [
             "fixation",
             "anchoring",
         ],
-    },
-    {
-        "title": "Human Preference-Driven Neural Operator Optimization",
-        "description": "Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
-        "related_categories": ["optimmization", "decision_making"],
-        "keywords": [
+        card_category="ci",
+        card_tag="ti",
+        card_label="Ideation Gap",
+        impact_signals=["human-ai", "equity", "evaluation", "design teams"],
+        drc_focus_signals=["bias", "ideation", "equity", "ai"],
+        feasibility_signals=["study", "authors", "methods", "student", "dataset"],
+    ),
+    whitespace_entry(
+        title="Human Preference-Driven Neural Operator Optimization",
+        description="Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
+        opportunity="Build optimization systems where designer preferences actively reshape surrogate objectives. This would ground DRC computational optimization in usable human-in-the-loop workflows.",
+        related_categories=["optimmization", "decision_making"],
+        keywords=[
             "preference",
             "neural operator",
             "optimization",
@@ -97,12 +176,19 @@ WHITESPACE_OPPORTUNITIES = [
             "human preference",
             "interactive optimization",
         ],
-    },
-    {
-        "title": "Grammar-Informed AI Process Management",
-        "description": "AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
-        "related_categories": ["grammar", "decision_making"],
-        "keywords": [
+        card_category="co",
+        card_tag="to",
+        card_label="Optimization Gap",
+        impact_signals=["human-ai", "methods", "decision-making", "real-world application"],
+        drc_focus_signals=["optimization", "neural operator", "preference"],
+        feasibility_signals=["optimization", "methods", "authors", "project", "student"],
+    ),
+    whitespace_entry(
+        title="Grammar-Informed AI Process Management",
+        description="AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
+        opportunity="Use grammar-derived design state as context for AI process managers so they can adapt to exploration, refinement, and convergence phases in real time.",
+        related_categories=["grammar", "decision_making"],
+        keywords=[
             "process management",
             "grammar",
             "sequence",
@@ -110,12 +196,19 @@ WHITESPACE_OPPORTUNITIES = [
             "adaptive teaming",
             "design state",
         ],
-    },
-    {
-        "title": "Sustainability Constraints in Topology Optimization",
-        "description": "Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
-        "related_categories": ["optimmization"],
-        "keywords": [
+        card_category="cc",
+        card_tag="tc",
+        card_label="Cross-Category",
+        impact_signals=["human-ai", "decision-making", "methods", "design workflow"],
+        drc_focus_signals=["grammar", "process management", "sequence"],
+        feasibility_signals=["authors", "methods", "process", "student", "project"],
+    ),
+    whitespace_entry(
+        title="Sustainability Constraints in Topology Optimization",
+        description="Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
+        opportunity="Extend topology and lattice optimization to include sustainability objectives such as carbon footprint, lifecycle cost, and recyclability.",
+        related_categories=["optimmization"],
+        keywords=[
             "topology optimization",
             "sustainability",
             "carbon",
@@ -123,12 +216,19 @@ WHITESPACE_OPPORTUNITIES = [
             "lifecycle",
             "additive manufacturing",
         ],
-    },
-    {
-        "title": "Decision Making Under Epistemic Uncertainty in Early-Stage Design",
-        "description": "Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
-        "related_categories": ["decision_making", "ideation"],
-        "keywords": [
+        card_category="co",
+        card_tag="to",
+        card_label="Optimization Gap",
+        impact_signals=["sustainability", "real-world application", "methods", "scalable methods"],
+        drc_focus_signals=["optimization", "additive manufacturing", "lifecycle"],
+        feasibility_signals=["optimization", "methods", "authors", "dataset", "project"],
+    ),
+    whitespace_entry(
+        title="Decision Making Under Epistemic Uncertainty in Early-Stage Design",
+        description="Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
+        opportunity="Develop Bayesian or robust decision-support methods for early conceptual design under ambiguity. This extends existing DRC decision-support work into less structured design settings.",
+        related_categories=["decision_making", "ideation"],
+        keywords=[
             "decision making",
             "uncertainty",
             "conceptual design",
@@ -136,12 +236,19 @@ WHITESPACE_OPPORTUNITIES = [
             "robust decision",
             "tradeoff",
         ],
-    },
-    {
-        "title": "Agentic AI for End-to-End UAV Mission Design",
-        "description": "UAV work exists, but full mission-level agentic design remains relatively unexplored.",
-        "related_categories": ["decision_making", "optimmization", "ideation"],
-        "keywords": [
+        card_category="cd",
+        card_tag="td",
+        card_label="Decision Gap",
+        impact_signals=["decision-making", "evaluation", "methods", "real-world application"],
+        drc_focus_signals=["decision making", "uncertainty", "conceptual design"],
+        feasibility_signals=["bayesian", "methods", "authors", "student", "project"],
+    ),
+    whitespace_entry(
+        title="Agentic AI for End-to-End UAV Mission Design",
+        description="UAV work exists, but full mission-level agentic design remains relatively unexplored.",
+        opportunity="Build agentic or multi-agent systems that span the UAV design-to-mission pipeline, connecting DRC workflow, optimization, and human-AI expertise to a clear application domain.",
+        related_categories=["decision_making", "optimmization", "ideation"],
+        keywords=[
             "uav",
             "drone",
             "mission design",
@@ -150,12 +257,19 @@ WHITESPACE_OPPORTUNITIES = [
             "hyform",
             "uver",
         ],
-    },
-    {
-        "title": "Neurodivergent Cognition in AI-Assisted Design",
-        "description": "Cognitive style and empathy are represented, but neurodivergent experiences with AI-assisted design tools are not.",
-        "related_categories": ["ideation", "decision_making"],
-        "keywords": [
+        card_category="cx",
+        card_tag="tx",
+        card_label="Domain Gap",
+        impact_signals=["human-ai", "real-world application", "workflow", "scalable methods"],
+        drc_focus_signals=["uav", "hyform", "agentic ai", "multi-agent"],
+        feasibility_signals=["hyform", "uav", "authors", "project", "dataset"],
+    ),
+    whitespace_entry(
+        title="Neurodivergent Cognition in AI-Assisted Design",
+        description="Cognitive style and empathy are represented, but neurodivergent experiences with AI-assisted design tools are not.",
+        opportunity="Study how neurodivergent designers engage with AI-assisted design tools and team settings, connecting cognitive-style research to inclusive human-AI design practice.",
+        related_categories=["ideation", "decision_making"],
+        keywords=[
             "cognitive style",
             "neurodivergent",
             "ai-assisted design",
@@ -163,5 +277,11 @@ WHITESPACE_OPPORTUNITIES = [
             "empathy",
             "participation",
         ],
-    },
+        card_category="ci",
+        card_tag="ti",
+        card_label="Ideation Gap",
+        impact_signals=["human-ai", "equity", "design teams", "evaluation"],
+        drc_focus_signals=["cognitive style", "inclusive design", "empathy"],
+        feasibility_signals=["study", "authors", "student", "methods", "project"],
+    ),
 ]

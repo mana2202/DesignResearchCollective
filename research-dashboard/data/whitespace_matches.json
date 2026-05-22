@@ -1,63 +1,58 @@
 [
   {
-    "title": "Grammar-Guided LLM Design Agents",
-    "description": "The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
-    "related_categories": [
-      "grammar",
-      "ideation",
-      "decision_making"
-    ],
-    "matched_authors": [
-      {
-        "author_name": "BChen",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in deep, language; recurring interest overlap in deep, language"
-      },
-      {
-        "author_name": "Nakahira",
-        "match_score": 0.96,
-        "reason": "category overlap in decision making, ideation; topic overlap in deep, process; recurring interest overlap in deep"
-      },
-      {
-        "author_name": "Zhang",
-        "match_score": 0.96,
-        "reason": "category overlap in decision making, ideation; topic overlap in connected, generation; recurring interest overlap in generation"
-      },
-      {
-        "author_name": "Biegler",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, ideation; topic overlap in process; recurring interest overlap in process"
-      },
-      {
-        "author_name": "Gounaris",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, ideation; topic overlap in process; recurring interest overlap in process"
-      },
-      {
-        "author_name": "Grossman",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, ideation; topic overlap in process; recurring interest overlap in process"
-      },
-      {
-        "author_name": "Grover",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, ideation; topic overlap in deep; recurring interest overlap in deep"
-      },
-      {
-        "author_name": "Kumar",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, ideation; topic overlap in generation; recurring interest overlap in generation"
-      }
-    ]
-  },
-  {
     "title": "Ideation to Optimization Pipelines with Human-in-the-Loop",
     "description": "Ideation and optimization work are both strong, but they are still largely siloed rather than linked in end-to-end workflows.",
+    "opportunity": "Build end-to-end pipelines where ideation outputs are parameterized and fed into optimization loops with human feedback. This would directly connect DRC ideation, optimization, and decision-support work.",
     "related_categories": [
       "ideation",
       "optimmization",
       "decision_making"
     ],
+    "keywords": [
+      "ideation",
+      "optimization",
+      "human-in-the-loop",
+      "concept generation",
+      "design pipeline",
+      "feedback",
+      "neural operator",
+      "workflow"
+    ],
+    "card_category": "cc",
+    "card_tag": "tc",
+    "card_label": "Cross-Category",
+    "impact_signals": [
+      "human-ai",
+      "workflow",
+      "evaluation",
+      "real-world application"
+    ],
+    "drc_focus_signals": [
+      "ideation",
+      "optimization",
+      "human-in-the-loop",
+      "neural operator"
+    ],
+    "feasibility_signals": [
+      "pipeline",
+      "authors",
+      "methods",
+      "feedback",
+      "student"
+    ],
+    "priority": "High",
+    "priority_label": "High",
+    "overall_priority_score": 0.712,
+    "priority_factors": {
+      "current_trends_score": 0.764,
+      "drc_interest_score": 0.659,
+      "impact_score": 0.787,
+      "evidence_strength_score": 0.515,
+      "feasibility_readiness_score": 0.808
+    },
+    "priority_reason": "High priority because feasibility readiness and impact are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
     "matched_authors": [
       {
         "author_name": "Akash Agrawal",
@@ -99,15 +94,65 @@
         "match_score": 0.99,
         "reason": "category overlap in decision making, ideation, optimmization; topic overlap in optimization; recurring interest overlap in optimization"
       }
-    ]
+    ],
+    "priority_rank": 1,
+    "score": "H1",
+    "tagLabel": "Cross-Category · High",
+    "sc": "sh"
   },
   {
     "title": "Marine Renewable Energy — The Missing Domain",
     "description": "Marine renewable energy appears as a strategic domain but is lightly represented in the publication history.",
+    "opportunity": "Apply DRC optimization and simulation methods to marine renewable energy design. This addresses a real domain gap while aligning with climate and infrastructure priorities.",
     "related_categories": [
       "optimmization",
       "decision_making"
     ],
+    "keywords": [
+      "marine renewable energy",
+      "wave energy",
+      "ocean",
+      "topology optimization",
+      "simulation",
+      "climate",
+      "infrastructure",
+      "renewable"
+    ],
+    "card_category": "cx",
+    "card_tag": "tx",
+    "card_label": "Domain Gap",
+    "impact_signals": [
+      "sustainability",
+      "climate",
+      "real-world application",
+      "infrastructure"
+    ],
+    "drc_focus_signals": [
+      "energy",
+      "simulation",
+      "optimization",
+      "marine"
+    ],
+    "feasibility_signals": [
+      "simulation",
+      "optimization",
+      "authors",
+      "dataset",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.681,
+    "priority_factors": {
+      "current_trends_score": 0.764,
+      "drc_interest_score": 0.542,
+      "impact_score": 0.778,
+      "evidence_strength_score": 0.515,
+      "feasibility_readiness_score": 0.808
+    },
+    "priority_reason": "Medium priority because feasibility readiness and impact are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
     "matched_authors": [
       {
         "author_name": "Berges",
@@ -149,15 +194,64 @@
         "match_score": 0.99,
         "reason": "category overlap in decision making, optimmization; topic overlap in energy, renewable; recurring interest overlap in energy, renewable"
       }
-    ]
+    ],
+    "priority_rank": 1,
+    "score": "M1",
+    "tagLabel": "Domain Gap · Medium",
+    "sc": "sm"
   },
   {
     "title": "Longitudinal AI Trust Calibration in Design Teams",
     "description": "The DRC has studied AI trust in snapshots, but not how trust evolves over repeated interactions and failures over time.",
+    "opportunity": "Run longitudinal studies tracking how repeated AI assistance shifts designer autonomy and reliance. This extends trust work from one-off evaluations to project-scale human-AI collaboration.",
     "related_categories": [
       "decision_making",
       "ideation"
     ],
+    "keywords": [
+      "trust",
+      "human-ai",
+      "design teams",
+      "collaboration",
+      "process management",
+      "longitudinal",
+      "adaptive teaming"
+    ],
+    "card_category": "cd",
+    "card_tag": "td",
+    "card_label": "Decision Gap",
+    "impact_signals": [
+      "human-ai",
+      "decision-making",
+      "evaluation",
+      "design teams"
+    ],
+    "drc_focus_signals": [
+      "trust",
+      "collaboration",
+      "process management",
+      "ai"
+    ],
+    "feasibility_signals": [
+      "teams",
+      "authors",
+      "study",
+      "methods",
+      "student"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.664,
+    "priority_factors": {
+      "current_trends_score": 0.743,
+      "drc_interest_score": 0.702,
+      "impact_score": 0.658,
+      "evidence_strength_score": 0.471,
+      "feasibility_readiness_score": 0.67
+    },
+    "priority_reason": "Medium priority because current trends and drc interest are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 2,
+    "supporting_author_count": 8,
     "matched_authors": [
       {
         "author_name": "Gounaris",
@@ -199,65 +293,64 @@
         "match_score": 0.96,
         "reason": "category overlap in decision making, ideation; topic overlap in management, process; recurring interest overlap in process"
       }
-    ]
-  },
-  {
-    "title": "Cross-Domain Design Grammar Transfer",
-    "description": "Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
-    "related_categories": [
-      "grammar",
-      "ideation"
     ],
-    "matched_authors": [
-      {
-        "author_name": "Cagan",
-        "match_score": 0.99,
-        "reason": "category overlap in grammar, ideation; topic overlap in domains, parametric; recurring interest overlap in domains, parametric"
-      },
-      {
-        "author_name": "Finger",
-        "match_score": 0.84,
-        "reason": "category overlap in grammar, ideation; topic overlap in parametric; recurring interest overlap in parametric"
-      },
-      {
-        "author_name": "Christohper McComb",
-        "match_score": 0.72,
-        "reason": "category overlap in ideation; topic overlap in domains, parametric; recurring interest overlap in domains, parametric"
-      },
-      {
-        "author_name": "Ninad Mahajan",
-        "match_score": 0.72,
-        "reason": "category overlap in ideation; topic overlap in domains, parametric; recurring interest overlap in domains, parametric"
-      },
-      {
-        "author_name": "Acharya",
-        "match_score": 0.64,
-        "reason": "category overlap in grammar, ideation"
-      },
-      {
-        "author_name": "Bolmin",
-        "match_score": 0.64,
-        "reason": "category overlap in grammar, ideation"
-      },
-      {
-        "author_name": "Brown",
-        "match_score": 0.64,
-        "reason": "category overlap in grammar, ideation"
-      },
-      {
-        "author_name": "Brumley",
-        "match_score": 0.64,
-        "reason": "category overlap in grammar, ideation"
-      }
-    ]
+    "priority_rank": 2,
+    "score": "M2",
+    "tagLabel": "Decision Gap · Medium",
+    "sc": "sm"
   },
   {
     "title": "Bias Detection and Mitigation in AI-Assisted Ideation",
     "description": "Bias in design and AI facilitation are present in the portfolio, but AI-amplified bias during ideation is still underexplored.",
+    "opportunity": "Develop methods to detect and mitigate anchoring, fixation, and demographic bias introduced during AI-assisted brainstorming. This links DRC equity work to current AI design infrastructure.",
     "related_categories": [
       "ideation",
       "decision_making"
     ],
+    "keywords": [
+      "bias",
+      "ideation",
+      "ai-assisted",
+      "brainstorming",
+      "equity",
+      "fixation",
+      "anchoring"
+    ],
+    "card_category": "ci",
+    "card_tag": "ti",
+    "card_label": "Ideation Gap",
+    "impact_signals": [
+      "human-ai",
+      "equity",
+      "evaluation",
+      "design teams"
+    ],
+    "drc_focus_signals": [
+      "bias",
+      "ideation",
+      "equity",
+      "ai"
+    ],
+    "feasibility_signals": [
+      "study",
+      "authors",
+      "methods",
+      "student",
+      "dataset"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.63,
+    "priority_factors": {
+      "current_trends_score": 0.764,
+      "drc_interest_score": 0.505,
+      "impact_score": 0.658,
+      "evidence_strength_score": 0.515,
+      "feasibility_readiness_score": 0.691
+    },
+    "priority_reason": "Medium priority because current trends and feasibility readiness are strong, while drc interest remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
     "matched_authors": [
       {
         "author_name": "Bauer",
@@ -299,215 +392,65 @@
         "match_score": 0.84,
         "reason": "category overlap in decision making, ideation; topic overlap in detection; recurring interest overlap in detection"
       }
-    ]
-  },
-  {
-    "title": "Human Preference-Driven Neural Operator Optimization",
-    "description": "Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
-    "related_categories": [
-      "optimmization",
-      "decision_making"
     ],
-    "matched_authors": [
-      {
-        "author_name": "Okeyo",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, optimmization; topic overlap in optimization, work; recurring interest overlap in optimization, work"
-      },
-      {
-        "author_name": "Pileggi",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, optimmization; topic overlap in integrated, optimization; recurring interest overlap in integrated, optimization"
-      },
-      {
-        "author_name": "Biegler",
-        "match_score": 0.96,
-        "reason": "category overlap in decision making, optimmization; topic overlap in neural, optimization; recurring interest overlap in optimization"
-      },
-      {
-        "author_name": "Christopher McComb",
-        "match_score": 0.96,
-        "reason": "category overlap in decision making, optimmization; topic overlap in human, optimization; recurring interest overlap in optimization"
-      },
-      {
-        "author_name": "Smith",
-        "match_score": 0.96,
-        "reason": "category overlap in decision making, optimmization; topic overlap in human, neural; recurring interest overlap in neural"
-      },
-      {
-        "author_name": "Akinci",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, optimmization; topic overlap in work; recurring interest overlap in work"
-      },
-      {
-        "author_name": "Amvrosiadis",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, optimmization; topic overlap in optimization; recurring interest overlap in optimization"
-      },
-      {
-        "author_name": "Berges",
-        "match_score": 0.84,
-        "reason": "category overlap in decision making, optimmization; topic overlap in optimization; recurring interest overlap in optimization"
-      }
-    ]
-  },
-  {
-    "title": "Grammar-Informed AI Process Management",
-    "description": "AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
-    "related_categories": [
-      "grammar",
-      "decision_making"
-    ],
-    "matched_authors": [
-      {
-        "author_name": "Akinci",
-        "match_score": 0.72,
-        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
-      },
-      {
-        "author_name": "Coffelt",
-        "match_score": 0.72,
-        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
-      },
-      {
-        "author_name": "Gounaris",
-        "match_score": 0.72,
-        "reason": "category overlap in decision making; topic overlap in management, process; recurring interest overlap in management, process"
-      },
-      {
-        "author_name": "Grossman",
-        "match_score": 0.72,
-        "reason": "category overlap in decision making; topic overlap in management, process; recurring interest overlap in management, process"
-      },
-      {
-        "author_name": "Okeyo",
-        "match_score": 0.72,
-        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
-      },
-      {
-        "author_name": "Torsten Maier",
-        "match_score": 0.72,
-        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
-      },
-      {
-        "author_name": "Biegler",
-        "match_score": 0.64,
-        "reason": "category overlap in decision making; topic overlap in management, process; recurring interest overlap in process"
-      },
-      {
-        "author_name": "Michalek",
-        "match_score": 0.64,
-        "reason": "category overlap in decision making; topic overlap in management, state; recurring interest overlap in state"
-      }
-    ]
-  },
-  {
-    "title": "Sustainability Constraints in Topology Optimization",
-    "description": "Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
-    "related_categories": [
-      "optimmization"
-    ],
-    "matched_authors": [
-      {
-        "author_name": "Conrad Tucker",
-        "match_score": 0.99,
-        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing, optimization"
-      },
-      {
-        "author_name": "Martha Baldwin",
-        "match_score": 0.99,
-        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing, optimization"
-      },
-      {
-        "author_name": "Maxime Mermillod-Blondin",
-        "match_score": 0.99,
-        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing, optimization"
-      },
-      {
-        "author_name": "Alison Olechowski",
-        "match_score": 0.96,
-        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing"
-      },
-      {
-        "author_name": "Jiangce Chen",
-        "match_score": 0.96,
-        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing"
-      },
-      {
-        "author_name": "Sneha Narra",
-        "match_score": 0.96,
-        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in optimization, topology"
-      },
-      {
-        "author_name": "Allin Groom",
-        "match_score": 0.92,
-        "reason": "category overlap in optimmization; topic overlap in manufacturing, optimization, topology; recurring interest overlap in manufacturing, optimization, topology"
-      },
-      {
-        "author_name": "Ayush Raina",
-        "match_score": 0.92,
-        "reason": "category overlap in optimmization; topic overlap in manufacturing, optimization, topology; recurring interest overlap in manufacturing, optimization, topology"
-      }
-    ]
-  },
-  {
-    "title": "Decision Making Under Epistemic Uncertainty in Early-Stage Design",
-    "description": "Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
-    "related_categories": [
-      "decision_making",
-      "ideation"
-    ],
-    "matched_authors": [
-      {
-        "author_name": "Chase",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in decision, deep, making; recurring interest overlap in decision, making"
-      },
-      {
-        "author_name": "Fischhoff",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
-      },
-      {
-        "author_name": "Gounaris",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in robust, uncertainty; recurring interest overlap in robust, uncertainty"
-      },
-      {
-        "author_name": "Grossman",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in robust, uncertainty; recurring interest overlap in robust, uncertainty"
-      },
-      {
-        "author_name": "Malena Agyemang",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
-      },
-      {
-        "author_name": "Skirpan",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
-      },
-      {
-        "author_name": "Smith",
-        "match_score": 0.99,
-        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
-      },
-      {
-        "author_name": "Biegler",
-        "match_score": 0.96,
-        "reason": "category overlap in decision making, ideation; topic overlap in robust, uncertainty; recurring interest overlap in uncertainty"
-      }
-    ]
+    "priority_rank": 3,
+    "score": "M3",
+    "tagLabel": "Ideation Gap · Medium",
+    "sc": "sm"
   },
   {
     "title": "Agentic AI for End-to-End UAV Mission Design",
     "description": "UAV work exists, but full mission-level agentic design remains relatively unexplored.",
+    "opportunity": "Build agentic or multi-agent systems that span the UAV design-to-mission pipeline, connecting DRC workflow, optimization, and human-AI expertise to a clear application domain.",
     "related_categories": [
       "decision_making",
       "optimmization",
       "ideation"
     ],
+    "keywords": [
+      "uav",
+      "drone",
+      "mission design",
+      "agentic ai",
+      "multi-agent",
+      "hyform",
+      "uver"
+    ],
+    "card_category": "cx",
+    "card_tag": "tx",
+    "card_label": "Domain Gap",
+    "impact_signals": [
+      "human-ai",
+      "real-world application",
+      "workflow",
+      "scalable methods"
+    ],
+    "drc_focus_signals": [
+      "uav",
+      "hyform",
+      "agentic ai",
+      "multi-agent"
+    ],
+    "feasibility_signals": [
+      "hyform",
+      "uav",
+      "authors",
+      "project",
+      "dataset"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.578,
+    "priority_factors": {
+      "current_trends_score": 0.471,
+      "drc_interest_score": 0.462,
+      "impact_score": 0.878,
+      "evidence_strength_score": 0.394,
+      "feasibility_readiness_score": 0.733
+    },
+    "priority_reason": "Medium priority because impact and feasibility readiness are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 1,
+    "supporting_author_count": 8,
     "matched_authors": [
       {
         "author_name": "Akinci",
@@ -549,15 +492,358 @@
         "match_score": 0.99,
         "reason": "category overlap in decision making, ideation, optimmization; topic overlap in multi-agent; recurring interest overlap in multi-agent"
       }
-    ]
+    ],
+    "priority_rank": 4,
+    "score": "M4",
+    "tagLabel": "Domain Gap · Medium",
+    "sc": "sm"
+  },
+  {
+    "title": "Decision Making Under Epistemic Uncertainty in Early-Stage Design",
+    "description": "Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
+    "opportunity": "Develop Bayesian or robust decision-support methods for early conceptual design under ambiguity. This extends existing DRC decision-support work into less structured design settings.",
+    "related_categories": [
+      "decision_making",
+      "ideation"
+    ],
+    "keywords": [
+      "decision making",
+      "uncertainty",
+      "conceptual design",
+      "bayesian",
+      "robust decision",
+      "tradeoff"
+    ],
+    "card_category": "cd",
+    "card_tag": "td",
+    "card_label": "Decision Gap",
+    "impact_signals": [
+      "decision-making",
+      "evaluation",
+      "methods",
+      "real-world application"
+    ],
+    "drc_focus_signals": [
+      "decision making",
+      "uncertainty",
+      "conceptual design"
+    ],
+    "feasibility_signals": [
+      "bayesian",
+      "methods",
+      "authors",
+      "student",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.577,
+    "priority_factors": {
+      "current_trends_score": 0.471,
+      "drc_interest_score": 0.687,
+      "impact_score": 0.567,
+      "evidence_strength_score": 0.427,
+      "feasibility_readiness_score": 0.733
+    },
+    "priority_reason": "Medium priority because feasibility readiness and drc interest are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 1,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Chase",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in decision, deep, making; recurring interest overlap in decision, making"
+      },
+      {
+        "author_name": "Fischhoff",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
+      },
+      {
+        "author_name": "Gounaris",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in robust, uncertainty; recurring interest overlap in robust, uncertainty"
+      },
+      {
+        "author_name": "Grossman",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in robust, uncertainty; recurring interest overlap in robust, uncertainty"
+      },
+      {
+        "author_name": "Malena Agyemang",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
+      },
+      {
+        "author_name": "Skirpan",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
+      },
+      {
+        "author_name": "Smith",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in decision, making; recurring interest overlap in decision, making"
+      },
+      {
+        "author_name": "Biegler",
+        "match_score": 0.96,
+        "reason": "category overlap in decision making, ideation; topic overlap in robust, uncertainty; recurring interest overlap in uncertainty"
+      }
+    ],
+    "priority_rank": 5,
+    "score": "M5",
+    "tagLabel": "Decision Gap · Medium",
+    "sc": "sm"
+  },
+  {
+    "title": "Grammar-Guided LLM Design Agents",
+    "description": "The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
+    "opportunity": "Constrain LLM-based design generation with mined process grammars, ensuring outputs follow designer-valid action sequences. This connects the DRC's HMM/grammar heritage with its emerging LLM work and can extend across multiple application domains.",
+    "related_categories": [
+      "grammar",
+      "ideation",
+      "decision_making"
+    ],
+    "keywords": [
+      "grammar",
+      "design grammar",
+      "rule-based",
+      "llm",
+      "language model",
+      "concept generation",
+      "designer-valid action sequences",
+      "process heuristics",
+      "generative ai"
+    ],
+    "card_category": "cc",
+    "card_tag": "tc",
+    "card_label": "Cross-Category",
+    "impact_signals": [
+      "human-ai",
+      "methods",
+      "scalable methods",
+      "design workflow"
+    ],
+    "drc_focus_signals": [
+      "grammar",
+      "llm",
+      "process",
+      "design agents"
+    ],
+    "feasibility_signals": [
+      "llm",
+      "grammar",
+      "authors",
+      "student",
+      "dataset"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.427,
+    "priority_factors": {
+      "current_trends_score": 0.0,
+      "drc_interest_score": 0.592,
+      "impact_score": 0.787,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.563
+    },
+    "priority_reason": "Low priority because impact and drc interest are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "BChen",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, ideation; topic overlap in deep, generative, language; recurring interest overlap in deep, generative, language"
+      },
+      {
+        "author_name": "Nakahira",
+        "match_score": 0.96,
+        "reason": "category overlap in decision making, ideation; topic overlap in deep, process; recurring interest overlap in deep"
+      },
+      {
+        "author_name": "Zhang",
+        "match_score": 0.96,
+        "reason": "category overlap in decision making, ideation; topic overlap in connected, generation; recurring interest overlap in generation"
+      },
+      {
+        "author_name": "Biegler",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, ideation; topic overlap in process; recurring interest overlap in process"
+      },
+      {
+        "author_name": "Gounaris",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, ideation; topic overlap in process; recurring interest overlap in process"
+      },
+      {
+        "author_name": "Grossman",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, ideation; topic overlap in process; recurring interest overlap in process"
+      },
+      {
+        "author_name": "Grover",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, ideation; topic overlap in deep; recurring interest overlap in deep"
+      },
+      {
+        "author_name": "Kumar",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, ideation; topic overlap in generation; recurring interest overlap in generation"
+      }
+    ],
+    "priority_rank": 1,
+    "score": "L1",
+    "tagLabel": "Cross-Category · Low",
+    "sc": "sl"
+  },
+  {
+    "title": "Grammar-Informed AI Process Management",
+    "description": "AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
+    "opportunity": "Use grammar-derived design state as context for AI process managers so they can adapt to exploration, refinement, and convergence phases in real time.",
+    "related_categories": [
+      "grammar",
+      "decision_making"
+    ],
+    "keywords": [
+      "process management",
+      "grammar",
+      "sequence",
+      "facilitation",
+      "adaptive teaming",
+      "design state"
+    ],
+    "card_category": "cc",
+    "card_tag": "tc",
+    "card_label": "Cross-Category",
+    "impact_signals": [
+      "human-ai",
+      "decision-making",
+      "methods",
+      "design workflow"
+    ],
+    "drc_focus_signals": [
+      "grammar",
+      "process management",
+      "sequence"
+    ],
+    "feasibility_signals": [
+      "authors",
+      "methods",
+      "process",
+      "student",
+      "project"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.402,
+    "priority_factors": {
+      "current_trends_score": 0.25,
+      "drc_interest_score": 0.416,
+      "impact_score": 0.595,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.524
+    },
+    "priority_reason": "Low priority because impact and feasibility readiness are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Akinci",
+        "match_score": 0.72,
+        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
+      },
+      {
+        "author_name": "Coffelt",
+        "match_score": 0.72,
+        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
+      },
+      {
+        "author_name": "Gounaris",
+        "match_score": 0.72,
+        "reason": "category overlap in decision making; topic overlap in management, process; recurring interest overlap in management, process"
+      },
+      {
+        "author_name": "Grossman",
+        "match_score": 0.72,
+        "reason": "category overlap in decision making; topic overlap in management, process; recurring interest overlap in management, process"
+      },
+      {
+        "author_name": "Okeyo",
+        "match_score": 0.72,
+        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
+      },
+      {
+        "author_name": "Torsten Maier",
+        "match_score": 0.72,
+        "reason": "category overlap in decision making; topic overlap in management, work; recurring interest overlap in management, work"
+      },
+      {
+        "author_name": "Biegler",
+        "match_score": 0.64,
+        "reason": "category overlap in decision making; topic overlap in management, process; recurring interest overlap in process"
+      },
+      {
+        "author_name": "Michalek",
+        "match_score": 0.64,
+        "reason": "category overlap in decision making; topic overlap in management, state; recurring interest overlap in state"
+      }
+    ],
+    "priority_rank": 2,
+    "score": "L2",
+    "tagLabel": "Cross-Category · Low",
+    "sc": "sl"
   },
   {
     "title": "Neurodivergent Cognition in AI-Assisted Design",
     "description": "Cognitive style and empathy are represented, but neurodivergent experiences with AI-assisted design tools are not.",
+    "opportunity": "Study how neurodivergent designers engage with AI-assisted design tools and team settings, connecting cognitive-style research to inclusive human-AI design practice.",
     "related_categories": [
       "ideation",
       "decision_making"
     ],
+    "keywords": [
+      "cognitive style",
+      "neurodivergent",
+      "ai-assisted design",
+      "inclusive design",
+      "empathy",
+      "participation"
+    ],
+    "card_category": "ci",
+    "card_tag": "ti",
+    "card_label": "Ideation Gap",
+    "impact_signals": [
+      "human-ai",
+      "equity",
+      "design teams",
+      "evaluation"
+    ],
+    "drc_focus_signals": [
+      "cognitive style",
+      "inclusive design",
+      "empathy"
+    ],
+    "feasibility_signals": [
+      "study",
+      "authors",
+      "student",
+      "methods",
+      "project"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.391,
+    "priority_factors": {
+      "current_trends_score": 0.0,
+      "drc_interest_score": 0.527,
+      "impact_score": 0.658,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.602
+    },
+    "priority_reason": "Low priority because impact and feasibility readiness are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
     "matched_authors": [
       {
         "author_name": "Chase",
@@ -599,6 +885,301 @@
         "match_score": 0.76,
         "reason": "category overlap in decision making, ideation; topic overlap in cognitive"
       }
-    ]
+    ],
+    "priority_rank": 3,
+    "score": "L3",
+    "tagLabel": "Ideation Gap · Low",
+    "sc": "sl"
+  },
+  {
+    "title": "Human Preference-Driven Neural Operator Optimization",
+    "description": "Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
+    "opportunity": "Build optimization systems where designer preferences actively reshape surrogate objectives. This would ground DRC computational optimization in usable human-in-the-loop workflows.",
+    "related_categories": [
+      "optimmization",
+      "decision_making"
+    ],
+    "keywords": [
+      "preference",
+      "neural operator",
+      "optimization",
+      "surrogate",
+      "human preference",
+      "interactive optimization"
+    ],
+    "card_category": "co",
+    "card_tag": "to",
+    "card_label": "Optimization Gap",
+    "impact_signals": [
+      "human-ai",
+      "methods",
+      "decision-making",
+      "real-world application"
+    ],
+    "drc_focus_signals": [
+      "optimization",
+      "neural operator",
+      "preference"
+    ],
+    "feasibility_signals": [
+      "optimization",
+      "methods",
+      "authors",
+      "project",
+      "student"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.359,
+    "priority_factors": {
+      "current_trends_score": 0.0,
+      "drc_interest_score": 0.492,
+      "impact_score": 0.475,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.687
+    },
+    "priority_reason": "Low priority because feasibility readiness and drc interest are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Okeyo",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, optimmization; topic overlap in optimization, work; recurring interest overlap in optimization, work"
+      },
+      {
+        "author_name": "Pileggi",
+        "match_score": 0.99,
+        "reason": "category overlap in decision making, optimmization; topic overlap in integrated, optimization; recurring interest overlap in integrated, optimization"
+      },
+      {
+        "author_name": "Biegler",
+        "match_score": 0.96,
+        "reason": "category overlap in decision making, optimmization; topic overlap in neural, optimization; recurring interest overlap in optimization"
+      },
+      {
+        "author_name": "Christopher McComb",
+        "match_score": 0.96,
+        "reason": "category overlap in decision making, optimmization; topic overlap in human, optimization; recurring interest overlap in optimization"
+      },
+      {
+        "author_name": "Smith",
+        "match_score": 0.96,
+        "reason": "category overlap in decision making, optimmization; topic overlap in human, neural; recurring interest overlap in neural"
+      },
+      {
+        "author_name": "Akinci",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, optimmization; topic overlap in work; recurring interest overlap in work"
+      },
+      {
+        "author_name": "Amvrosiadis",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, optimmization; topic overlap in optimization; recurring interest overlap in optimization"
+      },
+      {
+        "author_name": "Berges",
+        "match_score": 0.84,
+        "reason": "category overlap in decision making, optimmization; topic overlap in optimization; recurring interest overlap in optimization"
+      }
+    ],
+    "priority_rank": 4,
+    "score": "L4",
+    "tagLabel": "Optimization Gap · Low",
+    "sc": "sl"
+  },
+  {
+    "title": "Sustainability Constraints in Topology Optimization",
+    "description": "Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
+    "opportunity": "Extend topology and lattice optimization to include sustainability objectives such as carbon footprint, lifecycle cost, and recyclability.",
+    "related_categories": [
+      "optimmization"
+    ],
+    "keywords": [
+      "topology optimization",
+      "sustainability",
+      "carbon",
+      "recyclability",
+      "lifecycle",
+      "additive manufacturing"
+    ],
+    "card_category": "co",
+    "card_tag": "to",
+    "card_label": "Optimization Gap",
+    "impact_signals": [
+      "sustainability",
+      "real-world application",
+      "methods",
+      "scalable methods"
+    ],
+    "drc_focus_signals": [
+      "optimization",
+      "additive manufacturing",
+      "lifecycle"
+    ],
+    "feasibility_signals": [
+      "optimization",
+      "methods",
+      "authors",
+      "dataset",
+      "project"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.358,
+    "priority_factors": {
+      "current_trends_score": 0.0,
+      "drc_interest_score": 0.493,
+      "impact_score": 0.467,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.69
+    },
+    "priority_reason": "Low priority because feasibility readiness and drc interest are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Conrad Tucker",
+        "match_score": 0.99,
+        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing, optimization"
+      },
+      {
+        "author_name": "Martha Baldwin",
+        "match_score": 0.99,
+        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing, optimization"
+      },
+      {
+        "author_name": "Maxime Mermillod-Blondin",
+        "match_score": 0.99,
+        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing, optimization"
+      },
+      {
+        "author_name": "Alison Olechowski",
+        "match_score": 0.96,
+        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing"
+      },
+      {
+        "author_name": "Jiangce Chen",
+        "match_score": 0.96,
+        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in additive, manufacturing"
+      },
+      {
+        "author_name": "Sneha Narra",
+        "match_score": 0.96,
+        "reason": "category overlap in optimmization; topic overlap in additive, manufacturing, optimization, topology; recurring interest overlap in optimization, topology"
+      },
+      {
+        "author_name": "Allin Groom",
+        "match_score": 0.92,
+        "reason": "category overlap in optimmization; topic overlap in manufacturing, optimization, topology; recurring interest overlap in manufacturing, optimization, topology"
+      },
+      {
+        "author_name": "Ayush Raina",
+        "match_score": 0.92,
+        "reason": "category overlap in optimmization; topic overlap in manufacturing, optimization, topology; recurring interest overlap in manufacturing, optimization, topology"
+      }
+    ],
+    "priority_rank": 5,
+    "score": "L5",
+    "tagLabel": "Optimization Gap · Low",
+    "sc": "sl"
+  },
+  {
+    "title": "Cross-Domain Design Grammar Transfer",
+    "description": "Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
+    "opportunity": "Test whether mined design grammars transfer across domains such as additive manufacturing, UAV systems, and other engineering contexts. If they do, they become strong priors for AI-assisted design systems.",
+    "related_categories": [
+      "grammar",
+      "ideation"
+    ],
+    "keywords": [
+      "grammar",
+      "strategy transfer",
+      "cross-domain",
+      "rule-based",
+      "uav",
+      "parametric",
+      "design agents"
+    ],
+    "card_category": "cg",
+    "card_tag": "tg",
+    "card_label": "Grammar Gap",
+    "impact_signals": [
+      "methods",
+      "scalable methods",
+      "cross-domain",
+      "design workflow"
+    ],
+    "drc_focus_signals": [
+      "grammar",
+      "strategy transfer",
+      "parametric"
+    ],
+    "feasibility_signals": [
+      "authors",
+      "methods",
+      "uav",
+      "student",
+      "project"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.318,
+    "priority_factors": {
+      "current_trends_score": 0.0,
+      "drc_interest_score": 0.41,
+      "impact_score": 0.475,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.552
+    },
+    "priority_reason": "Low priority because feasibility readiness and impact are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Cagan",
+        "match_score": 0.99,
+        "reason": "category overlap in grammar, ideation; topic overlap in domains, parametric; recurring interest overlap in domains, parametric"
+      },
+      {
+        "author_name": "Finger",
+        "match_score": 0.84,
+        "reason": "category overlap in grammar, ideation; topic overlap in parametric; recurring interest overlap in parametric"
+      },
+      {
+        "author_name": "Christohper McComb",
+        "match_score": 0.72,
+        "reason": "category overlap in ideation; topic overlap in domains, parametric; recurring interest overlap in domains, parametric"
+      },
+      {
+        "author_name": "Ninad Mahajan",
+        "match_score": 0.72,
+        "reason": "category overlap in ideation; topic overlap in domains, parametric; recurring interest overlap in domains, parametric"
+      },
+      {
+        "author_name": "Acharya",
+        "match_score": 0.64,
+        "reason": "category overlap in grammar, ideation"
+      },
+      {
+        "author_name": "Bolmin",
+        "match_score": 0.64,
+        "reason": "category overlap in grammar, ideation"
+      },
+      {
+        "author_name": "Brown",
+        "match_score": 0.64,
+        "reason": "category overlap in grammar, ideation"
+      },
+      {
+        "author_name": "Brumley",
+        "match_score": 0.64,
+        "reason": "category overlap in grammar, ideation"
+      }
+    ],
+    "priority_rank": 6,
+    "score": "L6",
+    "tagLabel": "Grammar Gap · Low",
+    "sc": "sl"
   }
 ]
