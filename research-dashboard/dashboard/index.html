@@ -337,11 +337,11 @@
   }
   .author-filter-top { display: flex; gap: 10px; flex-wrap: wrap; }
   .author-filter-top .field {
-    min-width: 240px;
+    min-width: 0;
     width: 100%;
   }
   .author-filter-grid { display: grid; gap: 10px; align-items: start; }
-  .author-filter-card { padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
+  .author-filter-card { min-width: 0; padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
   .author-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
   .author-filter-title { font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); overflow-wrap: anywhere; }
   .author-filter-actions { display: flex; gap: 8px; flex-wrap: wrap; }
@@ -354,6 +354,8 @@
     grid-template-columns: 16px minmax(0, 1fr);
     align-items: center;
     column-gap: 12px;
+    width: 100%;
+    box-sizing: border-box;
     padding: 10px 12px;
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -523,12 +525,13 @@
     background: var(--surface3);
     border: 1px solid var(--border);
     border-radius: 14px;
+    box-sizing: border-box;
     color: var(--text-secondary);
     padding: 12px 14px;
     font-family: var(--font-ui);
     font-size: 14px;
     line-height: 1.65;
-    min-width: 180px;
+    min-width: 0;
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
   }
   .field::placeholder { color: var(--text-tertiary); font-size: 13px; }
