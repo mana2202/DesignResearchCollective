@@ -340,7 +340,7 @@
     min-width: 240px;
     width: 100%;
   }
-  .author-filter-grid { display: grid; gap: 10px; }
+  .author-filter-grid { display: grid; gap: 10px; align-items: start; }
   .author-filter-card { padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
   .author-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
   .author-filter-title { font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); }
@@ -410,7 +410,114 @@
   .active-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .active-filter-label { font-family: var(--font-ui); font-size: 12px; color: var(--text-tertiary); }
   .filter-topic-list { display: flex; flex-wrap: wrap; gap: 6px; max-height: 110px; overflow-y: auto; padding-right: 4px; }
+  .filter-topic-list.is-empty { display: block; max-height: none; overflow: visible; padding-right: 0; }
   .filter-topic-empty { font-family: var(--font-ui); font-size: 13px; color: var(--text-tertiary); line-height: 1.5; }
+  .filter-range { display: grid; gap: 12px; }
+  .filter-range-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: var(--text-tertiary);
+  }
+  .filter-range-value {
+    color: var(--text);
+    font-weight: 500;
+  }
+  .filter-range-sliders {
+    position: relative;
+    height: 26px;
+  }
+  .filter-range-track,
+  .filter-range-fill {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    border-radius: 999px;
+    transform: translateY(-50%);
+  }
+  .filter-range-track {
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .filter-range-fill {
+    width: auto;
+    background: linear-gradient(90deg, var(--primary), rgba(124,106,247,0.72));
+    box-shadow: 0 0 0 1px rgba(124,106,247,0.18);
+  }
+  .filter-range input[type="range"] {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    margin: 0;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    pointer-events: none;
+  }
+  .filter-range input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: transparent;
+  }
+  .filter-range input[type="range"]::-moz-range-track {
+    height: 6px;
+    background: transparent;
+  }
+  .filter-range input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px rgba(124,106,247,0.18);
+    pointer-events: auto;
+    cursor: pointer;
+    margin-top: -8px;
+  }
+  .filter-range input[type="range"]::-moz-range-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 2px solid var(--primary);
+    background: var(--surface);
+    box-shadow: 0 0 0 3px rgba(124,106,247,0.18);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+  .filter-range-extent {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--text-tertiary);
+  }
+  .filter-range-inputs {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .filter-range-input {
+    display: grid;
+    gap: 6px;
+  }
+  .filter-range-input label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .filter-range-input input {
+    width: 100%;
+    min-width: 0;
+  }
   .filter-reset { padding: 8px 12px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface3); color: var(--text-secondary); font-family: var(--font-ui); font-size: 13px; cursor: pointer; }
   .filter-reset:hover { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
   .field {
@@ -826,20 +933,21 @@ const AUTHOR_FILTER_GROUPS = [
   { key: 'categories', label: 'Research Categories', options: ['ideation', 'optimmization', 'grammar', 'decision_making'] },
   { key: 'whitespace', label: 'Whitespace Relevance', options: ['Strong whitespace match', 'Medium whitespace match', 'Emerging relevance', 'No whitespace connection'] },
   { key: 'roles', label: 'Collaboration Role / Research Function', options: ['Theory / Framework Building', 'Methods & Tooling', 'Evaluation & Validation', 'Human Studies', 'Systems / Infrastructure', 'AI & ML', 'Visualization', 'Simulation', 'Decision Support', 'Sustainability', 'Cross-disciplinary Bridge'] },
-  { key: 'activity', label: 'Activity / Recency', options: ['Active in last 1 year', 'Active in last 3 years', 'Established researcher', 'Emerging researcher'] },
+  { key: 'activity', label: 'Activity / Recency', options: [] },
   { key: 'breadth', label: 'Research Breadth', options: ['Specialist', 'Interdisciplinary', 'Cross-category bridge researcher'] },
   { key: 'methods', label: 'Data / Method Access', options: ['Has datasets', 'Simulation-heavy', 'AI/ML methods', 'Experimental methods', 'Design studies', 'Field studies', 'Review/meta-analysis'] },
 ];
-// Filter state is stored as sets so each group supports true multi-select.
+const AUTHOR_CHECKBOX_GROUPS = new Set(['affiliation', 'categories']);
+// Multi-select groups stay in sets, while activityRange tracks a numeric year window.
 const authorFilterState = {
   affiliation: new Set(),
   categories: new Set(),
   topics: new Set(),
   whitespace: new Set(),
   roles: new Set(),
-  activity: new Set(),
   breadth: new Set(),
   methods: new Set(),
+  activityRange: { start: null, end: null },
   topicQuery: '',
 };
 
@@ -1240,11 +1348,84 @@ function toggleAuthorFilter(groupKey, value) {
   renderAuthorProfiles();
 }
 
+function getAuthorProfileYearRange(profile) {
+  const firstYear = Number(profile.first_published_year || profile.first_published || 0);
+  const lastYear = Number(profile.last_published_year || profile.last_published || 0);
+  if (!firstYear && !lastYear) return { firstYear: 0, lastYear: 0 };
+  return {
+    firstYear: firstYear || lastYear,
+    lastYear: lastYear || firstYear,
+  };
+}
+
+function getAuthorYearExtent(profiles = AUTHOR_PROFILES) {
+  const years = profiles.flatMap((profile) => {
+    const range = getAuthorProfileYearRange(profile);
+    return [range.firstYear, range.lastYear].filter(Boolean);
+  });
+  const minYear = years.length ? Math.min(...years) : new Date().getFullYear();
+  const maxYear = years.length ? Math.max(...years) : minYear;
+  return { minYear, maxYear };
+}
+
+function getNormalizedAuthorActivityRange() {
+  const extent = getAuthorYearExtent();
+  let start = Number(authorFilterState.activityRange.start);
+  let end = Number(authorFilterState.activityRange.end);
+  if (!start) start = extent.minYear;
+  if (!end) end = extent.maxYear;
+  start = Math.max(extent.minYear, Math.min(start, extent.maxYear));
+  end = Math.max(extent.minYear, Math.min(end, extent.maxYear));
+  if (start > end) [start, end] = [end, start];
+  return { ...extent, start, end };
+}
+
+function isDefaultAuthorActivityRange() {
+  const range = getNormalizedAuthorActivityRange();
+  return range.start === range.minYear && range.end === range.maxYear;
+}
+
+function formatAuthorActivityRangeLabel() {
+  const range = getNormalizedAuthorActivityRange();
+  if (isDefaultAuthorActivityRange()) return 'Any years';
+  return `${range.start} to ${range.end}`;
+}
+
+function setAuthorActivityRange(boundary, rawValue) {
+  const range = getNormalizedAuthorActivityRange();
+  const nextValue = Math.max(range.minYear, Math.min(Number(rawValue) || range[boundary], range.maxYear));
+  if (boundary === 'start') {
+    authorFilterState.activityRange.start = Math.min(nextValue, range.end);
+    authorFilterState.activityRange.end = Math.max(range.end, authorFilterState.activityRange.start);
+  } else {
+    authorFilterState.activityRange.end = Math.max(nextValue, range.start);
+    authorFilterState.activityRange.start = Math.min(range.start, authorFilterState.activityRange.end);
+  }
+  renderAuthorFilters();
+  renderAuthorProfiles();
+}
+
+function setAuthorActivityYearInput(boundary, rawValue) {
+  const range = getNormalizedAuthorActivityRange();
+  const parsed = parseInt(String(rawValue || '').trim(), 10);
+  if (Number.isNaN(parsed)) {
+    if (boundary === 'start') authorFilterState.activityRange.start = range.minYear;
+    else authorFilterState.activityRange.end = range.maxYear;
+  } else {
+    setAuthorActivityRange(boundary, parsed);
+    return;
+  }
+  renderAuthorFilters();
+  renderAuthorProfiles();
+}
+
 function clearAuthorFilters() {
   Object.entries(authorFilterState).forEach(([key, value]) => {
     if (value instanceof Set) value.clear();
   });
   authorFilterState.topicQuery = '';
+  const extent = getAuthorYearExtent();
+  authorFilterState.activityRange = { start: extent.minYear, end: extent.maxYear };
   const topicInput = document.getElementById('author-topic-search');
   if (topicInput) topicInput.value = '';
   renderAuthorFilters();
@@ -1272,13 +1453,74 @@ function renderAuthorFilters() {
   const visibleTopics = allTopics
     .filter((topic) => !authorFilterState.topicQuery || topic.toLowerCase().includes(authorFilterState.topicQuery))
     .slice(0, AUTHOR_TOPIC_LIMIT);
+  const activityRange = getNormalizedAuthorActivityRange();
+  const activitySpan = Math.max(1, activityRange.maxYear - activityRange.minYear);
+  const activityFillStart = ((activityRange.start - activityRange.minYear) / activitySpan) * 100;
+  const activityFillEnd = ((activityRange.end - activityRange.minYear) / activitySpan) * 100;
 
   groupsContainer.innerHTML = AUTHOR_FILTER_GROUPS.map((group) => `
     <div class="author-filter-card">
       <div class="author-filter-row">
         <div class="author-filter-title">${group.label}</div>
       </div>
-      ${group.key === 'affiliation' ? `
+      ${group.key === 'activity' ? `
+        <div class="filter-range">
+          <div class="filter-range-head">
+            <span>Filter by recency</span>
+            <span class="filter-range-value">${escapeHtml(formatAuthorActivityRangeLabel())}</span>
+          </div>
+          <div class="filter-range-sliders">
+            <div class="filter-range-track"></div>
+            <div class="filter-range-fill" style="left:${activityFillStart}%; right:${100 - activityFillEnd}%"></div>
+            <input
+              type="range"
+              min="${activityRange.minYear}"
+              max="${activityRange.maxYear}"
+              step="1"
+              value="${activityRange.start}"
+              oninput="setAuthorActivityRange('start', this.value)"
+            >
+            <input
+              type="range"
+              min="${activityRange.minYear}"
+              max="${activityRange.maxYear}"
+              step="1"
+              value="${activityRange.end}"
+              oninput="setAuthorActivityRange('end', this.value)"
+            >
+          </div>
+          <div class="filter-range-extent">
+            <span>${activityRange.minYear}</span>
+            <span>${activityRange.maxYear}</span>
+          </div>
+          <div class="filter-range-inputs">
+            <div class="filter-range-input">
+              <label for="author-activity-start">First year</label>
+              <input
+                class="field"
+                id="author-activity-start"
+                type="number"
+                min="${activityRange.minYear}"
+                max="${activityRange.maxYear}"
+                value="${activityRange.start}"
+                onchange="setAuthorActivityYearInput('start', this.value)"
+              >
+            </div>
+            <div class="filter-range-input">
+              <label for="author-activity-end">Last year</label>
+              <input
+                class="field"
+                id="author-activity-end"
+                type="number"
+                min="${activityRange.minYear}"
+                max="${activityRange.maxYear}"
+                value="${activityRange.end}"
+                onchange="setAuthorActivityYearInput('end', this.value)"
+              >
+            </div>
+          </div>
+        </div>
+      ` : AUTHOR_CHECKBOX_GROUPS.has(group.key) ? `
         <div class="checkbox-list">
           ${group.options.map((option) => `
             <label class="checkbox-chip ${authorFilterState[group.key].has(option) ? 'active' : ''}">
@@ -1306,7 +1548,7 @@ function renderAuthorFilters() {
       <div class="author-filter-row">
         <div class="author-filter-title">Research Topics / Themes</div>
       </div>
-      <div class="filter-topic-list">
+      <div class="filter-topic-list ${visibleTopics.length ? '' : 'is-empty'}">
         ${visibleTopics.length ? visibleTopics.map((topic) => `
           <button type="button" class="filter-chip ${authorFilterState.topics.has(topic) ? 'active' : ''}" onclick='toggleAuthorFilter("topics", ${JSON.stringify(topic)})'>
             ${escapeHtml(topic)}
@@ -1321,14 +1563,24 @@ function renderAuthorFilters() {
     if (!(value instanceof Set)) return;
     [...value].forEach((item) => activeEntries.push({ key, value: item }));
   });
+  if (!isDefaultAuthorActivityRange()) {
+    activeEntries.push({ key: 'activityRange', value: formatAuthorActivityRangeLabel() });
+  }
 
   activeContainer.innerHTML = activeEntries.length
     ? `<span class="active-filter-label">Active filters</span>${activeEntries.map((entry) => `
-        <button type="button" class="filter-chip active" onclick='toggleAuthorFilter(${JSON.stringify(entry.key)}, ${JSON.stringify(entry.value)})'>
+        <button type="button" class="filter-chip active" onclick='${entry.key === "activityRange" ? "clearAuthorActivityRange()" : `toggleAuthorFilter(${JSON.stringify(entry.key)}, ${JSON.stringify(entry.value)})`}'>
           ${escapeHtml(displayFilterValue(entry.key, entry.value))}
         </button>
       `).join('')}<button type="button" class="filter-reset" onclick="clearAuthorFilters()">Clear all</button>`
     : `<span class="active-filter-label">No active filters</span><button type="button" class="filter-reset" onclick="clearAuthorFilters()">Reset</button>`;
+}
+
+function clearAuthorActivityRange() {
+  const extent = getAuthorYearExtent();
+  authorFilterState.activityRange = { start: extent.minYear, end: extent.maxYear };
+  renderAuthorFilters();
+  renderAuthorProfiles();
 }
 
 function matchesMultiSelect(selectedSet, candidateValues) {
@@ -1356,6 +1608,17 @@ function buildAuthorDerivedTags(profile) {
   };
 }
 
+function matchesAuthorActivityRange(profile) {
+  if (!AUTHOR_PROFILES.length) return true;
+  const selectedRange = getNormalizedAuthorActivityRange();
+  if (isDefaultAuthorActivityRange()) return true;
+  const profileRange = getAuthorProfileYearRange(profile);
+  if (!profileRange.firstYear && !profileRange.lastYear) return false;
+  // Treat the filter as a publication window: authors match when their active span
+  // overlaps the selected year range, rather than only when both endpoints sit inside it.
+  return profileRange.lastYear >= selectedRange.start && profileRange.firstYear <= selectedRange.end;
+}
+
 function renderAuthorProfiles() {
   const grid = document.getElementById('author-grid');
   if (!grid) return;
@@ -1375,7 +1638,7 @@ function renderAuthorProfiles() {
         matchesMultiSelect(authorFilterState.topics, tags.topics) &&
         matchesMultiSelect(authorFilterState.whitespace, tags.whitespace) &&
         matchesMultiSelect(authorFilterState.roles, tags.roles) &&
-        matchesMultiSelect(authorFilterState.activity, tags.activity) &&
+        matchesAuthorActivityRange(profile) &&
         matchesMultiSelect(authorFilterState.breadth, tags.breadth) &&
         matchesMultiSelect(authorFilterState.methods, tags.methods)
       );

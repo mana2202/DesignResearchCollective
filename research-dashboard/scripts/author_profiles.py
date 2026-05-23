@@ -791,11 +791,17 @@ def build_author_profiles(records: list[dict[str, Any]]) -> tuple[list[dict[str,
             key=lambda p: float(str(p["year"]).strip() or 0),
             reverse=True,
         )
+        publication_years = sorted({paper["year_num"] for paper in sorted_papers if paper["year_num"]})
+        first_published_year = publication_years[0] if publication_years else 0
+        last_published_year = publication_years[-1] if publication_years else 0
         last_published = normalize_year_label(sorted_papers[0]["year"]) if sorted_papers else ""
         profiles.append({
             "author_name": author_name,
             "paper_count": len(papers),
+            "first_published": str(first_published_year) if first_published_year else "",
+            "first_published_year": first_published_year or None,
             "last_published": last_published,
+            "last_published_year": last_published_year or None,
             "short_description": build_author_summary(dominant_categories, recurring_topics, len(papers)),
             "papers": [
                 {
