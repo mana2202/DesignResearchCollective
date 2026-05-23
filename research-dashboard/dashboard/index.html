@@ -327,6 +327,7 @@
     max-height: calc(100dvh - 40px);
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: contain;
     scrollbar-width: thin;
     scrollbar-color: var(--border) transparent;
   }
@@ -1009,7 +1010,20 @@ window.onload = async function () {
   renderWhitespace();
   updateAll();
   renderAuthorProfiles();
+  setupAuthorSidebarScroll();
 };
+
+function setupAuthorSidebarScroll() {
+  const sidebar = document.querySelector('.author-sidebar');
+  if (!sidebar || sidebar.dataset.wheelBound === 'true') return;
+  sidebar.dataset.wheelBound = 'true';
+  sidebar.addEventListener('wheel', (event) => {
+    if (Math.abs(event.deltaY) < Math.abs(event.deltaX)) return;
+    if (sidebar.scrollHeight <= sidebar.clientHeight) return;
+    sidebar.scrollTop += event.deltaY;
+    event.preventDefault();
+  }, { passive: false });
+}
 
 async function loadLiveData() {
   const status = document.getElementById('data-status');
