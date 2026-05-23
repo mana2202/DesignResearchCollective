@@ -152,6 +152,53 @@
 
   .sch { font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
   .sch::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .wslegend {
+    margin: -2px 0 14px;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text-tertiary);
+  }
+  .wslegend strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .wslegend-items {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 6px 0 4px;
+    vertical-align: middle;
+  }
+  .wslegend-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    white-space: nowrap;
+  }
+  .wslegend-pill .k {
+    font-weight: 700;
+  }
+  .wslegend-pill.high {
+    border-color: #8d6b20;
+    background: rgba(245, 192, 66, 0.14);
+    color: #f5c042;
+  }
+  .wslegend-pill.medium {
+    border-color: #3ca66b;
+    background: rgba(89, 206, 143, 0.14);
+    color: #78e3aa;
+  }
+  .wslegend-pill.low {
+    border-color: #3b7fd6;
+    background: rgba(98, 160, 255, 0.14);
+    color: #8ab8ff;
+  }
 
   .ovgrid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 22px; }
   .ovc { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px; box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
@@ -249,7 +296,7 @@
   .mxempty-mark { font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: var(--text-disabled); line-height: 1; }
 
   .wsgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
-  .wscard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 18px 16px; position: relative; overflow: hidden; transition: border-color 0.15s, transform 0.15s; box-shadow: 0 14px 34px rgba(0,0,0,0.18); }
+  .wscard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 18px 16px; position: relative; overflow: hidden; transition: border-color 0.15s, transform 0.15s; box-shadow: 0 14px 34px rgba(0,0,0,0.18); display: flex; flex-direction: column; min-height: 100%; }
   .wscard:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
   .wscard::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
   .wscard.ci::before { background: var(--accent1); }
@@ -265,11 +312,11 @@
   .td { background: rgba(247,197,90,0.15); color: var(--accent4); }
   .tc { background: rgba(124,106,247,0.1); color: var(--cat-ideation); }
   .tx { background: rgba(240,131,110,0.1); color: var(--cat-optimization); }
-  .wstitle { font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
+  .wstitle { font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 8px; padding-right: 34px; }
   .wsdesc { font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
   .wsopp { background: var(--surface2); border-radius: 7px; padding: 10px 11px; font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; border-left: 2px solid var(--border); }
   .wsopp-h { font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; display: block; }
-  .wscta { margin-top: 12px; width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text); font-family: var(--font-ui); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.12s; text-align: center; }
+  .wscta { margin-top: auto; width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text); font-family: var(--font-ui); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.12s; text-align: center; }
   .wscta:hover { border-color: var(--primary-border); background: var(--primary-subtle); }
   .score { position: absolute; top: 12px; right: 12px; min-width: 24px; height: 24px; padding: 0 8px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; }
   .sh { background: rgba(232,184,75,0.15); color: var(--status-warning); border: 1px solid rgba(232,184,75,0.3); }
@@ -329,9 +376,31 @@
     border-bottom: 1px solid var(--border);
     background: rgba(255,255,255,0.02);
   }
-  .wsmodal-headline { min-width: 0; }
-  .wsmodal-title { font-family: var(--font-ui); font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--text); }
-  .wsmodal-sub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .wsmodal-headline {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .wsmodal-title {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-ui);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .wsmodal-sub {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    flex-shrink: 0;
+  }
   .wsmodal-score {
     min-width: 24px;
     height: 24px;
@@ -388,6 +457,12 @@
     border-radius: 14px;
     background: rgba(255,255,255,0.025);
     border: 1px solid var(--border);
+  }
+  .wsdetail-section.plain {
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    border: 0;
   }
   .wsdetail-label {
     font-family: var(--font-ui);
@@ -855,7 +930,6 @@
   .legend-swatch.grammar { background: var(--cat-grammar); }
   .legend-swatch.decision { background: var(--cat-decision); }
   .legend-swatch.empty { background: transparent; border: 1px dashed var(--border); }
-  .sch-subnote { font-family: var(--font-ui); font-size: 13px; font-weight: 400; line-height: 1.5; letter-spacing: 0; text-transform: none; color: var(--text-tertiary); }
   .chart-shell { margin-bottom: 6px; }
   .chart-scroll { display: flex; justify-content: flex-end; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
   .chart-content { width: max-content; min-width: 100%; }
@@ -896,6 +970,13 @@
     .wsmodal-backdrop { padding: 12px; }
     .wsmodal { max-height: 92vh; }
     .wsmodal-head, .wsmodal-body { padding-left: 16px; padding-right: 16px; }
+    .wsmodal-headline {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .wsmodal-sub {
+      justify-content: flex-start;
+    }
     .author-head { flex-direction: column; align-items: flex-start; }
     .author-layout { grid-template-columns: 1fr; }
     .author-toolbar, .author-filter-top { flex-direction: column; }
@@ -1029,7 +1110,8 @@
     </div>
 
     <div class="tabp active" id="panel-whitespace">
-      <div class="sch">12 Identified Research Opportunities <span class="sch-subnote">— priority blends trends, DRC fit, impact, evidence, and readiness</span></div>
+      <div class="sch">12 Identified Research Opportunities</div>
+      <div class="wslegend"><strong>Priority legend:</strong> <span class="wslegend-items"><span class="wslegend-pill high"><span class="k">H</span><span>High</span></span><span class="wslegend-pill medium"><span class="k">M</span><span>Medium</span></span><span class="wslegend-pill low"><span class="k">L</span><span>Low</span></span></span> The number shows rank within that tier.</div>
       <div class="wsgrid" id="wsgrid"></div>
     </div>
 
@@ -1415,6 +1497,7 @@ function renderWhitespace() {
 function renderWhitespaceCards(container, items) {
   container.innerHTML = items.map((w, index) => `
     <article class="wscard ${w.cat}">
+      <div class="score ${w.sc}">${escapeHtml(w.priorityLabel)}</div>
       <div class="wstitle">${escapeHtml(w.title)}</div>
       <div class="wsdesc">${escapeHtml(w.desc)}</div>
       <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(w.opp)}</div>
@@ -1505,11 +1588,11 @@ function renderWhitespaceAuthorDetails(match) {
 
 function renderWhitespaceDetailSections(item) {
   return `
-    <div class="wsdetail-section">
+    <div class="wsdetail-section plain">
       <div class="wsdetail-label">Gap / Problem Statement</div>
       <div class="wsdesc">${escapeHtml(item.desc)}</div>
     </div>
-    <div class="wsdetail-section">
+    <div class="wsdetail-section plain">
       <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(item.opp)}</div>
     </div>
     ${item.overallPriorityScore != null && item.priorityFactors ? `
