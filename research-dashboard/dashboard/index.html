@@ -265,10 +265,12 @@
   .td { background: rgba(247,197,90,0.15); color: var(--accent4); }
   .tc { background: rgba(124,106,247,0.1); color: var(--cat-ideation); }
   .tx { background: rgba(240,131,110,0.1); color: var(--cat-optimization); }
-  .wstitle { font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 8px; padding-right: 34px; }
+  .wstitle { font-family: var(--font-ui); font-size: 14px; font-weight: 600; color: var(--text); line-height: 1.4; margin-bottom: 8px; }
   .wsdesc { font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; margin-bottom: 10px; }
   .wsopp { background: var(--surface2); border-radius: 7px; padding: 10px 11px; font-family: var(--font-ui); font-size: 14px; font-weight: 400; color: var(--text-secondary); line-height: 1.65; border-left: 2px solid var(--border); }
   .wsopp-h { font-family: var(--font-ui); font-size: 11px; font-weight: 500; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; display: block; }
+  .wscta { margin-top: 12px; width: 100%; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--border); background: rgba(255,255,255,0.02); color: var(--text); font-family: var(--font-ui); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.12s; text-align: center; }
+  .wscta:hover { border-color: var(--primary-border); background: var(--primary-subtle); }
   .score { position: absolute; top: 12px; right: 12px; min-width: 24px; height: 24px; padding: 0 8px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; }
   .sh { background: rgba(232,184,75,0.15); color: var(--status-warning); border: 1px solid rgba(232,184,75,0.3); }
   .sm { background: rgba(61,217,164,0.1); color: var(--status-positive); border: 1px solid rgba(61,217,164,0.2); }
@@ -295,6 +297,109 @@
   .wsmatch-meta { margin-top: 8px; display: grid; gap: 6px; }
   .wsmatch-paper { padding: 8px 9px; border-radius: 8px; background: rgba(255,255,255,0.02); border: 1px solid var(--border); }
   .wsmatch-paper strong { color: var(--text); }
+  .wsmodal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(7, 8, 18, 0.72);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 10000;
+  }
+  .wsmodal-backdrop.open { display: flex; }
+  .wsmodal {
+    width: min(860px, 100%);
+    max-height: min(86vh, 920px);
+    background: linear-gradient(180deg, rgba(20,22,36,0.98), rgba(13,14,24,0.98));
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    box-shadow: 0 28px 70px rgba(0,0,0,0.42);
+    overflow: hidden;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .wsmodal-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 20px 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+  }
+  .wsmodal-headline { min-width: 0; }
+  .wsmodal-title { font-family: var(--font-ui); font-size: 18px; font-weight: 700; line-height: 1.3; color: var(--text); }
+  .wsmodal-sub { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .wsmodal-score {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .wsmodal-close {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .wsmodal-close:hover { border-color: var(--primary-border); background: var(--primary-subtle); }
+  .wsmodal-body {
+    overflow-y: auto;
+    padding: 18px 20px 20px;
+    display: grid;
+    gap: 14px;
+  }
+  .wsmodal-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .wsmodal-navbtn {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .wsmodal-navbtn:hover { border-color: var(--primary-border); background: var(--primary-subtle); }
+  .wsmodal-navbtn.end { margin-left: auto; }
+  .wsdetail-section {
+    padding: 14px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.025);
+    border: 1px solid var(--border);
+  }
+  .wsdetail-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  body.modal-open { overflow: hidden; }
 
   .plist { display: grid; gap: 6px; }
   .prow { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: start; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; transition: border-color 0.12s, transform 0.12s; }
@@ -788,6 +893,9 @@
     .tabs { margin-bottom: 18px; }
     .tabbtn { padding: 10px 12px; font-size: 14px; }
     .wsgrid { grid-template-columns: 1fr; }
+    .wsmodal-backdrop { padding: 12px; }
+    .wsmodal { max-height: 92vh; }
+    .wsmodal-head, .wsmodal-body { padding-left: 16px; padding-right: 16px; }
     .author-head { flex-direction: column; align-items: flex-start; }
     .author-layout { grid-template-columns: 1fr; }
     .author-toolbar, .author-filter-top { flex-direction: column; }
@@ -950,6 +1058,18 @@
 </div>
 
 <div class="tt" id="tt"><div class="tt-t" id="tt-t"></div><div id="tt-b"></div></div>
+<div class="wsmodal-backdrop" id="wsmodal-backdrop" onclick="handleWhitespaceBackdropClick(event)">
+  <div class="wsmodal" role="dialog" aria-modal="true" aria-labelledby="wsmodal-title">
+    <div class="wsmodal-head">
+      <div class="wsmodal-headline">
+        <div class="wsmodal-title" id="wsmodal-title"></div>
+        <div class="wsmodal-sub" id="wsmodal-sub"></div>
+      </div>
+      <button type="button" class="wsmodal-close" aria-label="Close whitespace details" onclick="closeWhitespaceDetail()">×</button>
+    </div>
+    <div class="wsmodal-body" id="wsmodal-body"></div>
+  </div>
+</div>
 
 <script>
 const CATS = ['ideation', 'optimization', 'grammar', 'decision'];
@@ -960,7 +1080,9 @@ const PBCLASS = { ideation:'pbi', optimization:'pbo', grammar:'pbg', decision:'p
 let PAPERS = [];
 let AUTHOR_PROFILES = [];
 let WHITESPACE_MATCHES = [];
+let WHITESPACE_ITEMS = [];
 let OPEN_AUTHOR = '';
+let OPEN_WHITESPACE_INDEX = -1;
 const AUTHOR_TOPIC_LIMIT = 40;
 const AUTHOR_FILTER_GROUPS = [
   { key: 'affiliation', label: 'Research Affiliation', options: ['DRC Researchers', 'External Engineering Researchers'] },
@@ -1270,7 +1392,7 @@ function normalizeWhitespaceItem(item) {
 
 function renderWhitespace() {
   const container = document.getElementById('wsgrid');
-  const items = WHITESPACE_MATCHES.length
+  WHITESPACE_ITEMS = WHITESPACE_MATCHES.length
     ? WHITESPACE_MATCHES.map((item) => normalizeWhitespaceItem(item))
     : WS.map((item) => ({
       cat: item.cat,
@@ -1287,16 +1409,17 @@ function renderWhitespace() {
       matched_authors: [],
     }));
 
-  container.innerHTML = items.map((w) => `
-    <div class="wscard ${w.cat}">
-      <div class="score ${w.sc}">${escapeHtml(w.priorityLabel)}</div>
-      <div class="wstag ${w.tag}">${escapeHtml(w.tagLabel)}</div>
+  renderWhitespaceCards(container, WHITESPACE_ITEMS);
+}
+
+function renderWhitespaceCards(container, items) {
+  container.innerHTML = items.map((w, index) => `
+    <article class="wscard ${w.cat}">
       <div class="wstitle">${escapeHtml(w.title)}</div>
       <div class="wsdesc">${escapeHtml(w.desc)}</div>
       <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(w.opp)}</div>
-      ${renderWhitespacePriority(w)}
-      ${renderWhitespaceAuthors(w)}
-    </div>`).join('');
+      <button type="button" class="wscta" onclick="openWhitespaceDetail(${index})">More details</button>
+    </article>`).join('');
 }
 
 function priorityClass(label) {
@@ -1308,27 +1431,39 @@ function priorityClass(label) {
 
 function renderWhitespacePriority(item) {
   if (item.overallPriorityScore == null || !item.priorityFactors) return '';
-  const factors = item.priorityFactors;
   return `<details class="wsmeta">
     <summary>Priority details</summary>
-    <div class="wsmeta-body">
-      <div class="wsreason">${escapeHtml(item.priorityReason)}</div>
-      <div class="wsfactor-grid">
-        <div class="wsfactor"><span>Overall priority score</span><strong>${Number(item.overallPriorityScore).toFixed(2)}</strong></div>
-        <div class="wsfactor"><span>Current trends</span><strong>${Number(factors.current_trends_score || 0).toFixed(2)}</strong></div>
-        <div class="wsfactor"><span>DRC interest</span><strong>${Number(factors.drc_interest_score || 0).toFixed(2)}</strong></div>
-        <div class="wsfactor"><span>Impact</span><strong>${Number(factors.impact_score || 0).toFixed(2)}</strong></div>
-        <div class="wsfactor"><span>Evidence strength</span><strong>${Number(factors.evidence_strength_score || 0).toFixed(2)}</strong></div>
-        <div class="wsfactor"><span>Feasibility / readiness</span><strong>${Number(factors.feasibility_readiness_score || 0).toFixed(2)}</strong></div>
-      </div>
-    </div>
+    <div class="wsmeta-body">${renderWhitespacePriorityContent(item)}</div>
   </details>`;
+}
+
+function renderWhitespacePriorityContent(item) {
+  if (item.overallPriorityScore == null || !item.priorityFactors) return '';
+  const factors = item.priorityFactors;
+  return `
+    <div class="wsreason">${escapeHtml(item.priorityReason)}</div>
+    <div class="wsfactor-grid">
+      <div class="wsfactor"><span>Overall priority score</span><strong>${Number(item.overallPriorityScore).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Current trends</span><strong>${Number(factors.current_trends_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>DRC interest</span><strong>${Number(factors.drc_interest_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Impact</span><strong>${Number(factors.impact_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Evidence strength</span><strong>${Number(factors.evidence_strength_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Feasibility / readiness</span><strong>${Number(factors.feasibility_readiness_score || 0).toFixed(2)}</strong></div>
+    </div>
+  `;
 }
 
 function renderWhitespaceAuthors(item) {
   if (!item || !item.matched_authors || !item.matched_authors.length) return '';
   return `<div class="ws-authors">
     <div class="author-label">Related Authors</div>
+    ${renderWhitespaceAuthorsList(item)}
+  </div>`;
+}
+
+function renderWhitespaceAuthorsList(item) {
+  if (!item || !item.matched_authors || !item.matched_authors.length) return '';
+  return `
     ${item.matched_authors.slice(0, 4).map((match) => `
       <div class="ws-author-item">
         <strong>${escapeHtml(match.author_name)}</strong>
@@ -1342,7 +1477,7 @@ function renderWhitespaceAuthors(item) {
         </div>
       </div>
     `).join('')}
-  </div>`;
+  `;
 }
 
 function renderWhitespaceAuthorDetails(match) {
@@ -1367,6 +1502,92 @@ function renderWhitespaceAuthorDetails(match) {
     </div>
   </details>`;
 }
+
+function renderWhitespaceDetailSections(item) {
+  return `
+    <div class="wsdetail-section">
+      <div class="wsdetail-label">Gap / Problem Statement</div>
+      <div class="wsdesc">${escapeHtml(item.desc)}</div>
+    </div>
+    <div class="wsdetail-section">
+      <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(item.opp)}</div>
+    </div>
+    ${item.overallPriorityScore != null && item.priorityFactors ? `
+      <div class="wsdetail-section">
+        <div class="wsdetail-label">Priority Details</div>
+        ${renderWhitespacePriorityContent(item)}
+      </div>
+    ` : ''}
+    ${item.matched_authors?.length ? `
+      <div class="wsdetail-section">
+        <div class="wsdetail-label">Related Authors</div>
+        ${renderWhitespaceAuthorsList(item)}
+      </div>
+    ` : ''}
+  `;
+}
+
+function openWhitespaceDetail(index) {
+  if (!WHITESPACE_ITEMS.length) return;
+  OPEN_WHITESPACE_INDEX = ((index % WHITESPACE_ITEMS.length) + WHITESPACE_ITEMS.length) % WHITESPACE_ITEMS.length;
+  const item = WHITESPACE_ITEMS[OPEN_WHITESPACE_INDEX];
+  const backdrop = document.getElementById('wsmodal-backdrop');
+  const title = document.getElementById('wsmodal-title');
+  const sub = document.getElementById('wsmodal-sub');
+  const body = document.getElementById('wsmodal-body');
+  if (!backdrop || !title || !sub || !body) return;
+
+  title.textContent = item.title;
+  sub.innerHTML = `
+    <span class="wstag ${item.tag}">${escapeHtml(item.tagLabel)}</span>
+    <span class="wsmodal-score ${item.sc}">${escapeHtml(item.priorityLabel)}</span>
+  `;
+  body.innerHTML = `
+    <div class="wsmodal-nav">
+      <button type="button" class="wsmodal-navbtn" onclick="goToPreviousWhitespace()">← Previous</button>
+      <button type="button" class="wsmodal-navbtn end" onclick="goToNextWhitespace()">Next →</button>
+    </div>
+    ${renderWhitespaceDetailSections(item)}
+  `;
+  backdrop.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeWhitespaceDetail() {
+  OPEN_WHITESPACE_INDEX = -1;
+  document.getElementById('wsmodal-backdrop')?.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+function goToNextWhitespace() {
+  if (OPEN_WHITESPACE_INDEX === -1) return;
+  openWhitespaceDetail((OPEN_WHITESPACE_INDEX + 1) % WHITESPACE_ITEMS.length);
+}
+
+function goToPreviousWhitespace() {
+  if (OPEN_WHITESPACE_INDEX === -1) return;
+  openWhitespaceDetail((OPEN_WHITESPACE_INDEX - 1 + WHITESPACE_ITEMS.length) % WHITESPACE_ITEMS.length);
+}
+
+function handleWhitespaceBackdropClick(event) {
+  if (event.target.id === 'wsmodal-backdrop') closeWhitespaceDetail();
+}
+
+document.addEventListener('keydown', (event) => {
+  if (OPEN_WHITESPACE_INDEX === -1) return;
+  if (event.key === 'Escape') {
+    event.preventDefault();
+    closeWhitespaceDetail();
+  }
+  if (event.key === 'ArrowRight') {
+    event.preventDefault();
+    goToNextWhitespace();
+  }
+  if (event.key === 'ArrowLeft') {
+    event.preventDefault();
+    goToPreviousWhitespace();
+  }
+});
 
 function displayFilterValue(groupKey, value) {
   if (groupKey === 'categories') return displayCategoryLabel(value);
