@@ -343,7 +343,7 @@
   .author-filter-grid { display: grid; gap: 10px; align-items: start; }
   .author-filter-card { padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
   .author-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
-  .author-filter-title { font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); }
+  .author-filter-title { font-family: var(--font-ui); font-size: 11px; font-weight: 600; line-height: 1.4; letter-spacing: 0.10em; text-transform: uppercase; color: var(--text-tertiary); overflow-wrap: anywhere; }
   .author-filter-actions { display: flex; gap: 8px; flex-wrap: wrap; }
   .checkbox-list {
     display: grid;
@@ -404,8 +404,9 @@
   .checkbox-chip span {
     min-width: 0;
     line-height: 1.45;
+    overflow-wrap: anywhere;
   }
-  .filter-chip { width: fit-content; max-width: 100%; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1.2; }
+  .filter-chip { width: fit-content; max-width: 100%; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1.2; white-space: normal; overflow-wrap: anywhere; }
   .filter-chip:hover, .filter-chip.active { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
   .active-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .active-filter-label { font-family: var(--font-ui); font-size: 12px; color: var(--text-tertiary); }
