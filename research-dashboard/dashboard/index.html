@@ -325,12 +325,21 @@
     gap: 14px;
     position: sticky;
     top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 16px;
     border-radius: 18px;
     background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
     border: 1px solid var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
   }
   .author-filter-top { display: flex; gap: 10px; flex-wrap: wrap; }
+  .author-filter-top .field {
+    min-width: 240px;
+    width: 100%;
+  }
   .author-filter-grid { display: grid; gap: 10px; }
   .author-filter-card { padding: 14px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); }
   .author-filter-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
@@ -341,9 +350,10 @@
     gap: 8px;
   }
   .checkbox-chip {
-    display: flex;
+    display: grid;
+    grid-template-columns: 16px minmax(0, 1fr);
     align-items: center;
-    gap: 10px;
+    column-gap: 12px;
     padding: 10px 12px;
     border: 1px solid var(--border);
     border-radius: 12px;
@@ -361,10 +371,41 @@
     background: var(--primary-subtle);
   }
   .checkbox-chip input {
+    appearance: none;
+    -webkit-appearance: none;
     margin: 0;
-    accent-color: var(--primary);
+    width: 16px;
+    height: 16px;
+    border: 1px solid var(--primary-border);
+    border-radius: 4px;
+    background: var(--surface);
+    justify-self: center;
+    display: grid;
+    place-items: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
   }
-  .filter-chip { padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1.2; }
+  .checkbox-chip input::after {
+    content: '';
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid var(--primary);
+    border-bottom: 2px solid var(--primary);
+    transform: rotate(-45deg) scale(0);
+    transform-origin: center;
+    transition: transform 0.12s ease;
+  }
+  .checkbox-chip input:checked {
+    border-color: var(--primary);
+    background: rgba(124,106,247,0.12);
+  }
+  .checkbox-chip input:checked::after {
+    transform: rotate(-45deg) scale(1);
+  }
+  .checkbox-chip span {
+    min-width: 0;
+    line-height: 1.45;
+  }
+  .filter-chip { width: fit-content; max-width: 100%; padding: 4px 10px; border: 1px solid var(--border); border-radius: 999px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--text-tertiary); cursor: pointer; transition: all 0.12s; background: var(--surface3); line-height: 1.2; }
   .filter-chip:hover, .filter-chip.active { color: var(--text); border-color: var(--primary-border); background: var(--primary-subtle); }
   .active-filter-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
   .active-filter-label { font-family: var(--font-ui); font-size: 12px; color: var(--text-tertiary); }
@@ -614,6 +655,8 @@
     .author-filter-panel {
       position: static;
       top: auto;
+      max-height: none;
+      overflow: visible;
       padding: 14px;
     }
     .author-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
