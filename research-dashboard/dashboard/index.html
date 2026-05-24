@@ -480,6 +480,204 @@
   }
   body.modal-open { overflow: hidden; }
 
+  .paper-analyzer {
+    margin-bottom: 18px;
+    padding: 18px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+    box-shadow: 0 14px 34px rgba(0,0,0,0.18);
+  }
+  .paper-analyzer-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 14px;
+    margin-bottom: 10px;
+  }
+  .paper-analyzer-title {
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .paper-analyzer-copy {
+    margin-top: 4px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-tertiary);
+  }
+  .proposal-input {
+    width: 100%;
+    min-height: 144px;
+    resize: vertical;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+    color: var(--text);
+    padding: 14px 15px;
+    box-sizing: border-box;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+  .proposal-input::placeholder { color: var(--text-disabled); }
+  .proposal-input:focus {
+    outline: none;
+    border-color: var(--primary-border);
+    box-shadow: 0 0 0 1px rgba(124,106,247,0.22);
+  }
+  .paper-analyzer-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .paper-analyzer-btn {
+    padding: 10px 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(255,255,255,0.02);
+    color: var(--text);
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+  }
+  .paper-analyzer-btn:hover {
+    border-color: var(--primary-border);
+    background: var(--primary-subtle);
+  }
+  .paper-analyzer-btn.primary {
+    background: linear-gradient(180deg, var(--primary-subtle), rgba(255,255,255,0.02));
+    border-color: var(--primary-border);
+  }
+  .paper-analysis-results {
+    margin-top: 16px;
+    display: grid;
+    gap: 12px;
+  }
+  .paper-analysis-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+  .paper-analysis-card {
+    min-width: 0;
+    padding: 14px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+  }
+  .paper-analysis-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .paper-analysis-text {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .paper-analysis-text strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .paper-analysis-score {
+    margin-left: auto;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .paper-analysis-meta {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .paper-analysis-papers,
+  .paper-analysis-authors,
+  .paper-analysis-list {
+    display: grid;
+    gap: 10px;
+  }
+  .paper-analysis-paper,
+  .paper-analysis-author {
+    min-width: 0;
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .paper-analysis-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .paper-analysis-title-row {
+    min-width: 0;
+  }
+  .paper-analysis-title-row strong {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .paper-analysis-subtle {
+    margin-top: 4px;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-tertiary);
+  }
+  .paper-analysis-reason {
+    margin-top: 8px;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+  }
+  .paper-analysis-bullets {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .paper-analysis-empty {
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px dashed rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-tertiary);
+  }
+  .paper-analysis-divider {
+    margin: 18px 0 14px;
+  }
+
   .plist { display: grid; gap: 6px; }
   .prow { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: start; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; transition: border-color 0.12s, transform 0.12s; }
   .prow:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-1px); }
@@ -981,6 +1179,14 @@
     .wsmodal-sub {
       justify-content: flex-start;
     }
+    .paper-analyzer-head,
+    .paper-analysis-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .paper-analysis-grid {
+      grid-template-columns: 1fr;
+    }
     .author-head { flex-direction: column; align-items: flex-start; }
     .author-layout { grid-template-columns: 1fr; }
     .author-toolbar, .author-filter-top { flex-direction: column; }
@@ -1042,7 +1248,7 @@
     <div class="tabs">
       <button class="tabbtn active" onclick="setTab('whitespace',this)">White Spaces</button>
       <button class="tabbtn" onclick="setTab('authors',this)">Author Profiles</button>
-      <button class="tabbtn" onclick="setTab('papers',this)">Papers</button>
+      <button class="tabbtn" onclick="setTab('papers',this)">Proposal Analysis</button>
       <button class="tabbtn" onclick="setTab('matrix',this)">Coverage Matrix</button>
       <button class="tabbtn" onclick="setTab('overview',this)">About</button>
     </div>
@@ -1137,8 +1343,20 @@
     </div>
 
     <div class="tabp" id="panel-papers">
-      <div class="sch" id="papers-hd">All Papers</div>
-      <div class="plist" id="plist"></div>
+      <div class="paper-analyzer">
+        <div class="paper-analyzer-head">
+          <div>
+            <div class="paper-analyzer-title">Analyze a research proposal</div>
+            <div class="paper-analyzer-copy">Paste a proposal, abstract, thesis direction, or project idea to see what space it occupies across the current corpus.</div>
+          </div>
+        </div>
+        <textarea id="proposal-input" class="proposal-input" placeholder="Example: We want to study how human designers use AI-generated concepts in early-stage engineering design, and whether interactive evaluation loops can reduce fixation while improving concept quality."></textarea>
+        <div class="paper-analyzer-actions">
+          <button type="button" class="paper-analyzer-btn primary" onclick="analyzeProposal()">Analyze</button>
+          <button type="button" class="paper-analyzer-btn" onclick="clearProposalAnalyzer()">Clear</button>
+        </div>
+        <div class="paper-analysis-results" id="proposal-analysis-results"></div>
+      </div>
     </div>
   </main>
 </div>
@@ -1162,6 +1380,25 @@ const CATS = ['ideation', 'optimization', 'grammar', 'decision'];
 const CC = { ideation:'var(--accent1)', optimization:'var(--accent2)', grammar:'var(--accent3)', decision:'var(--accent4)' };
 const MXCLASS = { ideation:'mxi', optimization:'mxo', grammar:'mxg', decision:'mxd' };
 const PBCLASS = { ideation:'pbi', optimization:'pbo', grammar:'pbg', decision:'pbd' };
+const PROPOSAL_STOPWORDS = new Set(['about','across','after','again','against','also','among','and','another','around','because','been','before','being','between','both','build','building','could','design','during','each','from','have','into','just','make','making','more','most','much','must','need','other','ours','over','proposal','project','research','same','should','some','such','than','that','their','them','then','there','these','they','this','those','through','toward','under','using','want','what','when','where','which','while','with','would']);
+const PROPOSAL_CATEGORY_KEYWORDS = {
+  ideation: ['ideation','brainstorm','brainstorming','concept','concepts','creativity','creative','co-creation','co_creation','generation','divergent','inspiration','sketch','sketching','exploration'],
+  optimization: ['optimization','optimmization','topology','surrogate','surrogates','neural','operator','parametric','parameterized','performance','manufacturing','fabrication','lattice','simulation','multiphysics'],
+  grammar: ['grammar','grammars','rule','rules','sequence','sequences','state','hmm','markov','heuristic','heuristics','protocol','workflow','constraint','constrained'],
+  decision: ['decision','decisions','decision-making','decision_making','selection','tradeoff','trade-offs','preference','preferences','uncertainty','risk','trust','evaluation','assess','assessment']
+};
+const PROPOSAL_CAPABILITY_RULES = [
+  { label: 'Design ideation', categories: ['ideation'], keywords: ['ideation','concept','brainstorm','creative','exploration','fixation'] },
+  { label: 'Optimization workflows', categories: ['optimization'], keywords: ['optimization','surrogate','topology','workflow','parametric','performance'] },
+  { label: 'Design grammars', categories: ['grammar'], keywords: ['grammar','rule','sequence','state','heuristic','constraint'] },
+  { label: 'Human-AI collaboration', categories: ['ideation','decision'], keywords: ['human-ai','human ai','ai-assisted','ai assisted','copilot','co-creative','interactive','feedback'] },
+  { label: 'Decision support', categories: ['decision'], keywords: ['decision','uncertainty','tradeoff','preference','selection','support'] },
+  { label: 'Simulation / evaluation', categories: ['optimization','decision'], keywords: ['simulation','evaluate','evaluation','experiment','benchmark','validation'] },
+  { label: 'Visualization', categories: ['decision','ideation'], keywords: ['visualization','visual','interface','dashboard','explainability'] },
+  { label: 'Computational design methods', categories: ['grammar','optimization'], keywords: ['computational','generative','algorithmic','parametric','operator'] }
+];
+const PROPOSAL_METHOD_TERMS = ['dataset','datasets','benchmark','evaluation','evaluate','validation','validated','experiment','experiments','study','studies','simulation','user study','survey','protocol','metric','metrics'];
+const PROPOSAL_DATASET_TERMS = ['dataset','datasets','corpus','benchmark','archive','log data','telemetry','repository','repositories','sensor','sensors'];
 
 let PAPERS = [];
 let AUTHOR_PROFILES = [];
@@ -1169,6 +1406,7 @@ let WHITESPACE_MATCHES = [];
 let WHITESPACE_ITEMS = [];
 let OPEN_AUTHOR = '';
 let OPEN_WHITESPACE_INDEX = -1;
+let PROPOSAL_ANALYSIS = null;
 const AUTHOR_TOPIC_LIMIT = 40;
 const AUTHOR_FILTER_GROUPS = [
   { key: 'affiliation', label: 'Research Affiliation', options: ['DRC Researchers', 'External Engineering Researchers'] },
@@ -1218,6 +1456,7 @@ window.onload = async function () {
   renderWhitespace();
   updateAll();
   renderAuthorProfiles();
+  renderProposalAnalyzerResults();
   setupAuthorSidebarScroll();
 };
 
@@ -1287,13 +1526,28 @@ function dedupeByTitle(papers) {
 }
 
 function mapPaperRow(row) {
+  const title = String(row.title || '').trim();
+  const abstract = String(row.abstract || '').trim();
+  const keywords = parseKeywordList(row.keywords);
+  const topics = parseBertTopics(row.bert_topics);
+  const searchTokens = uniqueList(tokenizeText([title, abstract, keywords.join(' '), topics.join(' ')].join(' ')));
   return {
-    title: String(row.title || '').trim(),
+    title,
     authors: String(row.authors || '').trim() || 'Unknown authors',
     year: parseInt(row.year, 10) || null,
     venue: String(row.journal || row.data_source || row.hf_dataset || '').trim() || 'Unknown venue',
     cats: mapCategories(row.categories, row.primary_category),
     source: mapSource(row),
+    abstract,
+    keywords,
+    topics,
+    url: String(row.url || '').trim(),
+    titleTokens: uniqueList(tokenizeText(title)),
+    abstractTokens: uniqueList(tokenizeText(abstract)),
+    keywordTokens: uniqueList(tokenizeText(keywords.join(' '))),
+    topicTokens: uniqueList(tokenizeText(topics.join(' '))),
+    searchTokens,
+    searchTokenSet: new Set(searchTokens),
   };
 }
 
@@ -1312,6 +1566,23 @@ function mapCategories(raw, primaryRaw) {
   if (tokens.length) return [...new Set(tokens)];
   const fallback = normalizeCategoryToken(primaryRaw);
   return fallback ? [fallback] : [];
+}
+
+function parseKeywordList(raw) {
+  return String(raw || '')
+    .split('|')
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+function parseBertTopics(raw) {
+  return String(raw || '')
+    .split(';')
+    .map((item) => {
+      const body = item.includes(':') ? item.split(':').slice(1).join(':') : item;
+      return body.replace(/\(\d(?:\.\d+)?\)\s*$/, '').trim();
+    })
+    .filter(Boolean);
 }
 
 function normalizeCategoryToken(raw) {
@@ -2078,17 +2349,418 @@ function toggleAuthorProfile(authorName) {
   renderAuthorProfiles();
 }
 
+function tokenizeText(text) {
+  return String(text || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9+\-]+/g, ' ')
+    .split(/\s+/)
+    .map((token) => token.trim())
+    .filter((token) => token.length > 2 && !PROPOSAL_STOPWORDS.has(token));
+}
+
+function uniqueList(items) {
+  return [...new Set((items || []).filter(Boolean))];
+}
+
+function clamp(value, min, max) {
+  return Math.min(max, Math.max(min, value));
+}
+
+function topTokenCounts(tokens, limit = 18) {
+  const counts = new Map();
+  (tokens || []).forEach((token) => counts.set(token, (counts.get(token) || 0) + 1));
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit)
+    .map(([token, count]) => ({ token, count }));
+}
+
+function overlapScore(queryTokens, candidateTokens) {
+  if (!queryTokens?.length || !candidateTokens?.length) return 0;
+  const candidateSet = candidateTokens instanceof Set ? candidateTokens : new Set(candidateTokens);
+  const matches = queryTokens.filter((token) => candidateSet.has(token)).length;
+  return clamp(matches / Math.min(queryTokens.length, 12), 0, 1);
+}
+
+function listTokenMatches(queryTokens, candidateTokens, limit = 4) {
+  if (!queryTokens?.length || !candidateTokens?.length) return [];
+  const candidateSet = candidateTokens instanceof Set ? candidateTokens : new Set(candidateTokens);
+  return queryTokens.filter((token) => candidateSet.has(token)).slice(0, limit);
+}
+
+function humanizeToken(token) {
+  return String(token || '').replace(/_/g, ' ');
+}
+
+function getProposalText() {
+  return document.getElementById('proposal-input')?.value.trim() || '';
+}
+
+function analyzeProposal() {
+  const text = getProposalText();
+  PROPOSAL_ANALYSIS = text ? buildProposalAnalysis(text) : { error: 'Paste a proposal, abstract, or project idea to analyze.' };
+  renderProposalAnalyzerResults();
+}
+
+function clearProposalAnalyzer() {
+  const input = document.getElementById('proposal-input');
+  if (input) input.value = '';
+  PROPOSAL_ANALYSIS = null;
+  renderProposalAnalyzerResults();
+}
+
+function buildProposalProfile(text) {
+  const rawLower = text.toLowerCase();
+  const tokens = tokenizeText(text);
+  const topTokens = topTokenCounts(tokens);
+  const keyTokens = topTokens.map((item) => item.token);
+  const categoryScores = Object.fromEntries(Object.entries(PROPOSAL_CATEGORY_KEYWORDS).map(([category, keywords]) => {
+    const hits = keywords.reduce((total, keyword) => total + (rawLower.includes(keyword.replace(/_/g, ' ')) ? 1 : 0), 0);
+    const tokenHits = keyTokens.reduce((total, token) => total + (keywords.includes(token) ? 1 : 0), 0);
+    return [category, clamp((hits + tokenHits) / Math.max(3, keywords.length * 0.18), 0, 1)];
+  }));
+  const selectedCategories = Object.entries(categoryScores)
+    .filter(([, score]) => score >= 0.16)
+    .sort((a, b) => b[1] - a[1])
+    .map(([category]) => category);
+  const fallbackCategory = Object.entries(categoryScores).sort((a, b) => b[1] - a[1])[0];
+  const categories = selectedCategories.length ? selectedCategories : (fallbackCategory?.[1] > 0 ? [fallbackCategory[0]] : []);
+  return {
+    text,
+    rawLower,
+    tokens,
+    keyTokens,
+    topTokens,
+    tokenSet: new Set(keyTokens),
+    categoryScores,
+    categories,
+  };
+}
+
+function proposalCategoryOverlap(proposalCategories, paperCategories) {
+  if (!proposalCategories.length || !paperCategories?.length) return 0;
+  const candidate = new Set((paperCategories || []).map((category) => normalizeCategoryToken(category)));
+  const matches = proposalCategories.filter((category) => candidate.has(normalizeCategoryToken(category))).length;
+  return clamp(matches / proposalCategories.length, 0, 1);
+}
+
+function scorePaperForProposal(paper, profile) {
+  const titleScore = overlapScore(profile.keyTokens, paper.titleTokens);
+  const abstractScore = overlapScore(profile.keyTokens, paper.abstractTokens);
+  const keywordScore = overlapScore(profile.keyTokens, paper.keywordTokens);
+  const topicScore = overlapScore(profile.keyTokens, paper.topicTokens);
+  const categoryScore = proposalCategoryOverlap(profile.categories, paper.cats);
+  const recencyScore = paper.year ? clamp((paper.year - (new Date().getFullYear() - 12)) / 12, 0, 1) : 0;
+  const matchScore = (titleScore * 0.24) + (abstractScore * 0.24) + (keywordScore * 0.18) + (topicScore * 0.14) + (categoryScore * 0.12) + (recencyScore * 0.08);
+  const overlapTerms = uniqueList([
+    ...listTokenMatches(profile.keyTokens, paper.titleTokens, 2),
+    ...listTokenMatches(profile.keyTokens, paper.keywordTokens, 2),
+    ...listTokenMatches(profile.keyTokens, paper.topicTokens, 2),
+  ]).slice(0, 4);
+  const matchingCategories = (paper.cats || []).filter((category) => profile.categories.includes(normalizeCategoryToken(category)));
+  const reasonParts = [];
+  if (matchingCategories.length) reasonParts.push(`connects to ${matchingCategories.map(displayCategoryLabel).join(', ')}`);
+  if (overlapTerms.length) reasonParts.push(`repeats proposal themes like ${overlapTerms.map(humanizeToken).join(', ')}`);
+  if (paper.year) reasonParts.push(`published in ${paper.year}`);
+  return {
+    ...paper,
+    matchScore,
+    overlapTerms,
+    reason: reasonParts.length ? `${reasonParts[0].charAt(0).toUpperCase()}${reasonParts[0].slice(1)}${reasonParts.length > 1 ? ` and ${reasonParts.slice(1).join(' and ')}` : ''}.` : 'Shares some language with the proposal, but the connection is still tentative.',
+  };
+}
+
+function scorePapersForProposal(profile) {
+  return PAPERS
+    .map((paper) => scorePaperForProposal(paper, profile))
+    .filter((paper) => paper.matchScore > 0.08)
+    .sort((a, b) => b.matchScore - a.matchScore || (b.year || 0) - (a.year || 0))
+    .slice(0, 6);
+}
+
+function scoreAuthorPaperForProposal(paper, profile) {
+  const categories = (paper.categories || []).map((category) => normalizeCategoryToken(category));
+  const titleTokens = tokenizeText(paper.title || '');
+  const topicTokens = tokenizeText((paper.topics || []).join(' '));
+  const categoryTokens = categories.map((category) => humanizeToken(category));
+  return {
+    ...paper,
+    matchScore: (overlapScore(profile.keyTokens, titleTokens) * 0.45) + (overlapScore(profile.keyTokens, topicTokens) * 0.35) + (proposalCategoryOverlap(profile.categories, categories) * 0.20),
+    matchReason: [
+      categories.some((category) => profile.categories.includes(category)) ? `matches ${categories.filter((category) => profile.categories.includes(category)).map(displayCategoryLabel).join(', ')}` : '',
+      listTokenMatches(profile.keyTokens, new Set([...titleTokens, ...topicTokens]), 3).length ? `touches ${listTokenMatches(profile.keyTokens, new Set([...titleTokens, ...topicTokens]), 3).map(humanizeToken).join(', ')}` : '',
+    ].filter(Boolean).join(' and '),
+    categoryTokens,
+  };
+}
+
+function proposalWhitespaceBridgeScore(profile, author) {
+  const whitespaceTitles = (author.related_whitespace_opportunities || []).map((item) => item.title || '');
+  const whitespaceTokens = tokenizeText(whitespaceTitles.join(' '));
+  const roles = tokenizeText((author.collaboration_roles || []).join(' '));
+  return clamp((overlapScore(profile.keyTokens, whitespaceTokens) * 0.6) + (overlapScore(profile.keyTokens, roles) * 0.4), 0, 1);
+}
+
+function scoreAuthorsForProposal(profile, paperMatches) {
+  const paperLookup = new Map(paperMatches.map((paper) => [paper.title, paper]));
+  return AUTHOR_PROFILES.map((author) => {
+    const authorTokens = uniqueList(tokenizeText([
+      ...(author.recurring_topics || []),
+      ...(author.inferred_interests || []),
+      author.short_description || '',
+      ...(author.papers || []).map((paper) => `${paper.title || ''} ${(paper.topics || []).join(' ')}`),
+    ].join(' ')));
+    const categoryTopicMatchScore = clamp((overlapScore(profile.keyTokens, authorTokens) * 0.65) + (proposalCategoryOverlap(profile.categories, author.research_categories || author.dominant_categories || []) * 0.35), 0, 1);
+    const representativePapers = (author.papers || [])
+      .map((paper) => {
+        const scored = scoreAuthorPaperForProposal(paper, profile);
+        const corpusMatch = paperLookup.get(paper.title);
+        return {
+          title: paper.title,
+          year: paper.year,
+          categories: paper.categories || [],
+          topics: paper.topics || [],
+          matchScore: clamp((scored.matchScore * 0.7) + ((corpusMatch?.matchScore || 0) * 0.3), 0, 1),
+          reason: scored.matchReason || corpusMatch?.reason || 'Touches similar themes to the proposal.',
+        };
+      })
+      .filter((paper) => paper.matchScore > 0.06)
+      .sort((a, b) => b.matchScore - a.matchScore || String(b.year || '').localeCompare(String(a.year || '')))
+      .slice(0, 2);
+    const representativePaperScore = representativePapers[0]?.matchScore || 0;
+    const recencyBase = author.last_published_year ? clamp((Number(author.last_published_year) - (new Date().getFullYear() - 10)) / 10, 0, 1) : 0;
+    const affiliationBoost = author.affiliation_bucket === 'DRC Researchers' ? 1 : author.affiliation_bucket === 'Both' ? 0.9 : 0.65;
+    const recentDrcRelevanceScore = clamp((recencyBase * 0.7) + (affiliationBoost * 0.3), 0, 1);
+    const bridgeToGapScore = proposalWhitespaceBridgeScore(profile, author);
+    const authorWhitespaceMatchScore = (recentDrcRelevanceScore * 0.25) + (categoryTopicMatchScore * 0.35) + (representativePaperScore * 0.25) + (bridgeToGapScore * 0.15);
+    const anchorTerms = listTokenMatches(profile.keyTokens, authorTokens, 3).map(humanizeToken);
+    const bridgeReason = bridgeToGapScore > 0.2
+      ? `Provides a bridge through ${anchorTerms.length ? anchorTerms.join(', ') : 'related whitespace and collaboration role overlap'}.`
+      : `Closer to the proposal through ${anchorTerms.length ? anchorTerms.join(', ') : 'adjacent category overlap'}, but the bridge is still emerging.`;
+    return {
+      author_name: author.author_name,
+      author_whitespace_match_score: authorWhitespaceMatchScore,
+      match_factors: {
+        recent_drc_relevance_score: recentDrcRelevanceScore,
+        category_topic_match_score: categoryTopicMatchScore,
+        representative_paper_score: representativePaperScore,
+        bridge_to_gap_score: bridgeToGapScore,
+      },
+      representative_papers: representativePapers,
+      bridge_reason: bridgeReason,
+      reason: `${author.author_name} aligns through ${(author.research_categories || []).map(displayCategoryLabel).slice(0, 2).join(', ') || 'adjacent topics'}${anchorTerms.length ? ` and recurring themes like ${anchorTerms.join(', ')}` : ''}.`,
+    };
+  }).filter((author) => author.author_whitespace_match_score > 0.18)
+    .sort((a, b) => b.author_whitespace_match_score - a.author_whitespace_match_score)
+    .slice(0, 4);
+}
+
+function identifyProposalCapabilities(profile, paperMatches, collaboratorMatches) {
+  return PROPOSAL_CAPABILITY_RULES.map((capability) => {
+    const categoryHits = capability.categories.filter((category) => profile.categories.includes(category)).length;
+    const keywordHits = capability.keywords.reduce((total, keyword) => total + (profile.rawLower.includes(keyword) ? 1 : 0), 0);
+    const collaboratorRoleHits = collaboratorMatches.reduce((total, author) => total + (author.bridge_reason.toLowerCase().includes(capability.label.toLowerCase()) ? 1 : 0), 0);
+    const score = (categoryHits * 0.45) + (keywordHits * 0.35) + (collaboratorRoleHits * 0.20);
+    return {
+      label: capability.label,
+      score,
+      reason: `${capability.label} is supported by ${categoryHits ? 'category alignment' : 'topic overlap'}${keywordHits ? ` and proposal language around ${capability.keywords.filter((keyword) => profile.rawLower.includes(keyword)).slice(0, 2).join(', ')}` : ''}.`,
+    };
+  }).filter((item) => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 5);
+}
+
+function describeProposalDistinctiveness(profile, paperMatches) {
+  const nearbyTokenSet = new Set(paperMatches.flatMap((paper) => paper.searchTokens || []));
+  const sharedThemes = listTokenMatches(profile.keyTokens, nearbyTokenSet, 5).map(humanizeToken);
+  const distinctTerms = profile.keyTokens.filter((token) => !nearbyTokenSet.has(token)).slice(0, 5).map(humanizeToken);
+  const sharedText = sharedThemes.length ? `The proposal clearly sits near existing work in ${sharedThemes.join(', ')}.` : 'The proposal does not strongly cluster around one established theme in the loaded corpus yet.';
+  const distinctText = distinctTerms.length ? `What looks most distinct is the emphasis on ${distinctTerms.join(', ')}.` : 'The language is very close to nearby prior work, so the distinct angle may need to be sharpened in the proposal framing.';
+  return { sharedText, distinctText, sharedThemes, distinctTerms };
+}
+
+function identifyProposalRisks(profile, paperMatches, collaboratorMatches) {
+  const risks = [];
+  if (!profile.categories.length) {
+    risks.push('The proposal does not show a strong category signal yet, so it may be hard to position in the current ideation / optimization / grammar / decision space.');
+  }
+  if ((paperMatches[0]?.matchScore || 0) < 0.18) {
+    risks.push('The nearest-paper scores are weak, which suggests a loose connection to the current corpus or a need for more concrete framing.');
+  }
+  if (!PROPOSAL_METHOD_TERMS.some((term) => profile.rawLower.includes(term))) {
+    risks.push('The proposal does not yet describe a clear evaluation or method path, which makes feasibility and evidence harder to judge.');
+  }
+  if (!PROPOSAL_DATASET_TERMS.some((term) => profile.rawLower.includes(term)) && profile.rawLower.includes('ai')) {
+    risks.push('The AI-oriented framing does not yet point to a dataset, benchmark, or data collection path.');
+  }
+  if (collaboratorMatches[0]?.author_whitespace_match_score < 0.25) {
+    risks.push('There is not yet a very strong collaborator fit in the loaded DRC profile set, so the proposal may need a sharper bridge to current lab strengths.');
+  }
+  if (profile.keyTokens.length < 6) {
+    risks.push('The proposal description is still underspecified; adding methods, domain, and evaluation detail would improve placement confidence.');
+  }
+  if (profile.categories.length > 3) {
+    risks.push('The proposal spans many categories at once, which may make the scope feel broad unless one primary contribution is foregrounded.');
+  }
+  return risks.length ? risks : ['The biggest risk is not absence of fit, but making sure the proposal states its evaluation plan and distinctive contribution explicitly.'];
+}
+
+function summarizeProposalSpace(profile, paperMatches, capabilities) {
+  const categories = profile.categories.length ? profile.categories.map(displayCategoryLabel).join(', ') : 'an interdisciplinary space without a clear single category signal';
+  const nearestPaper = paperMatches[0];
+  const capability = capabilities[0]?.label;
+  let summary = `This proposal sits in ${categories}.`;
+  if (nearestPaper) summary += ` The nearest prior anchor is "${nearestPaper.title}" (${nearestPaper.year || 'n.d.'}).`;
+  if (capability) summary += ` It most directly builds on DRC capability in ${capability.toLowerCase()}.`;
+  return summary;
+}
+
+function buildProposalAnalysis(text) {
+  const profile = buildProposalProfile(text);
+  const paperMatches = scorePapersForProposal(profile);
+  const collaboratorMatches = scoreAuthorsForProposal(profile, paperMatches);
+  const capabilities = identifyProposalCapabilities(profile, paperMatches, collaboratorMatches);
+  const distinctiveness = describeProposalDistinctiveness(profile, paperMatches);
+  const risks = identifyProposalRisks(profile, paperMatches, collaboratorMatches);
+  return {
+    profile,
+    summary: summarizeProposalSpace(profile, paperMatches, capabilities),
+    paperMatches,
+    collaboratorMatches,
+    capabilities,
+    distinctiveness,
+    risks,
+  };
+}
+
+function renderProposalAnalyzerResults() {
+  const container = document.getElementById('proposal-analysis-results');
+  if (!container) return;
+  if (!PROPOSAL_ANALYSIS) {
+    container.innerHTML = '';
+    return;
+  }
+  if (PROPOSAL_ANALYSIS.error) {
+    container.innerHTML = `<div class="paper-analysis-empty">${escapeHtml(PROPOSAL_ANALYSIS.error)}</div>`;
+    return;
+  }
+  const { profile, summary, paperMatches, collaboratorMatches, capabilities, distinctiveness, risks } = PROPOSAL_ANALYSIS;
+  container.innerHTML = `
+    <div class="paper-analysis-grid">
+      <section class="paper-analysis-card">
+        <div class="paper-analysis-label">What space does this occupy?</div>
+        <div class="paper-analysis-text">${escapeHtml(summary)}</div>
+        <div class="paper-analysis-meta">
+          ${(profile.categories.length ? profile.categories : ['No clear category signal']).map((category) => {
+            const normalized = normalizeCategoryToken(category);
+            const badgeClass = categoryBadgeClass(normalized);
+            const label = normalized ? displayCategoryLabel(normalized) : category;
+            return `<span class="pb ${badgeClass}">${escapeHtml(label)}</span>`;
+          }).join('')}
+        </div>
+      </section>
+      <section class="paper-analysis-card">
+        <div class="paper-analysis-label">DRC capability it builds on</div>
+        ${capabilities.length ? `
+          <div class="paper-analysis-list">
+            ${capabilities.map((capability) => `
+              <div>
+                <div class="paper-analysis-row">
+                  <div class="paper-analysis-title-row"><strong>${escapeHtml(capability.label)}</strong></div>
+                </div>
+                <div class="paper-analysis-reason">${escapeHtml(capability.reason)}</div>
+              </div>
+            `).join('')}
+          </div>
+        ` : '<div class="paper-analysis-empty">Not enough signal yet to tie this proposal to a specific DRC capability cluster.</div>'}
+      </section>
+    </div>
+
+    <section class="paper-analysis-card">
+      <div class="paper-analysis-label">Nearest prior papers</div>
+      ${paperMatches.length ? `
+        <div class="paper-analysis-papers">
+          ${paperMatches.map((paper) => `
+            <div class="paper-analysis-paper">
+              <div class="paper-analysis-row">
+                <div class="paper-analysis-title-row">
+                  <strong>${escapeHtml(paper.title)}</strong>
+                  <div class="paper-analysis-subtle">${escapeHtml(String(paper.year || 'Unknown year'))} · ${escapeHtml(paper.authors)} · ${escapeHtml(paper.venue)}</div>
+                </div>
+                <div class="paper-analysis-score">${(paper.matchScore * 100).toFixed(0)}%</div>
+              </div>
+              <div class="paper-analysis-meta">
+                ${(paper.cats || []).map((category) => `<span class="pb ${categoryBadgeClass(category)}">${escapeHtml(displayCategoryLabel(category))}</span>`).join('')}
+                ${(paper.topics || []).slice(0, 3).map((topic) => `<span class="tchip">${escapeHtml(topic)}</span>`).join('')}
+              </div>
+              <div class="paper-analysis-reason">${escapeHtml(paper.reason)}</div>
+            </div>
+          `).join('')}
+        </div>
+      ` : '<div class="paper-analysis-empty">The current corpus does not show a strong nearby prior-paper cluster for this proposal yet.</div>'}
+    </section>
+
+    <div class="paper-analysis-grid">
+      <section class="paper-analysis-card">
+        <div class="paper-analysis-label">What is distinct?</div>
+        <div class="paper-analysis-text">${escapeHtml(distinctiveness.sharedText)} ${escapeHtml(distinctiveness.distinctText)}</div>
+      </section>
+      <section class="paper-analysis-card">
+        <div class="paper-analysis-label">Missing evidence / biggest risk</div>
+        <ul class="paper-analysis-bullets">
+          ${risks.map((risk) => `<li>${escapeHtml(risk)}</li>`).join('')}
+        </ul>
+      </section>
+    </div>
+
+    <section class="paper-analysis-card">
+      <div class="paper-analysis-label">Likely collaborators</div>
+      ${collaboratorMatches.length ? `
+        <div class="paper-analysis-authors">
+          ${collaboratorMatches.map((author) => `
+            <div class="paper-analysis-author">
+              <div class="paper-analysis-row">
+                <div class="paper-analysis-title-row">
+                  <strong>${escapeHtml(author.author_name)}</strong>
+                  <div class="paper-analysis-subtle">${escapeHtml(author.reason)}</div>
+                </div>
+                <div class="paper-analysis-score">${(author.author_whitespace_match_score * 100).toFixed(0)}%</div>
+              </div>
+              <div class="paper-analysis-reason">${escapeHtml(author.bridge_reason)}</div>
+              ${author.representative_papers.length ? `
+                <div class="paper-analysis-list" style="margin-top:10px;">
+                  ${author.representative_papers.map((paper) => `
+                    <div>
+                      <strong>${escapeHtml(paper.title)}</strong>
+                      <div class="paper-analysis-subtle">${escapeHtml(String(paper.year || 'Unknown year'))} · ${(paper.categories || []).map((category) => escapeHtml(displayCategoryLabel(category))).join(', ') || 'Uncategorized'}</div>
+                      <div class="paper-analysis-reason">${escapeHtml(paper.reason)}</div>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+          `).join('')}
+        </div>
+      ` : '<div class="paper-analysis-empty">No strong collaborator fit emerged from the current author profile set. That usually means the proposal needs a clearer category, domain, or method signal.</div>'}
+    </section>
+  `;
+}
+
 function renderPapers() {
+  const header = document.getElementById('papers-hd');
+  const list = document.getElementById('plist');
+  if (!header || !list) return;
   const fp = filtered().sort((a, b) => b.year - a.year);
   let label = 'All Papers';
   if (activeCat !== 'all') label = activeCat.charAt(0).toUpperCase() + activeCat.slice(1) + ' Papers';
   if (activeYears.size > 0) label += ` (${[...activeYears].sort().join(', ')})`;
-  document.getElementById('papers-hd').textContent = `${label} — ${fp.length} result${fp.length !== 1 ? 's' : ''}`;
+  header.textContent = `${label} — ${fp.length} result${fp.length !== 1 ? 's' : ''}`;
   if (fp.length === 0) {
-    document.getElementById('plist').innerHTML = '<div class="emptystate">No papers match current filters.</div>';
+    list.innerHTML = '<div class="emptystate">No papers match current filters.</div>';
     return;
   }
-  document.getElementById('plist').innerHTML = fp.map((p) => {
+  list.innerHTML = fp.map((p) => {
     const dotColor = CC[activeCat !== 'all' ? activeCat : p.cats[0]] || 'var(--muted)';
     const badges = p.cats.map((c) => `<span class="pb ${PBCLASS[c]}">${c}</span>`).join('');
     return `<div class="prow">
