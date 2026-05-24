@@ -1,0 +1,3488 @@
+[
+  {
+    "title": "Ideation to Optimization Pipelines with Human-in-the-Loop",
+    "description": "Ideation and optimization work are both strong, but they are still largely siloed rather than linked in end-to-end workflows.",
+    "opportunity": "Build end-to-end pipelines where ideation outputs are parameterized and fed into optimization loops with human feedback. This would directly connect DRC ideation, optimization, and decision-support work.",
+    "related_categories": [
+      "ideation",
+      "optimmization",
+      "decision_making"
+    ],
+    "keywords": [
+      "ideation",
+      "optimization",
+      "human-in-the-loop",
+      "concept generation",
+      "design pipeline",
+      "feedback",
+      "neural operator",
+      "workflow"
+    ],
+    "card_category": "cc",
+    "card_tag": "tc",
+    "card_label": "Cross-Category",
+    "impact_signals": [
+      "human-ai",
+      "workflow",
+      "evaluation",
+      "real-world application"
+    ],
+    "drc_focus_signals": [
+      "ideation",
+      "optimization",
+      "human-in-the-loop",
+      "neural operator"
+    ],
+    "feasibility_signals": [
+      "pipeline",
+      "authors",
+      "methods",
+      "feedback",
+      "student"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.694,
+    "priority_factors": {
+      "current_trends_score": 0.764,
+      "drc_interest_score": 0.602,
+      "impact_score": 0.787,
+      "evidence_strength_score": 0.581,
+      "feasibility_readiness_score": 0.723
+    },
+    "priority_reason": "Medium priority because impact and current trends are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Okeyo",
+        "author_whitespace_match_score": 0.81,
+        "match_score": 0.81,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.805,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.827,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Improved Collaborative Filtering Recommender System Based on Hybrid Similarity Measures.",
+            "year": "2025",
+            "reason": "category overlap in ideation; topic overlap in evaluation, ideation, neural; recent contribution in 2025"
+          },
+          {
+            "title": "A Hybrid Approach for Personalized Recommender System Using Weighted TFIDF on RSS Contents",
+            "year": "2016",
+            "reason": "category overlap in ideation; topic overlap in application, concept, evaluation, ideation"
+          },
+          {
+            "title": "Combining ontological and temporal formalisms for composite activity modelling and recognition in smart homes",
+            "year": "2014",
+            "reason": "category overlap in optimization; topic overlap in human, optimization, work, workflow"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as evaluation, optimization, work, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Peha",
+        "author_whitespace_match_score": 0.806,
+        "match_score": 0.806,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.805,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.81,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Lessons from internet use and performance during COVID-19",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, optimization, work; recent contribution in 2021"
+          },
+          {
+            "title": "Cost benefit analysis: Evaluation among the millimetre wavebands and SHF bands of small cell 5G networks",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in evaluation, generation, ideation; recent contribution in 2020"
+          },
+          {
+            "title": "Expanding cellular network capacity with multi-network access",
+            "year": "2018",
+            "reason": "category overlap in optimization; topic overlap in end-to-end, generation, optimization; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as end-to-end, generation, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Noelia Grande Gutierrez",
+        "author_whitespace_match_score": 0.803,
+        "match_score": 0.803,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.955,
+          "category_topic_match_score": 0.6,
+          "representative_paper_score": 0.978,
+          "bridge_to_gap_score": 0.729
+        },
+        "representative_papers": [
+          {
+            "title": "MegaFlow2D: A Parametric Dataset for Machine Learning Super-resolution in Computational Fluid Dynamics Simulations",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in are, both, build, generation; recent contribution in 2023"
+          },
+          {
+            "title": "Energy-Based Feature Extraction with Adaptive Local Domain Decomposition for Prediction of Transient and Turbulence Flow with Operator Regression Models",
+            "year": "",
+            "reason": "category overlap in optimization; topic overlap in are, methods, neural, operator"
+          },
+          {
+            "title": "Taylor Series Error Correction Network for Super-Resolution of Discretized Partial Differential Equation Solutions",
+            "year": "",
+            "reason": "category overlap in optimization; topic overlap in application, directly, methods, neural"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation, optimmization with whitespace-relevant topics such as methods, neural, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nicolas F Soria Zurita",
+        "author_whitespace_match_score": 0.795,
+        "match_score": 0.795,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.985,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "Adaptation and Challenges in Human-AI Partnership for the Design of Complex Engineering Systems",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in are, both, human, human-ai; recent contribution in 2023"
+          },
+          {
+            "title": "When faced with increasing complexity: The effectiveness of AI assistance for drone design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, but, human, ideation; recent contribution in 2022"
+          },
+          {
+            "title": "Addressing Challenges to Problem Complexity: Effectiveness of AI Assistance During the Design Process",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in but, human, ideation, methods; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as human, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Joshi",
+        "author_whitespace_match_score": 0.794,
+        "match_score": 0.794,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.88,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.893,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "A Novel Framework for the Analysis and Design of Heterogeneous Federated Learning",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in ideation, methods, neural, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Job assignment in machine learning inference systems with accuracy constraints",
+            "year": "2025",
+            "reason": "category overlap in optimization; topic overlap in concept, methods, neural, optimization; recent contribution in 2025"
+          },
+          {
+            "title": "A Unified Approach to Translate Classical Bandit Algorithms to Structured Bandits",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in concept, methods, optimization; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Chi",
+        "author_whitespace_match_score": 0.79,
+        "match_score": 0.79,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.88,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.878,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Accelerating convergence of score-based diffusion models, provably",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in application, methods, neural, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Communication-efficient distributed optimization in networks with gradient tracking and variance reduction",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in generation, methods, neural, optimization; recent contribution in 2020"
+          },
+          {
+            "title": "A large collection of real-world pediatric sleep studies",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in neural, optimization, real-world; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Joshua T. Gyory",
+        "author_whitespace_match_score": 0.788,
+        "match_score": 0.788,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.981,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 0.973,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "Adaptation and Challenges in Human-AI Partnership for the Design of Complex Engineering Systems",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in are, both, human, human-ai; recent contribution in 2023"
+          },
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in are, human, work, workflow; recent contribution in 2022"
+          },
+          {
+            "title": "Decoding the Agility of Artificial Intelligence-Assisted Human Design Teams",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in human, methods, optimization, still; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as human, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Low",
+        "author_whitespace_match_score": 0.783,
+        "match_score": 0.783,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.865,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.867,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Scalable Bioinformatics: Methods, Software Tools, and Hardware Architectures",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in application, ideation, methods, workflows; recent contribution in 2022"
+          },
+          {
+            "title": "ARRAY'21: Proceedings of the 7th ACM SIGPLAN International Workshop on Libraries, Languages and Compilers for Array Programming: June 21, 2021, Virtual, Canada",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, optimization, workflows; recent contribution in 2021"
+          },
+          {
+            "title": "Small: A software framework for portable machine learning libraries",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in concept, ideation, workflows; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 1,
+    "score": "M1",
+    "tagLabel": "Cross-Category · Medium",
+    "sc": "sm",
+    "cat": "cc",
+    "tag": "tc",
+    "desc": "Ideation and optimization work are both strong, but they are still largely siloed rather than linked in end-to-end workflows.",
+    "opp": "Build end-to-end pipelines where ideation outputs are parameterized and fed into optimization loops with human feedback. This would directly connect DRC ideation, optimization, and decision-support work."
+  },
+  {
+    "title": "Marine Renewable Energy — The Missing Domain",
+    "description": "Marine renewable energy appears as a strategic domain but is lightly represented in the publication history.",
+    "opportunity": "Apply DRC optimization and simulation methods to marine renewable energy design. This addresses a real domain gap while aligning with climate and infrastructure priorities.",
+    "related_categories": [
+      "optimmization",
+      "decision_making"
+    ],
+    "keywords": [
+      "marine renewable energy",
+      "wave energy",
+      "ocean",
+      "topology optimization",
+      "simulation",
+      "climate",
+      "infrastructure",
+      "renewable"
+    ],
+    "card_category": "cx",
+    "card_tag": "tx",
+    "card_label": "Domain Gap",
+    "impact_signals": [
+      "sustainability",
+      "climate",
+      "real-world application",
+      "infrastructure"
+    ],
+    "drc_focus_signals": [
+      "energy",
+      "simulation",
+      "optimization",
+      "marine"
+    ],
+    "feasibility_signals": [
+      "simulation",
+      "optimization",
+      "authors",
+      "dataset",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.666,
+    "priority_factors": {
+      "current_trends_score": 0.764,
+      "drc_interest_score": 0.5,
+      "impact_score": 0.778,
+      "evidence_strength_score": 0.548,
+      "feasibility_readiness_score": 0.746
+    },
+    "priority_reason": "Medium priority because impact and current trends are strong, while drc interest remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Morgan",
+        "author_whitespace_match_score": 0.893,
+        "match_score": 0.893,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.775,
+          "category_topic_match_score": 0.867,
+          "representative_paper_score": 0.985,
+          "bridge_to_gap_score": 1.0
+        },
+        "representative_papers": [
+          {
+            "title": "Future HVDC Cable Supply and Demand as a Potential Threat to the EU Energy Transition",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in energy, infrastructure, methods, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Future HVDC Cable Supply and Demand as a Potential Threat to the EU Energy Transition",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in energy, infrastructure, methods, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Estimating what US residential customers are willing to pay for resilience to large electricity outages of long duration",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in energy, infrastructure, optimization, renewable; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as climate, energy, renewable, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Jaramillo",
+        "author_whitespace_match_score": 0.872,
+        "match_score": 0.872,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.88,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Annex III: Scenarios and modelling methods",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in energy, infrastructure, methods, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "Climate-induced tradeoffs in planning and operating costs of a regional electricity system",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in climate, energy, methods, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Diverse decarbonization pathways under near cost-optimal futures",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in climate, energy, methods, optimization; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as climate, energy, renewable, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nock",
+        "author_whitespace_match_score": 0.849,
+        "match_score": 0.849,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.805,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.985,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Understanding energy limiting behavior in different climate zones: case studies of three utility service regions",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in climate, energy, optimization, renewable; recent contribution in 2023"
+          },
+          {
+            "title": "Understanding energy limiting behavior in different climate zones: case studies of three utility service regions",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in climate, energy, optimization, renewable; recent contribution in 2023"
+          },
+          {
+            "title": "Changing the policy paradigm: A benefit maximization approach to electricity planning in developing countries",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in energy, infrastructure, optimization, renewable; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as energy, renewable, sustainability, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Thornburg",
+        "author_whitespace_match_score": 0.825,
+        "match_score": 0.825,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.745,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.947,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Peer-to-Peer Electricity Trading: A Policy Approach for Rwanda",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in energy, infrastructure, optimization, renewable; recent contribution in 2023"
+          },
+          {
+            "title": "A tool for assessing demand side management and operating strategies for isolated microgrids",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in energy, methods, optimization, renewable; recent contribution in 2021"
+          },
+          {
+            "title": "Building power grid 2.0: Deep learning and federated computations for energy decarbonization and edge resilience",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in energy, methods, optimization, renewable; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as energy, optimization, renewable, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Grossman",
+        "author_whitespace_match_score": 0.817,
+        "match_score": 0.817,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.865,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "IDAES Enterprise: Generation Expansion Planning with Enhanced Requirements for Capacity Adequacy Under Renewable Intermittency",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in application, climate, energy, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Life cycle optimization of power generation and transmission expansion planning",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in application, energy, infrastructure, optimization; recent contribution in 2023"
+          },
+          {
+            "title": "Mixed-integer nonlinear programming model for optimal field management for carbon capture and storage",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in application, energy, methods, optimization; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as optimization, project, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Karplus",
+        "author_whitespace_match_score": 0.813,
+        "match_score": 0.813,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.85,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "The impact of electric utility ownership structures on low-carbon investment decision",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in application, energy, optimization, real; recent contribution in 2021"
+          },
+          {
+            "title": "Carbon Pricing Strategies Under Binding Political Economy Constraints",
+            "year": "2016",
+            "reason": "category overlap in optimization; topic overlap in application, climate, energy, optimization"
+          },
+          {
+            "title": "Carbon pricing under binding political constraints",
+            "year": "2016",
+            "reason": "category overlap in optimization; topic overlap in application, climate, energy, optimization"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as climate, energy, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Chi",
+        "author_whitespace_match_score": 0.806,
+        "match_score": 0.806,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.85,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.973,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Softmax policy gradient methods can take exponential time to converge",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in climate, marine, methods, ocean; recent contribution in 2023"
+          },
+          {
+            "title": "Pessimistic Q-learning for offline reinforcement learning: Towards optimal sample complexity",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in application, domain, methods, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "Vertical Federated Learning with Missing Features During Training and Inference",
+            "year": "2025",
+            "reason": "category overlap in optimization; topic overlap in domain, methods, missing, optimization; recent contribution in 2025"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Vladimir Romanovsky",
+        "author_whitespace_match_score": 0.8,
+        "match_score": 0.8,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.91,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.887,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Synthesis of physical processes of permafrost degradation and geophysical and geomechanical properties of permafrost",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in application, climate, infrastructure, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "Toward a Permafrost Vulnerability Index for Critical Infrastructure, Community Resilience and National Security",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in application, climate, infrastructure, marine; recent contribution in 2023"
+          },
+          {
+            "title": "Understanding Effects of Permafrost Degradation and Coastal Erosion on Civil Infrastructure in Arctic Coastal Villages: A Community Survey and Knowledge Co-Production",
+            "year": "2022",
+            "reason": "topic overlap in application, climate, infrastructure, marine; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as application, climate, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 2,
+    "score": "M2",
+    "tagLabel": "Domain Gap · Medium",
+    "sc": "sm",
+    "cat": "cx",
+    "tag": "tx",
+    "desc": "Marine renewable energy appears as a strategic domain but is lightly represented in the publication history.",
+    "opp": "Apply DRC optimization and simulation methods to marine renewable energy design. This addresses a real domain gap while aligning with climate and infrastructure priorities."
+  },
+  {
+    "title": "Longitudinal AI Trust Calibration in Design Teams",
+    "description": "The DRC has studied AI trust in snapshots, but not how trust evolves over repeated interactions and failures over time.",
+    "opportunity": "Run longitudinal studies tracking how repeated AI assistance shifts designer autonomy and reliance. This extends trust work from one-off evaluations to project-scale human-AI collaboration.",
+    "related_categories": [
+      "decision_making",
+      "ideation"
+    ],
+    "keywords": [
+      "trust",
+      "human-ai",
+      "design teams",
+      "collaboration",
+      "process management",
+      "longitudinal",
+      "adaptive teaming"
+    ],
+    "card_category": "cd",
+    "card_tag": "td",
+    "card_label": "Decision Gap",
+    "impact_signals": [
+      "human-ai",
+      "decision-making",
+      "evaluation",
+      "design teams"
+    ],
+    "drc_focus_signals": [
+      "trust",
+      "collaboration",
+      "process management",
+      "ai"
+    ],
+    "feasibility_signals": [
+      "teams",
+      "authors",
+      "study",
+      "methods",
+      "student"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.649,
+    "priority_factors": {
+      "current_trends_score": 0.743,
+      "drc_interest_score": 0.649,
+      "impact_score": 0.658,
+      "evidence_strength_score": 0.537,
+      "feasibility_readiness_score": 0.591
+    },
+    "priority_reason": "Medium priority because current trends and impact are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 2,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Torsten Maier",
+        "author_whitespace_match_score": 0.843,
+        "match_score": 0.843,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.972,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "A Query Conundrum: The Mental Challenges of Using a Cognitive Assistant",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in has, how, not, studied; recent contribution in 2021"
+          },
+          {
+            "title": "The Relationship Between Performance and Trust in AI in E-Finance",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in how, human-ai, interactions, process; recent contribution in 2022"
+          },
+          {
+            "title": "An Analysis of Design Process and Performance in Distributed Data Science Teams",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in but, collaboration, management, process; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as management, work, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Jay Martin",
+        "author_whitespace_match_score": 0.841,
+        "match_score": 0.841,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.963,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in collaboration, has, management, process; recent contribution in 2022"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in collaboration, has, management, process; recent contribution in 2022"
+          },
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in management, process, teams, work; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as collaboration, management, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Pratima Saravanan",
+        "author_whitespace_match_score": 0.807,
+        "match_score": 0.807,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.931,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.897,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "When the Going Gets Tough: Exploring Changes in the Startup Landscape Due to the Challenges of 2020",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in collaboration, how, management, work; recent contribution in 2021"
+          },
+          {
+            "title": "Decision-Making In The Prescription Of Orthotics And Prosthetics For Partial-Foot Amputees",
+            "year": "2019",
+            "reason": "category overlap in decision making; topic overlap in decision-making, management, methods, work; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as collaboration, management, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Joshua T Gyory",
+        "author_whitespace_match_score": 0.795,
+        "match_score": 0.795,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.985,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in collaboration, has, management, process; recent contribution in 2022"
+          },
+          {
+            "title": "Comparing Nominal and Interacting Sub-Structured Teams in an Interdisciplinary Engineering Design Task",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in but, collaboration, extends, not; recent contribution in 2022"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in collaboration, has, management, process; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as collaboration, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Corey Balon",
+        "author_whitespace_match_score": 0.785,
+        "match_score": 0.785,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.943,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in collaboration, has, management, process; recent contribution in 2022"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in collaboration, has, management, process; recent contribution in 2022"
+          },
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in management, process, teams, work; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as collaboration, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Okeyo",
+        "author_whitespace_match_score": 0.782,
+        "match_score": 0.782,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.745,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.774,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Stock price prediction using neural network models based on tweets sentiment scores",
+            "year": "2017",
+            "reason": "category overlap in decision making; topic overlap in decision-making, management, methods, time"
+          },
+          {
+            "title": "A Trust Model for Context-Aware E-Health Services",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in management, trust; recent contribution in 2021"
+          },
+          {
+            "title": "Telecommuting model for small and medium enterprises (Smes) in Kenya",
+            "year": "2016",
+            "reason": "category overlap in ideation; topic overlap in interactions, methods, work"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as evaluation, management, work, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Daniel Spillane",
+        "author_whitespace_match_score": 0.755,
+        "match_score": 0.755,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.931,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.977,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Comparing Human and Cognitive Assistant Facilitated Brainstorming Sessions",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in evaluation, has, management, not; recent contribution in 2022"
+          },
+          {
+            "title": "Analyzing the Characteristics of Cognitive-Assistant-Facilitated Ideation Groups",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in evaluation, has, management, not; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as evaluation, management, work, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Erdogmus",
+        "author_whitespace_match_score": 0.754,
+        "match_score": 0.754,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.775,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.84,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Detection and elimination of systematic labeling bias in code reviewer recommendation systems",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in evaluation, management, methods; recent contribution in 2021"
+          },
+          {
+            "title": "Detection and elimination of systematic labeling bias in code reviewer recommendation systems",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in evaluation, management, methods; recent contribution in 2021"
+          },
+          {
+            "title": "SECOMlint: A linter for Security Commit Messages",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in evaluation, management, trust; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as collaboration, studies, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 3,
+    "score": "M3",
+    "tagLabel": "Decision Gap · Medium",
+    "sc": "sm",
+    "cat": "cd",
+    "tag": "td",
+    "desc": "The DRC has studied AI trust in snapshots, but not how trust evolves over repeated interactions and failures over time.",
+    "opp": "Run longitudinal studies tracking how repeated AI assistance shifts designer autonomy and reliance. This extends trust work from one-off evaluations to project-scale human-AI collaboration."
+  },
+  {
+    "title": "Bias Detection and Mitigation in AI-Assisted Ideation",
+    "description": "Bias in design and AI facilitation are present in the portfolio, but AI-amplified bias during ideation is still underexplored.",
+    "opportunity": "Develop methods to detect and mitigate anchoring, fixation, and demographic bias introduced during AI-assisted brainstorming. This links DRC equity work to current AI design infrastructure.",
+    "related_categories": [
+      "ideation",
+      "decision_making"
+    ],
+    "keywords": [
+      "bias",
+      "ideation",
+      "ai-assisted",
+      "brainstorming",
+      "equity",
+      "fixation",
+      "anchoring"
+    ],
+    "card_category": "ci",
+    "card_tag": "ti",
+    "card_label": "Ideation Gap",
+    "impact_signals": [
+      "human-ai",
+      "equity",
+      "evaluation",
+      "design teams"
+    ],
+    "drc_focus_signals": [
+      "bias",
+      "ideation",
+      "equity",
+      "ai"
+    ],
+    "feasibility_signals": [
+      "study",
+      "authors",
+      "methods",
+      "student",
+      "dataset"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.636,
+    "priority_factors": {
+      "current_trends_score": 0.764,
+      "drc_interest_score": 0.486,
+      "impact_score": 0.658,
+      "evidence_strength_score": 0.615,
+      "feasibility_readiness_score": 0.662
+    },
+    "priority_reason": "Medium priority because current trends and feasibility readiness are strong, while drc interest remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Malena Agyemang",
+        "author_whitespace_match_score": 0.78,
+        "match_score": 0.78,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.963,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 0.96,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "Deriving Recommendations for the Use of Agent-Based Models in Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, current, develop, ideation; recent contribution in 2022"
+          },
+          {
+            "title": "Uncovering Potential Bias in Engineering Design: A Comparative Review of Bias Research in Medicine",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in are, bias, methods; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as bias, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Cranor",
+        "author_whitespace_match_score": 0.779,
+        "match_score": 0.779,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.82,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.893,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "How usable are ios app privacy labels?",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, detection, ideation, methods; recent contribution in 2022"
+          },
+          {
+            "title": "Nudging users towards privacy on mobile devices",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in detection, evaluation, ideation, methods; recent contribution in 2022"
+          },
+          {
+            "title": "A systematic literature review of empirical methods and risk representation in usable privacy and security research",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as detection, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Torsten Maier",
+        "author_whitespace_match_score": 0.777,
+        "match_score": 0.777,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.912,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "Comparing Human and Cognitive Assistant Facilitated Brainstorming Sessions",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, brainstorming, evaluation, facilitation; recent contribution in 2022"
+          },
+          {
+            "title": "Analyzing the Characteristics of Cognitive-Assistant-Facilitated Ideation Groups",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in are, brainstorming, evaluation, facilitation; recent contribution in 2020"
+          },
+          {
+            "title": "An Analysis of Design Process and Performance in Distributed Data Science Teams",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in are, but, ideation, teams; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as work, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Bauer",
+        "author_whitespace_match_score": 0.772,
+        "match_score": 0.772,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.745,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.943,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Users Are still Not the Enemy: Applying Security Usability Principles to Covid-19 {Return-To-Work} Security",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in are, detection, ideation, methods; recent contribution in 2020"
+          },
+          {
+            "title": "Users Are still Not the Enemy: Applying Security Usability Principles to Covid-19 {Return-To-Work} Security",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in are, detection, ideation, methods; recent contribution in 2020"
+          },
+          {
+            "title": "CoCoT: Collaborative Contact Tracing (Extended Version)",
+            "year": "2024",
+            "reason": "category overlap in ideation; topic overlap in detection, evaluation, ideation, methods; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as detection, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Christin",
+        "author_whitespace_match_score": 0.77,
+        "match_score": 0.77,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.835,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.845,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Are security experts useful? Bayesian Nash equilibria for network security games with limited information",
+            "year": "2011",
+            "reason": "category overlap in ideation; topic overlap in are, detection, ideation, infrastructure"
+          },
+          {
+            "title": "Blockchain Address Poisoning",
+            "year": "2025",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods; recent contribution in 2025"
+          },
+          {
+            "title": "Blockchain Amplification Attack",
+            "year": "2024",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as detection, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Ndibwile",
+        "author_whitespace_match_score": 0.756,
+        "match_score": 0.756,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.76,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.863,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "A comparative study of smartphone-user security perception and preference towards redesigned security notifications",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in detection, evaluation, methods, work; recent contribution in 2018"
+          },
+          {
+            "title": "A Demographic Perspective of Smartphone Security and Its Redesigned Notifications",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in demographic, detection, ideation, methods; recent contribution in 2019"
+          },
+          {
+            "title": "Low time complexity model for email spam detection using logistic regression",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as detection, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Okeyo",
+        "author_whitespace_match_score": 0.756,
+        "match_score": 0.756,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.82,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.804,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Telecommuting model for small and medium enterprises (Smes) in Kenya",
+            "year": "2016",
+            "reason": "category overlap in ideation; topic overlap in ideation, infrastructure, methods, work"
+          },
+          {
+            "title": "A Self Scheduling and Power Control MAC Protocol for Interference Mitigation in Wireless Body Area Networks",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in evaluation, ideation, mitigation; recent contribution in 2020"
+          },
+          {
+            "title": "Hybrid IEEE 802.15. 6 wireless body area networks interference mitigation model for high mobility interference scenarios",
+            "year": "2018",
+            "reason": "category overlap in ideation; topic overlap in evaluation, ideation, mitigation; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as evaluation, work, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Rawn",
+        "author_whitespace_match_score": 0.755,
+        "match_score": 0.755,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.745,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.875,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Improving voltage profile of the Nigerian Power Grid",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods, mitigation; recent contribution in 2019"
+          },
+          {
+            "title": "Improving voltage profile of the Nigerian Power Grid",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods, mitigation; recent contribution in 2019"
+          },
+          {
+            "title": "Technical analysis of barriers to raising the power delivery ceiling in Nigeria",
+            "year": "2018",
+            "reason": "category overlap in ideation; topic overlap in detection, ideation, methods, mitigation; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as detection, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 4,
+    "score": "M4",
+    "tagLabel": "Ideation Gap · Medium",
+    "sc": "sm",
+    "cat": "ci",
+    "tag": "ti",
+    "desc": "Bias in design and AI facilitation are present in the portfolio, but AI-amplified bias during ideation is still underexplored.",
+    "opp": "Develop methods to detect and mitigate anchoring, fixation, and demographic bias introduced during AI-assisted brainstorming. This links DRC equity work to current AI design infrastructure."
+  },
+  {
+    "title": "Neurodivergent Cognition in AI-Assisted Design",
+    "description": "Cognitive style and empathy are represented, but neurodivergent experiences with AI-assisted design tools are not.",
+    "opportunity": "Study how neurodivergent designers engage with AI-assisted design tools and team settings, connecting cognitive-style research to inclusive human-AI design practice.",
+    "related_categories": [
+      "ideation",
+      "decision_making"
+    ],
+    "keywords": [
+      "cognitive style",
+      "neurodivergent",
+      "ai-assisted design",
+      "inclusive design",
+      "empathy",
+      "participation"
+    ],
+    "card_category": "ci",
+    "card_tag": "ti",
+    "card_label": "Ideation Gap",
+    "impact_signals": [
+      "human-ai",
+      "equity",
+      "design teams",
+      "evaluation"
+    ],
+    "drc_focus_signals": [
+      "cognitive style",
+      "inclusive design",
+      "empathy"
+    ],
+    "feasibility_signals": [
+      "study",
+      "authors",
+      "student",
+      "methods",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.592,
+    "priority_factors": {
+      "current_trends_score": 0.514,
+      "drc_interest_score": 0.56,
+      "impact_score": 0.658,
+      "evidence_strength_score": 0.581,
+      "feasibility_readiness_score": 0.698
+    },
+    "priority_reason": "Medium priority because feasibility readiness and impact are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 3,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Jay Martin",
+        "author_whitespace_match_score": 0.895,
+        "match_score": 0.895,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.973,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, project, research, team; recent contribution in 2022"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, project, research, team; recent contribution in 2022"
+          },
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in are, research, team, teams; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as project, research, team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Joshua T Gyory",
+        "author_whitespace_match_score": 0.85,
+        "match_score": 0.85,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Independence or Interaction? Understanding the Benefits and Limitations of Nominally Inspired and Interacting Sub-Structured Teams in a Virtual and Interdisciplinary Engineering Design Task",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in are, but, cognition, not; recent contribution in 2023"
+          },
+          {
+            "title": "Comparing Nominal and Interacting Sub-Structured Teams in an Interdisciplinary Engineering Design Task",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, but, not, practice; recent contribution in 2022"
+          },
+          {
+            "title": "Communication in AI-assisted Teams During an Interdisciplinary Drone Design Problem",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in ai-assisted, are, how, research; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as research, team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Malena Agyemang",
+        "author_whitespace_match_score": 0.85,
+        "match_score": 0.85,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Uncovering Potential Bias in Engineering Design: A Comparative Review of Bias Research in Medicine",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in are, empathy, methods, not; recent contribution in 2023"
+          },
+          {
+            "title": "Deriving Recommendations for the Use of Agent-Based Models in Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, how, methods, research; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as empathy, research, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Corey Balon",
+        "author_whitespace_match_score": 0.843,
+        "match_score": 0.843,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.972,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Toward Hybrid Teams: A Platform To Understand Human-Computer Collaboration During the Design of Complex Engineered Systems",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in designers, evaluation, how, research; recent contribution in 2020"
+          },
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, project, research, team; recent contribution in 2022"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, project, research, team; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as research, team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Jessica Menold",
+        "author_whitespace_match_score": 0.843,
+        "match_score": 0.843,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.97,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "A Query Conundrum: The Mental Challenges of Using a Cognitive Assistant",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in are, cognitive, how, not; recent contribution in 2021"
+          },
+          {
+            "title": "Comparing Human and Cognitive Assistant Facilitated Brainstorming Sessions",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, cognitive, evaluation, not; recent contribution in 2022"
+          },
+          {
+            "title": "Does empathy lead to creativity? A simulation-based investigation on the role of team trait empathy on nominal group concept generation and early concept screening",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in designers, empathy, how, not; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as research, team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nicolas F Soria Zurita",
+        "author_whitespace_match_score": 0.839,
+        "match_score": 0.839,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.955,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Independence or Interaction? Understanding the Benefits and Limitations of Nominally Inspired and Interacting Sub-Structured Teams in a Virtual and Interdisciplinary Engineering Design Task",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in are, but, cognition, not; recent contribution in 2023"
+          },
+          {
+            "title": "Comparing Nominal and Interacting Sub-Structured Teams in an Interdisciplinary Engineering Design Task",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, but, not, practice; recent contribution in 2022"
+          },
+          {
+            "title": "Adaptation and Challenges in Human-AI Partnership for the Design of Complex Engineering Systems",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in are, designers, human-ai, research; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as research, team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Joshua T. Gyory",
+        "author_whitespace_match_score": 0.815,
+        "match_score": 0.815,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.944,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.913,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Adaptation and Challenges in Human-AI Partnership for the Design of Complex Engineering Systems",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in are, designers, human-ai, research; recent contribution in 2023"
+          },
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in are, research, team, teams; recent contribution in 2022"
+          },
+          {
+            "title": "Decoding the Agility of Artificial Intelligence-Assisted Human Design Teams",
+            "year": "2022",
+            "reason": "topic overlap in ai-assisted, how, methods, practice; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as research, team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Kenneth Kotovsky",
+        "author_whitespace_match_score": 0.799,
+        "match_score": 0.799,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, project, research, team; recent contribution in 2022"
+          },
+          {
+            "title": "A Strategic Decision-making Architecture Toward Hybrid Teams for Dynamic Competitive Problems",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in are, methods, research, team; recent contribution in 2021"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in are, project, research, team; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as team, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 5,
+    "score": "M5",
+    "tagLabel": "Ideation Gap · Medium",
+    "sc": "sm",
+    "cat": "ci",
+    "tag": "ti",
+    "desc": "Cognitive style and empathy are represented, but neurodivergent experiences with AI-assisted design tools are not.",
+    "opp": "Study how neurodivergent designers engage with AI-assisted design tools and team settings, connecting cognitive-style research to inclusive human-AI design practice."
+  },
+  {
+    "title": "Decision Making Under Epistemic Uncertainty in Early-Stage Design",
+    "description": "Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
+    "opportunity": "Develop Bayesian or robust decision-support methods for early conceptual design under ambiguity. This extends existing DRC decision-support work into less structured design settings.",
+    "related_categories": [
+      "decision_making",
+      "ideation"
+    ],
+    "keywords": [
+      "decision making",
+      "uncertainty",
+      "conceptual design",
+      "bayesian",
+      "robust decision",
+      "tradeoff"
+    ],
+    "card_category": "cd",
+    "card_tag": "td",
+    "card_label": "Decision Gap",
+    "impact_signals": [
+      "decision-making",
+      "evaluation",
+      "methods",
+      "real-world application"
+    ],
+    "drc_focus_signals": [
+      "decision making",
+      "uncertainty",
+      "conceptual design"
+    ],
+    "feasibility_signals": [
+      "bayesian",
+      "methods",
+      "authors",
+      "student",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.575,
+    "priority_factors": {
+      "current_trends_score": 0.493,
+      "drc_interest_score": 0.641,
+      "impact_score": 0.567,
+      "evidence_strength_score": 0.504,
+      "feasibility_readiness_score": 0.68
+    },
+    "priority_reason": "Medium priority because feasibility readiness and drc interest are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 2,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Malena Agyemang",
+        "author_whitespace_match_score": 0.821,
+        "match_score": 0.821,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.963,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Uncovering Potential Bias in Engineering Design: A Comparative Review of Bias Research in Medicine",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in decision, decision-making, existing, making; recent contribution in 2023"
+          },
+          {
+            "title": "Deriving Recommendations for the Use of Agent-Based Models in Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in develop, methods, work; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as decision, making, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Grossman",
+        "author_whitespace_match_score": 0.81,
+        "match_score": 0.81,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.67,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.964,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "MILP formulation and Nested decomposition algorithm for electric powerinfrastructure planning",
+            "year": "2017",
+            "reason": "category overlap in decision making; topic overlap in decision, making, methods, project"
+          },
+          {
+            "title": "A comparative study between GDP and NLP formulations for conceptual design of distillation columns",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in conceptual, decision, making, methods; recent contribution in 2018"
+          },
+          {
+            "title": "The Center for Advanced Process Decision-making at Carnegie Mellon",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in decision, decision-making, making, project; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as project, robust, uncertainty, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Smailagic",
+        "author_whitespace_match_score": 0.778,
+        "match_score": 0.778,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.715,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.997,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Opportunities of a machine learning-based decision support system for stroke rehabilitation assessment",
+            "year": "2020",
+            "reason": "category overlap in decision making; topic overlap in application, bayesian, decision, deep; recent contribution in 2020"
+          },
+          {
+            "title": "Towards efficient annotations for a human-ai collaborative, clinical decision support system: A case study on physical stroke rehabilitation assessment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in bayesian, decision, deep, making; recent contribution in 2022"
+          },
+          {
+            "title": "Co-design and evaluation of an intelligent decision support system for stroke rehabilitation assessment",
+            "year": "2020",
+            "reason": "category overlap in decision making; topic overlap in application, decision, evaluation, making; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as evaluation, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Chase",
+        "author_whitespace_match_score": 0.765,
+        "match_score": 0.765,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.82,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.84,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Development of natural scene representation in primary visual cortex requires early postnatal experience",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in decision, early, making; recent contribution in 2021"
+          },
+          {
+            "title": "Existing function in primary visual cortex is not perturbed by new skill acquisition of a non-matched sensory task",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in decision, existing, making; recent contribution in 2022"
+          },
+          {
+            "title": "Learning alters neural activity to simultaneously support memory and action",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in decision, making, support; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as decision, making, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Fischhoff",
+        "author_whitespace_match_score": 0.765,
+        "match_score": 0.765,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.76,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.899,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "How patients deal with an ambiguous medical test: decision-making after genetic testing",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in ambiguous, decision, decision-making, making; recent contribution in 2021"
+          },
+          {
+            "title": "Assessing adolescent decision-making competence",
+            "year": "2013",
+            "reason": "category overlap in decision making; topic overlap in decision, decision-making, making, settings"
+          },
+          {
+            "title": "BEHAVIORAL INFLUENCES ON CLINICIAN DECISION MAKING IN END-OF-LIFE SITUATIONS",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in decision, making, methods, settings; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as decision, making, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Skirpan",
+        "author_whitespace_match_score": 0.762,
+        "match_score": 0.762,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.82,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.825,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "From preference elicitation to participatory ML: A critical survey & guidelines for future research",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in decision, evaluation, making, work; recent contribution in 2023"
+          },
+          {
+            "title": "Is a privacy crisis experienced, a privacy crisis avoided?",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in decision, decision-making, making; recent contribution in 2022"
+          },
+          {
+            "title": "Ethics education in context: A case study of novel ethics activities for the CS classroom",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in decision, making; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as decision, making, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nakahira",
+        "author_whitespace_match_score": 0.753,
+        "match_score": 0.753,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.745,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.867,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Safe Decision-Making in Interactive Environments",
+            "year": "2024",
+            "reason": "category overlap in decision making; topic overlap in decision, decision-making, evaluation, making; recent contribution in 2024"
+          },
+          {
+            "title": "Axon Arbor Trade-off Between Wiring Cost, Delay, and Synchronization in Neuronal Networks",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in decision, deep, making; recent contribution in 2021"
+          },
+          {
+            "title": "An occlusion-and interaction-aware safe control strategy for autonomous vehicles",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in decision, making; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as deep, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Torsten Maier",
+        "author_whitespace_match_score": 0.75,
+        "match_score": 0.75,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.912,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 0.893,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "Using Workplace Thriving Theory to Investigate First-Year Engineering Students’ Abilities to Thrive during the Transition to Online Learning due to COVID-19",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in methods, project, settings, structured; recent contribution in 2022"
+          },
+          {
+            "title": "A Query Conundrum: The Mental Challenges of Using a Cognitive Assistant",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in application, clear, work; recent contribution in 2021"
+          },
+          {
+            "title": "Comparing Human and Cognitive Assistant Facilitated Brainstorming Sessions",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in evaluation, support, work; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as work, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 6,
+    "score": "M6",
+    "tagLabel": "Decision Gap · Medium",
+    "sc": "sm",
+    "cat": "cd",
+    "tag": "td",
+    "desc": "Decision support is present, but ambiguous early-stage conceptual design under deep uncertainty remains a clear opportunity.",
+    "opp": "Develop Bayesian or robust decision-support methods for early conceptual design under ambiguity. This extends existing DRC decision-support work into less structured design settings."
+  },
+  {
+    "title": "Agentic AI for End-to-End UAV Mission Design",
+    "description": "UAV work exists, but full mission-level agentic design remains relatively unexplored.",
+    "opportunity": "Build agentic or multi-agent systems that span the UAV design-to-mission pipeline, connecting DRC workflow, optimization, and human-AI expertise to a clear application domain.",
+    "related_categories": [
+      "decision_making",
+      "optimmization",
+      "ideation"
+    ],
+    "keywords": [
+      "uav",
+      "drone",
+      "mission design",
+      "agentic ai",
+      "multi-agent",
+      "hyform",
+      "uver"
+    ],
+    "card_category": "cx",
+    "card_tag": "tx",
+    "card_label": "Domain Gap",
+    "impact_signals": [
+      "human-ai",
+      "real-world application",
+      "workflow",
+      "scalable methods"
+    ],
+    "drc_focus_signals": [
+      "uav",
+      "hyform",
+      "agentic ai",
+      "multi-agent"
+    ],
+    "feasibility_signals": [
+      "hyform",
+      "uav",
+      "authors",
+      "project",
+      "dataset"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.573,
+    "priority_factors": {
+      "current_trends_score": 0.493,
+      "drc_interest_score": 0.411,
+      "impact_score": 0.878,
+      "evidence_strength_score": 0.471,
+      "feasibility_readiness_score": 0.672
+    },
+    "priority_reason": "Medium priority because impact and feasibility readiness are strong, while drc interest remains the main limiting factor.",
+    "supporting_paper_count": 2,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Chi",
+        "author_whitespace_match_score": 0.79,
+        "match_score": 0.79,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.865,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.893,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Pessimistic Q-learning for offline reinforcement learning: Towards optimal sample complexity",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in application, domain, methods, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "Scalable Dynamic Resource Allocation via Domain Randomized Reinforcement Learning",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in domain, methods, optimization, scalable; recent contribution in 2024"
+          },
+          {
+            "title": "A Multi-Token Coordinate Descent Method for Semi-Decentralized Vertical Federated Learning",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in domain, methods, optimization; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Joshi",
+        "author_whitespace_match_score": 0.769,
+        "match_score": 0.769,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.835,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.84,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Adaptive learning rate schedule in distributed stochastic gradient descent",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Adaptive quantization of model updates for communication-efficient federated learning",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in domain, methods, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Deep kernels with probabilistic embeddings for small-data learning",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in domain, methods, optimization; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nakahira",
+        "author_whitespace_match_score": 0.769,
+        "match_score": 0.769,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.835,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.84,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Learning to Stabilize Unknown LTI Systems on a Single Trajectory under Stochastic Noise",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Orthogonal Modal Representation in Long-Term Risk Quantification for Dynamic Multi-Agent Systems",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Probabilistic safety certificate for multi-agent systems",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Christopher McComb",
+        "author_whitespace_match_score": 0.765,
+        "match_score": 0.765,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.865,
+          "category_topic_match_score": 0.667,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.438
+        },
+        "representative_papers": [
+          {
+            "title": "Opportunities for Natural Language Processing in Qualitative Engineering Education Research: Two Examples",
+            "year": "2018",
+            "reason": "category overlap in ideation; topic overlap in application, but, clear, full; recent contribution in 2018"
+          },
+          {
+            "title": "Addressing Challenges to Problem Complexity: Effectiveness of AI Assistance During the Design Process",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in but, drone, hyform, methods; recent contribution in 2021"
+          },
+          {
+            "title": "HUVER: The HyForm Uncrewed Vehicle Engineering Repository",
+            "year": "2025",
+            "reason": "category overlap in optimization; topic overlap in dataset, human-ai, hyform, optimization; recent contribution in 2025"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Grossman",
+        "author_whitespace_match_score": 0.763,
+        "match_score": 0.763,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.805,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.845,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Logic based approaches for mixed integer programming models and their application in process synthesis",
+            "year": "2000",
+            "reason": "category overlap in optimization; topic overlap in application, methods, optimization, project"
+          },
+          {
+            "title": "A review of stochastic programming methods for optimization of process systems under uncertainty",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, optimization, project; recent contribution in 2021"
+          },
+          {
+            "title": "Integrating Reliability and Uncertainty in Process Synthesis",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in optimization, project, workflow; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as optimization, project, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Qu",
+        "author_whitespace_match_score": 0.757,
+        "match_score": 0.757,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.775,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.852,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Exploiting fast decaying and locality in multi-agent mdp with tree dependence structure",
+            "year": "2019",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization, scalable; recent contribution in 2019"
+          },
+          {
+            "title": "A scalable network-aware multi-agent reinforcement learning framework for decentralized inverter-based voltage control",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in multi-agent, optimization, scalable; recent contribution in 2023"
+          },
+          {
+            "title": "Combining model-based controller and ML advice via convex reparameterization",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as multi-agent, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Moura",
+        "author_whitespace_match_score": 0.75,
+        "match_score": 0.75,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.79,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.81,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Peer-to-peer deep learning for beyond-5g iot",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in domain, optimization, scalable; recent contribution in 2023"
+          },
+          {
+            "title": "Attack resilient distributed estimation: A consensus+ innovations approach",
+            "year": "2018",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2018"
+          },
+          {
+            "title": "Distributed gradient methods for nonconvex optimization: Local and global convergence guarantees",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in methods, multi-agent, optimization; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, multi-agent, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Low",
+        "author_whitespace_match_score": 0.744,
+        "match_score": 0.744,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.775,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.798,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Scalable Bioinformatics: Methods, Software Tools, and Hardware Architectures",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in application, methods, scalable; recent contribution in 2022"
+          },
+          {
+            "title": "Efficient spmv operation for large and highly sparse matrices using scalable multi-way merge parallelization",
+            "year": "2019",
+            "reason": "category overlap in optimization; topic overlap in methods, optimization, scalable; recent contribution in 2019"
+          },
+          {
+            "title": "ARRAY'21: Proceedings of the 7th ACM SIGPLAN International Workshop on Libraries, Languages and Compilers for Array Programming: June 21, 2021, Virtual, Canada",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, optimization; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 7,
+    "score": "M7",
+    "tagLabel": "Domain Gap · Medium",
+    "sc": "sm",
+    "cat": "cx",
+    "tag": "tx",
+    "desc": "UAV work exists, but full mission-level agentic design remains relatively unexplored.",
+    "opp": "Build agentic or multi-agent systems that span the UAV design-to-mission pipeline, connecting DRC workflow, optimization, and human-AI expertise to a clear application domain."
+  },
+  {
+    "title": "Grammar-Guided LLM Design Agents",
+    "description": "The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
+    "opportunity": "Constrain LLM-based design generation with mined process grammars, ensuring outputs follow designer-valid action sequences. This connects the DRC's HMM/grammar heritage with its emerging LLM work and can extend across multiple application domains.",
+    "related_categories": [
+      "grammar",
+      "ideation",
+      "decision_making"
+    ],
+    "keywords": [
+      "grammar",
+      "design grammar",
+      "rule-based",
+      "llm",
+      "language model",
+      "concept generation",
+      "designer-valid action sequences",
+      "process heuristics",
+      "generative ai"
+    ],
+    "card_category": "cc",
+    "card_tag": "tc",
+    "card_label": "Cross-Category",
+    "impact_signals": [
+      "human-ai",
+      "methods",
+      "scalable methods",
+      "design workflow"
+    ],
+    "drc_focus_signals": [
+      "grammar",
+      "llm",
+      "process",
+      "design agents"
+    ],
+    "feasibility_signals": [
+      "llm",
+      "grammar",
+      "authors",
+      "student",
+      "dataset"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.573,
+    "priority_factors": {
+      "current_trends_score": 0.493,
+      "drc_interest_score": 0.55,
+      "impact_score": 0.787,
+      "evidence_strength_score": 0.504,
+      "feasibility_readiness_score": 0.53
+    },
+    "priority_reason": "Medium priority because impact and drc interest are strong, while current trends remains the main limiting factor.",
+    "supporting_paper_count": 2,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "BChen",
+        "author_whitespace_match_score": 0.716,
+        "match_score": 0.716,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.745,
+          "category_topic_match_score": 0.6,
+          "representative_paper_score": 0.84,
+          "bridge_to_gap_score": 0.729
+        },
+        "representative_papers": [
+          {
+            "title": "GSM-Infinite: How Do Your LLMs Behave over Infinitely Increasing Context Length and Reasoning Complexity?",
+            "year": "2025",
+            "reason": "category overlap in decision making; topic overlap in language, llms, methods; recent contribution in 2025"
+          },
+          {
+            "title": "Prompt-prompted mixture of experts for efficient llm generation",
+            "year": "2024",
+            "reason": "category overlap in ideation; topic overlap in generation, llm, methods; recent contribution in 2024"
+          },
+          {
+            "title": "SFT: Efficient, Scalable and Generalizable LLM Fine-tuning by Structured Sparsity",
+            "year": "2024",
+            "reason": "category overlap in ideation; topic overlap in llm, methods, scalable; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as deep, generative, language, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Torsten Maier",
+        "author_whitespace_match_score": 0.68,
+        "match_score": 0.68,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.912,
+          "category_topic_match_score": 0.467,
+          "representative_paper_score": 0.943,
+          "bridge_to_gap_score": 0.354
+        },
+        "representative_papers": [
+          {
+            "title": "A Query Conundrum: The Mental Challenges of Using a Cognitive Assistant",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in application, has, not, those; recent contribution in 2021"
+          },
+          {
+            "title": "Assessing The Impact Of Cognitive Assistants On Mental Workload In Simple Tasks",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in but, has, those, work; recent contribution in 2019"
+          },
+          {
+            "title": "Analyzing the Characteristics of Cognitive-Assistant-Facilitated Ideation Groups",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in has, not, those, work; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as work, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Sierra Hicks",
+        "author_whitespace_match_score": 0.671,
+        "match_score": 0.671,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.95,
+          "category_topic_match_score": 0.467,
+          "representative_paper_score": 0.867,
+          "bridge_to_gap_score": 0.354
+        },
+        "representative_papers": [
+          {
+            "title": "Agents and the Arctic: The Case for Increased Use of Agent-Based Modeling to Study Permafrost",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in agents, has, multiple, process; recent contribution in 2021"
+          },
+          {
+            "title": "Toward a Permafrost Vulnerability Index for Critical Infrastructure, Community Resilience and National Security",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in application, has, methods, multiple; recent contribution in 2023"
+          },
+          {
+            "title": "Deriving Recommendations for the Use of Agent-Based Models in Engineering Design",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in methods, work; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as application, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Lilian Alessa",
+        "author_whitespace_match_score": 0.667,
+        "match_score": 0.667,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.91,
+          "category_topic_match_score": 0.467,
+          "representative_paper_score": 0.893,
+          "bridge_to_gap_score": 0.354
+        },
+        "representative_papers": [
+          {
+            "title": "Agents and the Arctic: The Case for Increased Use of Agent-Based Modeling to Study Permafrost",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in agents, has, multiple, process; recent contribution in 2021"
+          },
+          {
+            "title": "Toward a Permafrost Vulnerability Index for Critical Infrastructure, Community Resilience and National Security",
+            "year": "2023",
+            "reason": "category overlap in decision making; topic overlap in application, has, methods, multiple; recent contribution in 2023"
+          },
+          {
+            "title": "Infrastructure and Community Resilience in the Changing Arctic: Status, Challenges, and Research Needs",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in application, but, its; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as application, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Jia",
+        "author_whitespace_match_score": 0.657,
+        "match_score": 0.657,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.73,
+          "category_topic_match_score": 0.533,
+          "representative_paper_score": 0.825,
+          "bridge_to_gap_score": 0.542
+        },
+        "representative_papers": [
+          {
+            "title": "Syrust: automatic testing of rust libraries with semantic-aware program synthesis",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in application, language, methods; recent contribution in 2021"
+          },
+          {
+            "title": "Syrust: Automatic testing of rust libraries with semantic-aware program synthesis–technical report",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in application, language, methods; recent contribution in 2021"
+          },
+          {
+            "title": "Users Are still Not the Enemy: Applying Security Usability Principles to Covid-19 {Return-To-Work} Security",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in application, methods, not; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges grammar, ideation with whitespace-relevant topics such as application, methods, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nakahira",
+        "author_whitespace_match_score": 0.655,
+        "match_score": 0.655,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.76,
+          "category_topic_match_score": 0.533,
+          "representative_paper_score": 0.787,
+          "bridge_to_gap_score": 0.542
+        },
+        "representative_papers": [
+          {
+            "title": "Physics-Informed Deep B-Spline Networks for Dynamical Systems",
+            "year": "2025",
+            "reason": "category overlap in ideation; topic overlap in deep, generative, methods; recent contribution in 2025"
+          },
+          {
+            "title": "A Learning and Control Perspective for Microfinance",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in emerging, methods; recent contribution in 2023"
+          },
+          {
+            "title": "A learning and control perspective for microfinance",
+            "year": "2022",
+            "reason": "category overlap in ideation; topic overlap in emerging, methods; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as deep, methods, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Jessica Menold",
+        "author_whitespace_match_score": 0.65,
+        "match_score": 0.65,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.94,
+          "category_topic_match_score": 0.4,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.167
+        },
+        "representative_papers": [
+          {
+            "title": "\"Thus, I had to go with what I had\": A Multiple Methods Exploration of Novice Designers Articulation of Prototyping Decisions",
+            "year": "2018",
+            "reason": "category overlap in ideation; topic overlap in has, methods, multiple, process; recent contribution in 2018"
+          },
+          {
+            "title": "A Query Conundrum: The Mental Challenges of Using a Cognitive Assistant",
+            "year": "2021",
+            "reason": "category overlap in ideation; topic overlap in application, has, not, those; recent contribution in 2021"
+          },
+          {
+            "title": "Does empathy lead to creativity? A simulation-based investigation on the role of team trait empathy on nominal group concept generation and early concept screening",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in concept, generation, has, not; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as the target gap, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Kosa Goucher-Lambert",
+        "author_whitespace_match_score": 0.643,
+        "match_score": 0.643,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.912,
+          "category_topic_match_score": 0.4,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.167
+        },
+        "representative_papers": [
+          {
+            "title": "Conceptual Design Generation Using Large Language Models",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in application, concept, domains, generation; recent contribution in 2023"
+          },
+          {
+            "title": "Using Hidden Markov Models to Uncover Underlying States in Neuroimaging Data for a Design Ideation Task",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in dataset, domains, generative, hmm; recent contribution in 2019"
+          },
+          {
+            "title": "Uncovering Hidden Patterns of Design Ideation Using Hidden Markov Modeling and Neuroimaging",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in concept, dataset, domains, generation; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, ideation with whitespace-relevant topics such as the target gap, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 8,
+    "score": "M8",
+    "tagLabel": "Cross-Category · Medium",
+    "sc": "sm",
+    "cat": "cc",
+    "tag": "tc",
+    "desc": "The DRC has deep expertise in design grammars/process heuristics and LLMs for design, but those threads have not yet been connected directly.",
+    "opp": "Constrain LLM-based design generation with mined process grammars, ensuring outputs follow designer-valid action sequences. This connects the DRC's HMM/grammar heritage with its emerging LLM work and can extend across multiple application domains."
+  },
+  {
+    "title": "Human Preference-Driven Neural Operator Optimization",
+    "description": "Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
+    "opportunity": "Build optimization systems where designer preferences actively reshape surrogate objectives. This would ground DRC computational optimization in usable human-in-the-loop workflows.",
+    "related_categories": [
+      "optimmization",
+      "decision_making"
+    ],
+    "keywords": [
+      "preference",
+      "neural operator",
+      "optimization",
+      "surrogate",
+      "human preference",
+      "interactive optimization"
+    ],
+    "card_category": "co",
+    "card_tag": "to",
+    "card_label": "Optimization Gap",
+    "impact_signals": [
+      "human-ai",
+      "methods",
+      "decision-making",
+      "real-world application"
+    ],
+    "drc_focus_signals": [
+      "optimization",
+      "neural operator",
+      "preference"
+    ],
+    "feasibility_signals": [
+      "optimization",
+      "methods",
+      "authors",
+      "project",
+      "student"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.507,
+    "priority_factors": {
+      "current_trends_score": 0.493,
+      "drc_interest_score": 0.466,
+      "impact_score": 0.475,
+      "evidence_strength_score": 0.471,
+      "feasibility_readiness_score": 0.678
+    },
+    "priority_reason": "Medium priority because feasibility readiness and current trends are strong, while drc interest remains the main limiting factor.",
+    "supporting_paper_count": 2,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Pileggi",
+        "author_whitespace_match_score": 0.796,
+        "match_score": 0.796,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.85,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.932,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Exhaustive DFM Evaluation of Logic Cell Libraries via Virtual Characterization",
+            "year": "2018",
+            "reason": "category overlap in optimization; topic overlap in application, integrated, methods, neural; recent contribution in 2018"
+          },
+          {
+            "title": "An equivalent circuit workflow for unconstrained optimization",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in integrated, methods, neural, optimization; recent contribution in 2023"
+          },
+          {
+            "title": "Equivalent circuit programming for power flow analysis and optimization",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in integrated, methods, neural, optimization; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as integrated, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Chase",
+        "author_whitespace_match_score": 0.793,
+        "match_score": 0.793,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.85,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Dissociating the Influence of Limb Posture and Visual Feedback Shifts on the Adaptation to Novel Movement Dynamics",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in computational, interactive, neural, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Existing function in primary visual cortex is not perturbed by new skill acquisition of a non-matched sensory task",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in computational, human, neural, not; recent contribution in 2022"
+          },
+          {
+            "title": "New skill acquisition does not perturb existing function in sensory cortex",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in computational, human, neural, not; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as computational, neural, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Chi",
+        "author_whitespace_match_score": 0.79,
+        "match_score": 0.79,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.865,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.893,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Accelerating convergence of score-based diffusion models, provably",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in application, methods, neural, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "Is Q-Learning Minimax Optimal? A Tight Sample Complexity Analysis",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in computational, methods, neural, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "A large collection of real-world pediatric sleep studies",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in neural, optimization, real-world; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Zhang",
+        "author_whitespace_match_score": 0.774,
+        "match_score": 0.774,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.775,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "-Curves: Interpolatory curves with curvature approximating a parabola",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in computational, methods, operator, optimization; recent contribution in 2023"
+          },
+          {
+            "title": "A Multi-Sized Unit Cell Method for the Design of LPBF Lattice Support Structures Concerning Complex Geometries",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in application, integrated, methods, optimization; recent contribution in 2024"
+          },
+          {
+            "title": "A novel hybrid IGA-EIEQ numerical method for the Allen–Cahn/Cahn–Hilliard equations on complex curved surfaces",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in computational, methods, neural, optimization; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as computational, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Grossman",
+        "author_whitespace_match_score": 0.773,
+        "match_score": 0.773,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.805,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.884,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Novel flexibility index formulations for the selection of the operating range within a design space",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in integrated, methods, optimization, project; recent contribution in 2021"
+          },
+          {
+            "title": "An Industrial Application of Deep Reinforcement Learning for Chemical Production Scheduling",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in application, neural, optimization, project; recent contribution in 2020"
+          },
+          {
+            "title": "A decomposition method for synthesizing complex column configurations using tray-by-tray GDP models",
+            "year": "2004",
+            "reason": "category overlap in optimization; topic overlap in computational, integrated, methods, neural"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as optimization, project, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Joshi",
+        "author_whitespace_match_score": 0.773,
+        "match_score": 0.773,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.85,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.84,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Adaptive learning rate schedule in distributed stochastic gradient descent",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, neural, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Adaptive quantization of model updates for communication-efficient federated learning",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in methods, neural, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "Communication-Efficient and Model-Heterogeneous Personalized Federated Learning via Clustered Knowledge Transfer",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in methods, neural, optimization; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nakahira",
+        "author_whitespace_match_score": 0.772,
+        "match_score": 0.772,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.82,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.867,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Safe Decision-Making in Interactive Environments",
+            "year": "2024",
+            "reason": "category overlap in decision making; topic overlap in decision-making, human, interactive, work; recent contribution in 2024"
+          },
+          {
+            "title": "Adaptive safe control for driving in uncertain environments",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in human, methods, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "An analytic solution to covariance propagation in neural networks",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in methods, neural, optimization; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Ndibwile",
+        "author_whitespace_match_score": 0.762,
+        "match_score": 0.762,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.82,
+          "category_topic_match_score": 0.733,
+          "representative_paper_score": 0.825,
+          "bridge_to_gap_score": 0.625
+        },
+        "representative_papers": [
+          {
+            "title": "Classifying swahili smishing attacks for mobile money users: A machine-learning approach",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in application, methods, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "FakeAP detector: an android-based client-side application for detecting Wi-Fi hotspot spoofing",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in application, human, optimization; recent contribution in 2022"
+          },
+          {
+            "title": "A comparative study of smartphone-user security perception and preference towards redesigned security notifications",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in methods, preference, work; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making, optimmization with whitespace-relevant topics such as application, methods, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 9,
+    "score": "M9",
+    "tagLabel": "Optimization Gap · Medium",
+    "sc": "sm",
+    "cat": "co",
+    "tag": "to",
+    "desc": "Neural operator work is strong, but human judgment is not yet tightly integrated into those optimization loops.",
+    "opp": "Build optimization systems where designer preferences actively reshape surrogate objectives. This would ground DRC computational optimization in usable human-in-the-loop workflows."
+  },
+  {
+    "title": "Sustainability Constraints in Topology Optimization",
+    "description": "Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
+    "opportunity": "Extend topology and lattice optimization to include sustainability objectives such as carbon footprint, lifecycle cost, and recyclability.",
+    "related_categories": [
+      "optimmization"
+    ],
+    "keywords": [
+      "topology optimization",
+      "sustainability",
+      "carbon",
+      "recyclability",
+      "lifecycle",
+      "additive manufacturing"
+    ],
+    "card_category": "co",
+    "card_tag": "to",
+    "card_label": "Optimization Gap",
+    "impact_signals": [
+      "sustainability",
+      "real-world application",
+      "methods",
+      "scalable methods"
+    ],
+    "drc_focus_signals": [
+      "optimization",
+      "additive manufacturing",
+      "lifecycle"
+    ],
+    "feasibility_signals": [
+      "optimization",
+      "methods",
+      "authors",
+      "dataset",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.497,
+    "priority_factors": {
+      "current_trends_score": 0.471,
+      "drc_interest_score": 0.499,
+      "impact_score": 0.467,
+      "evidence_strength_score": 0.36,
+      "feasibility_readiness_score": 0.713
+    },
+    "priority_reason": "Medium priority because feasibility readiness and drc interest are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 1,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Martha Baldwin",
+        "author_whitespace_match_score": 0.977,
+        "match_score": 0.977,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.933,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 1.0
+        },
+        "representative_papers": [
+          {
+            "title": "Smooth Like Butter: Evaluating Multi-Lattice Transitions in Property-Augmented Latent Spaces",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in additive, application, dataset, has; recent contribution in 2024"
+          },
+          {
+            "title": "A Data-driven Approach for Multi-Lattice Transitions",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in additive, application, has, lattice; recent contribution in 2022"
+          },
+          {
+            "title": "Smoothing the Rough Edges: Evaluating Automatically Generated Multi-Lattice Transitions",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in additive, application, has, lattice; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as additive, application, manufacturing, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Maxime Mermillod-Blondin",
+        "author_whitespace_match_score": 0.977,
+        "match_score": 0.977,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.933,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 1.0
+        },
+        "representative_papers": [
+          {
+            "title": "Benchmarking the Current State of Lattice Design Software for Additive Manufacturing",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in additive, application, lattice, manufacturing; recent contribution in 2024"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as additive, application, manufacturing, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Sneha Narra",
+        "author_whitespace_match_score": 0.953,
+        "match_score": 0.953,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.867,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 1.0
+        },
+        "representative_papers": [
+          {
+            "title": "Multi-lattice Topology Optimization via Generative Lattice Modeling",
+            "year": "2025",
+            "reason": "category overlap in optimization; topic overlap in additive, application, lattice, manufacturing; recent contribution in 2025"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as application, methods, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Conrad Tucker",
+        "author_whitespace_match_score": 0.924,
+        "match_score": 0.924,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.887,
+          "category_topic_match_score": 0.867,
+          "representative_paper_score": 0.997,
+          "bridge_to_gap_score": 1.0
+        },
+        "representative_papers": [
+          {
+            "title": "Comparing Attribute- and Form-Based Machine Learning Techniques for Component Prediction",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in application, dataset, has, manufacturing; recent contribution in 2020"
+          },
+          {
+            "title": "Detection Of System Compromise In Additive Manufacturing Using Video Motion Magnification",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in additive, cost, dataset, manufacturing; recent contribution in 2020"
+          },
+          {
+            "title": "Artificial intelligence and engineering design",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in has, methods, optimization, topology; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as additive, manufacturing, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Nicholas A. Meisel",
+        "author_whitespace_match_score": 0.902,
+        "match_score": 0.902,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Stochastically-Trained Physics-Informed Neural Networks: Application to Thermal Analysis in Metal Laser Powder Bed Fusion",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in additive, application, cost, manufacturing; recent contribution in 2021"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as additive, manufacturing, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Nicholas A Meisel",
+        "author_whitespace_match_score": 0.894,
+        "match_score": 0.894,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.97,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Smooth Like Butter: Evaluating Multi-Lattice Transitions in Property-Augmented Latent Spaces",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in additive, application, dataset, has; recent contribution in 2024"
+          },
+          {
+            "title": "A Data-driven Approach for Multi-Lattice Transitions",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in additive, application, has, lattice; recent contribution in 2022"
+          },
+          {
+            "title": "Smoothing the Rough Edges: Evaluating Automatically Generated Multi-Lattice Transitions",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in additive, application, has, lattice; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as additive, application, manufacturing, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Grossman",
+        "author_whitespace_match_score": 0.893,
+        "match_score": 0.893,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.79,
+          "category_topic_match_score": 0.867,
+          "representative_paper_score": 0.97,
+          "bridge_to_gap_score": 1.0
+        },
+        "representative_papers": [
+          {
+            "title": "Novel flexibility index formulations for the selection of the operating range within a design space",
+            "year": "2021",
+            "reason": "category overlap in optimization; topic overlap in constraints, manufacturing, methods, optimization; recent contribution in 2021"
+          },
+          {
+            "title": "An Industrial Application of Deep Reinforcement Learning for Chemical Production Scheduling",
+            "year": "2020",
+            "reason": "category overlap in optimization; topic overlap in application, constraints, manufacturing, optimization; recent contribution in 2020"
+          },
+          {
+            "title": "Expanding RTN discrete-time scheduling formulations to preemptive tasks",
+            "year": "2018",
+            "reason": "category overlap in optimization; topic overlap in constraints, methods, optimization, performance; recent contribution in 2018"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as constraints, manufacturing, optimization, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Christopher McComb",
+        "author_whitespace_match_score": 0.887,
+        "match_score": 0.887,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.94,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 1.0,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Smooth Like Butter: Evaluating Multi-Lattice Transitions in Property-Augmented Latent Spaces",
+            "year": "2024",
+            "reason": "category overlap in optimization; topic overlap in additive, application, dataset, has; recent contribution in 2024"
+          },
+          {
+            "title": "A Data-driven Approach for Multi-Lattice Transitions",
+            "year": "2022",
+            "reason": "category overlap in optimization; topic overlap in additive, application, has, lattice; recent contribution in 2022"
+          },
+          {
+            "title": "Smoothing the Rough Edges: Evaluating Automatically Generated Multi-Lattice Transitions",
+            "year": "2023",
+            "reason": "category overlap in optimization; topic overlap in additive, application, has, lattice; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges optimmization with whitespace-relevant topics such as manufacturing, optimization, performance, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 10,
+    "score": "M10",
+    "tagLabel": "Optimization Gap · Medium",
+    "sc": "sm",
+    "cat": "co",
+    "tag": "to",
+    "desc": "Optimization work has emphasized technical performance more than lifecycle, carbon, recyclability, or end-of-life concerns.",
+    "opp": "Extend topology and lattice optimization to include sustainability objectives such as carbon footprint, lifecycle cost, and recyclability."
+  },
+  {
+    "title": "Cross-Domain Design Grammar Transfer",
+    "description": "Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
+    "opportunity": "Test whether mined design grammars transfer across domains such as additive manufacturing, UAV systems, and other engineering contexts. If they do, they become strong priors for AI-assisted design systems.",
+    "related_categories": [
+      "grammar",
+      "ideation"
+    ],
+    "keywords": [
+      "grammar",
+      "strategy transfer",
+      "cross-domain",
+      "rule-based",
+      "uav",
+      "parametric",
+      "design agents"
+    ],
+    "card_category": "cg",
+    "card_tag": "tg",
+    "card_label": "Grammar Gap",
+    "impact_signals": [
+      "methods",
+      "scalable methods",
+      "cross-domain",
+      "design workflow"
+    ],
+    "drc_focus_signals": [
+      "grammar",
+      "strategy transfer",
+      "parametric"
+    ],
+    "feasibility_signals": [
+      "authors",
+      "methods",
+      "uav",
+      "student",
+      "project"
+    ],
+    "priority": "Medium",
+    "priority_label": "Medium",
+    "overall_priority_score": 0.47,
+    "priority_factors": {
+      "current_trends_score": 0.471,
+      "drc_interest_score": 0.421,
+      "impact_score": 0.475,
+      "evidence_strength_score": 0.427,
+      "feasibility_readiness_score": 0.584
+    },
+    "priority_reason": "Medium priority because feasibility readiness and impact are strong, while drc interest remains the main limiting factor.",
+    "supporting_paper_count": 1,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Cagan",
+        "author_whitespace_match_score": 0.82,
+        "match_score": 0.82,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.79,
+          "category_topic_match_score": 0.8,
+          "representative_paper_score": 0.884,
+          "bridge_to_gap_score": 0.812
+        },
+        "representative_papers": [
+          {
+            "title": "Learning Proficient Behavior With Computational Agents in Engineering Configuration Design",
+            "year": "2025",
+            "reason": "category overlap in ideation; topic overlap in agents, manufacturing, methods, open; recent contribution in 2025"
+          },
+          {
+            "title": "Design Strategy Transfer in Cognitively-Inspired Agents",
+            "year": "2018",
+            "reason": "category overlap in ideation; topic overlap in agents, methods, strategy, transfer; recent contribution in 2018"
+          },
+          {
+            "title": "Shape Grammars and Their Languages: A Methodology for Product Design and Product Representation",
+            "year": "1997",
+            "reason": "category overlap in grammar; topic overlap in domains, grammar, grammars, manufacturing"
+          }
+        ],
+        "bridge_reason": "This author bridges grammar, ideation with whitespace-relevant topics such as domains, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "strong category/topic overlap, recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Deepesh Toshniwal",
+        "author_whitespace_match_score": 0.758,
+        "match_score": 0.758,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Design for Advanced Manufacturing",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in additive, but, manufacturing, parametric; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as additive, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "James K. Guest",
+        "author_whitespace_match_score": 0.758,
+        "match_score": 0.758,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Design for Advanced Manufacturing",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in additive, but, manufacturing, parametric; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as additive, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Julián Norato",
+        "author_whitespace_match_score": 0.758,
+        "match_score": 0.758,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Design for Advanced Manufacturing",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in additive, but, manufacturing, parametric; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as additive, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Stefanie Elgeti",
+        "author_whitespace_match_score": 0.758,
+        "match_score": 0.758,
+        "match_factors": {
+          "recent_drc_relevance_score": 1.0,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.92,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Design for Advanced Manufacturing",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in additive, but, manufacturing, parametric; recent contribution in 2023"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as additive, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Yaoyao Fiona Zhao",
+        "author_whitespace_match_score": 0.707,
+        "match_score": 0.707,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.925,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.79,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Design for Advanced Manufacturing",
+            "year": "2023",
+            "reason": "category overlap in ideation; topic overlap in additive, but, manufacturing, parametric; recent contribution in 2023"
+          },
+          {
+            "title": "Artificial intelligence and engineering design",
+            "year": "2022",
+            "reason": "topic overlap in domains, methods, parametric, strong; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as additive, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Christohper McComb",
+        "author_whitespace_match_score": 0.693,
+        "match_score": 0.693,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.863,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.795,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Modeling a Strategic Human Engineering Design Process: Human-Inspired Heuristic Guidance Through Learned Visual Design Agents",
+            "year": "2020",
+            "reason": "category overlap in ideation; topic overlap in agents, domains, manufacturing, parametric; recent contribution in 2020"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as domains, manufacturing, parametric, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "John Ostrander",
+        "author_whitespace_match_score": 0.693,
+        "match_score": 0.693,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.863,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.795,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "A Comparative Study Of Virtual Reality And Computer-Aided Design To Evaluate Parts For Additive Manufacturing",
+            "year": "2019",
+            "reason": "category overlap in ideation; topic overlap in additive, become, domains, manufacturing; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges ideation with whitespace-relevant topics such as additive, domains, manufacturing, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      }
+    ],
+    "priority_rank": 11,
+    "score": "M11",
+    "tagLabel": "Grammar Gap · Medium",
+    "sc": "sm",
+    "cat": "cg",
+    "tag": "tg",
+    "desc": "Grammar and strategy transfer have been studied within domains, but cross-domain transfer remains largely open.",
+    "opp": "Test whether mined design grammars transfer across domains such as additive manufacturing, UAV systems, and other engineering contexts. If they do, they become strong priors for AI-assisted design systems."
+  },
+  {
+    "title": "Grammar-Informed AI Process Management",
+    "description": "AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
+    "opportunity": "Use grammar-derived design state as context for AI process managers so they can adapt to exploration, refinement, and convergence phases in real time.",
+    "related_categories": [
+      "grammar",
+      "decision_making"
+    ],
+    "keywords": [
+      "process management",
+      "grammar",
+      "sequence",
+      "facilitation",
+      "adaptive teaming",
+      "design state"
+    ],
+    "card_category": "cc",
+    "card_tag": "tc",
+    "card_label": "Cross-Category",
+    "impact_signals": [
+      "human-ai",
+      "decision-making",
+      "methods",
+      "design workflow"
+    ],
+    "drc_focus_signals": [
+      "grammar",
+      "process management",
+      "sequence"
+    ],
+    "feasibility_signals": [
+      "authors",
+      "methods",
+      "process",
+      "student",
+      "project"
+    ],
+    "priority": "Low",
+    "priority_label": "Low",
+    "overall_priority_score": 0.39,
+    "priority_factors": {
+      "current_trends_score": 0.25,
+      "drc_interest_score": 0.391,
+      "impact_score": 0.595,
+      "evidence_strength_score": 0.25,
+      "feasibility_readiness_score": 0.486
+    },
+    "priority_reason": "Low priority because impact and feasibility readiness are strong, while evidence strength remains the main limiting factor.",
+    "supporting_paper_count": 0,
+    "supporting_author_count": 8,
+    "matched_authors": [
+      {
+        "author_name": "Grossman",
+        "author_whitespace_match_score": 0.677,
+        "match_score": 0.677,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.73,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.866,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "The Center for Advanced Process Decision-making at Carnegie Mellon",
+            "year": "2018",
+            "reason": "category overlap in decision making; topic overlap in decision-making, management, process, project; recent contribution in 2018"
+          },
+          {
+            "title": "Capacity planning with competitive decision-makers: Trilevel MILP formulation, degeneracy, and solution approaches",
+            "year": "2017",
+            "reason": "category overlap in decision making; topic overlap in management, methods, process, project"
+          },
+          {
+            "title": "MILP formulation and Nested decomposition algorithm for electric powerinfrastructure planning",
+            "year": "2017",
+            "reason": "category overlap in decision making; topic overlap in management, methods, process, project"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as management, process, project, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Jay Martin",
+        "author_whitespace_match_score": 0.66,
+        "match_score": 0.66,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.906,
+          "category_topic_match_score": 0.433,
+          "representative_paper_score": 0.827,
+          "bridge_to_gap_score": 0.5
+        },
+        "representative_papers": [
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in create, management, process, work; recent contribution in 2022"
+          },
+          {
+            "title": "A Real-Time Artificial Intelligence Process Manager for Engineering Design",
+            "year": "2022",
+            "reason": "topic overlap in adapt, management, managers, process; recent contribution in 2022"
+          },
+          {
+            "title": "Human versus Artificial Intelligence: A Data-Driven Approach to Real-Time Process Management During Complex Engineering Design",
+            "year": "2022",
+            "reason": "topic overlap in adapt, management, managers, process; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as management, project, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Akinci",
+        "author_whitespace_match_score": 0.626,
+        "match_score": 0.626,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.67,
+          "category_topic_match_score": 0.5,
+          "representative_paper_score": 0.723,
+          "bridge_to_gap_score": 0.688
+        },
+        "representative_papers": [
+          {
+            "title": "Supporting the decision-making process of first responders in building emergencies: The need for a vulnerability representation",
+            "year": "2008",
+            "reason": "category overlap in decision making; topic overlap in decision-making, management, process, work"
+          },
+          {
+            "title": "Factors affecting contractors' risk of cost overburden",
+            "year": "1998",
+            "reason": "category overlap in decision making; topic overlap in management, project, work"
+          },
+          {
+            "title": "INTERACTION PATTERNS WITH PROJECT HISTORIES",
+            "year": "2009",
+            "reason": "category overlap in grammar; topic overlap in grammar, methods, project"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as management, project, work, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Alparslan Emrah Bayrak",
+        "author_whitespace_match_score": 0.613,
+        "match_score": 0.613,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.894,
+          "category_topic_match_score": 0.367,
+          "representative_paper_score": 0.857,
+          "bridge_to_gap_score": 0.312
+        },
+        "representative_papers": [
+          {
+            "title": "A Strategic Decision-making Architecture Toward Hybrid Teams for Dynamic Competitive Problems",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in create, decision-making, methods, sequence; recent contribution in 2021"
+          },
+          {
+            "title": "A Differential Game Approach to Dynamic Competitive Decisions Toward Human-Computer Collaboration",
+            "year": "2019",
+            "reason": "category overlap in decision making; topic overlap in decision-making, methods, process; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as methods, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 2 representative papers"
+      },
+      {
+        "author_name": "Torsten Maier",
+        "author_whitespace_match_score": 0.602,
+        "match_score": 0.602,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.808,
+          "category_topic_match_score": 0.433,
+          "representative_paper_score": 0.693,
+          "bridge_to_gap_score": 0.5
+        },
+        "representative_papers": [
+          {
+            "title": "The Relationship Between Performance and Trust in AI in E-Finance",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in human-ai, process, work; recent contribution in 2022"
+          },
+          {
+            "title": "Comparing Human and Cognitive Assistant Facilitated Brainstorming Sessions",
+            "year": "2022",
+            "reason": "topic overlap in facilitation, management, state, they; recent contribution in 2022"
+          },
+          {
+            "title": "Using Workplace Thriving Theory to Investigate First-Year Engineering Students’ Abilities to Thrive during the Transition to Online Learning due to COVID-19",
+            "year": "2022",
+            "reason": "topic overlap in management, methods, project, work; recent contribution in 2022"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as management, work, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      },
+      {
+        "author_name": "Charity Hippie",
+        "author_whitespace_match_score": 0.59,
+        "match_score": 0.59,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.863,
+          "category_topic_match_score": 0.367,
+          "representative_paper_score": 0.795,
+          "bridge_to_gap_score": 0.312
+        },
+        "representative_papers": [
+          {
+            "title": "Decision-Making In The Prescription Of Orthotics And Prosthetics For Partial-Foot Amputees",
+            "year": "2019",
+            "reason": "category overlap in decision making; topic overlap in decision-making, management, methods, work; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as management, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Jingxin Wang",
+        "author_whitespace_match_score": 0.59,
+        "match_score": 0.59,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.863,
+          "category_topic_match_score": 0.367,
+          "representative_paper_score": 0.795,
+          "bridge_to_gap_score": 0.312
+        },
+        "representative_papers": [
+          {
+            "title": "Decision-Making In The Prescription Of Orthotics And Prosthetics For Partial-Foot Amputees",
+            "year": "2019",
+            "reason": "category overlap in decision making; topic overlap in decision-making, management, methods, work; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as management, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 1 representative paper"
+      },
+      {
+        "author_name": "Kenneth Kotovsky",
+        "author_whitespace_match_score": 0.589,
+        "match_score": 0.589,
+        "match_factors": {
+          "recent_drc_relevance_score": 0.955,
+          "category_topic_match_score": 0.3,
+          "representative_paper_score": 0.905,
+          "bridge_to_gap_score": 0.125
+        },
+        "representative_papers": [
+          {
+            "title": "Data on the Human versus Artificial Intelligence Process Management Experiment",
+            "year": "2022",
+            "reason": "category overlap in decision making; topic overlap in create, management, process, work; recent contribution in 2022"
+          },
+          {
+            "title": "A Strategic Decision-making Architecture Toward Hybrid Teams for Dynamic Competitive Problems",
+            "year": "2021",
+            "reason": "category overlap in decision making; topic overlap in create, decision-making, methods, sequence; recent contribution in 2021"
+          },
+          {
+            "title": "A Differential Game Approach to Dynamic Competitive Decisions Toward Human-Computer Collaboration",
+            "year": "2019",
+            "reason": "category overlap in decision making; topic overlap in decision-making, methods, process; recent contribution in 2019"
+          }
+        ],
+        "bridge_reason": "This author bridges decision making with whitespace-relevant topics such as the target gap, making them a plausible contributor to this opportunity.",
+        "reason": "recent DRC-relevant work, 3 representative papers"
+      }
+    ],
+    "priority_rank": 1,
+    "score": "L1",
+    "tagLabel": "Cross-Category · Low",
+    "sc": "sl",
+    "cat": "cc",
+    "tag": "tc",
+    "desc": "AI process managers and grammar/sequence work exist separately; combining them would create richer adaptive facilitation.",
+    "opp": "Use grammar-derived design state as context for AI process managers so they can adapt to exploration, refinement, and convergence phases in real time."
+  }
+]
