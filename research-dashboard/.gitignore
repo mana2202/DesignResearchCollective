@@ -8,4 +8,4 @@ build/
 .venv/
 venv/
 node_modules/
-data/papers_enriched.json
+.tools/
