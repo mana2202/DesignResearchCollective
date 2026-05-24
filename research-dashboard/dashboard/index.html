@@ -295,6 +295,106 @@
   .mxnote { margin-top: 10px; font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: var(--text-tertiary); display: flex; align-items: center; gap: 8px; line-height: 1.5; }
   .mxempty-mark { font-family: var(--font-ui); font-size: 13px; font-weight: 400; color: var(--text-disabled); line-height: 1; }
 
+  .thesis-wrap { display: grid; gap: 18px; }
+  .thesis-hero {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .thesis-title {
+    font-family: var(--font-ui);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .thesis-copy {
+    margin-top: 8px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .thesis-grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .thesis-card {
+    min-width: 0;
+    padding: 16px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.16);
+  }
+  .thesis-card.full { grid-column: 1 / -1; }
+  .thesis-label {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+    margin-bottom: 8px;
+  }
+  .thesis-text {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .thesis-text strong { color: var(--text); font-weight: 600; }
+  .thesis-bullets {
+    margin: 0;
+    padding-left: 18px;
+    display: grid;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+  }
+  .thesis-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .thesis-stat-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .thesis-stat {
+    padding: 12px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .thesis-stat-k {
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-tertiary);
+  }
+  .thesis-stat-v {
+    margin-top: 4px;
+    font-family: var(--font-ui);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .thesis-inline-note {
+    margin-top: 10px;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-tertiary);
+  }
+
   .wsgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 12px; }
   .wscard { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 18px 18px 16px; position: relative; overflow: hidden; transition: border-color 0.15s, transform 0.15s; box-shadow: 0 14px 34px rgba(0,0,0,0.18); display: flex; flex-direction: column; min-height: 100%; }
   .wscard:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-2px); }
@@ -1184,6 +1284,10 @@
       flex-direction: column;
       align-items: flex-start;
     }
+    .thesis-grid,
+    .thesis-stat-grid {
+      grid-template-columns: 1fr;
+    }
     .paper-analysis-grid {
       grid-template-columns: 1fr;
     }
@@ -1249,73 +1353,106 @@
       <button class="tabbtn active" onclick="setTab('whitespace',this)">White Spaces</button>
       <button class="tabbtn" onclick="setTab('authors',this)">Author Profiles</button>
       <button class="tabbtn" onclick="setTab('papers',this)">Proposal Analysis</button>
-      <button class="tabbtn" onclick="setTab('matrix',this)">Coverage Matrix</button>
-      <button class="tabbtn" onclick="setTab('overview',this)">About</button>
+      <button class="tabbtn" onclick="setTab('thesis',this)">DRC Portfolio Thesis</button>
     </div>
 
-    <div class="tabp" id="panel-overview">
-      <div class="sch">Publication Activity by Year</div>
-      <div id="barchart" class="chart-shell"></div>
-
-      <div class="sch" style="margin-top:20px">Tools &amp; Datasets Built by DRC</div>
-      <div class="toolgrid">
-        <a class="toolcard" href="https://www.cambridge.org/core/journals/design-science/article/kaboom-an-agentbased-model-for-simulating-cognitive-style-in-team-problem-solving/DA2EA6A5A1E4472707B9C8C5FF642EA0" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">KABOOM</div>
-          <div class="toolauthor">Samuel Lapp, Kathryn Jablokow, Christopher McComb</div>
-          <div class="tooldesc">Agent-based model for simulating cognitive style, team structure, and problem-solving behavior in design teams.</div>
-        </a>
-        <a class="toolcard" href="https://www.hyform.org" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">HyForm</div>
-          <div class="toolauthor">DRC / Human-AI Design research team</div>
-          <div class="tooldesc">Collaborative UAV design platform used to study human teams, AI assistance, and process management in engineering design tasks.</div>
-        </a>
-        <a class="toolcard" href="https://huggingface.co/datasets/raiselab/HUVER" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">HUVER</div>
-          <div class="toolauthor">Abhiram Karri, Gary Stump, Christopher McComb, Binyang Song</div>
-          <div class="tooldesc">Multimodal repository of UAV configurations, descriptions, and performance data for surrogate modeling and generative design research.</div>
-        </a>
-        <a class="toolcard" href="https://pypi.org/project/keepdelta/" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">KeepDelta</div>
-          <div class="toolauthor">Aslan Noorghasemi, Christopher McComb</div>
-          <div class="tooldesc">Python library for human-readable data differencing that makes evolving structured data easier to compare, track, and inspect.</div>
-        </a>
-        <a class="toolcard" href="https://huggingface.co/spaces/cmudrc/AddLat2D" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">AddLat2D</div>
-          <div class="toolauthor">Martha Baldwin, Nicholas A. Meisel, Christopher McComb</div>
-          <div class="tooldesc">2D lattice generator for creating additive manufacturing datasets with controllable image size, density values, and geometry variation.</div>
-        </a>
-        <a class="toolcard" href="https://huggingface.co/datasets/cmudrc/Material_Selection_Eval" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">MSEval</div>
-          <div class="toolauthor">Yash Patawari Jain, Daniele Grandi, Allin Groom, Brandon Cramer, Christopher McComb</div>
-          <div class="tooldesc">Benchmark dataset of expert material evaluations for testing and comparing model performance in conceptual design material selection.</div>
-        </a>
-        <a class="toolcard" href="https://huggingface.co/datasets/saluslab/HM-SYNC" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">HM-SYNC</div>
-          <div class="toolauthor">John Martins, Cheyu Lin, Katherine Flanigan, Christopher McComb</div>
-          <div class="tooldesc">Multimodal manufacturing dataset capturing observed human-machine interactions to support analysis of behavior in advanced manufacturing systems.</div>
-        </a>
-        <a class="toolcard" href="https://cmudrc.github.io/show-me-the-funding/" target="_blank" rel="noreferrer noopener">
-          <div class="toolicon" aria-hidden="true">↗</div>
-          <div class="tooltitle">Show Me The Funding</div>
-          <div class="toolauthor">Design Research Collective</div>
-          <div class="tooldesc">NSF funding explorer that helps researchers inspect program-level funding patterns and benchmark proposal budgets against historical awards.</div>
-        </a>
-      </div>
-    </div>
-
-    <div class="tabp" id="panel-matrix">
-      <div class="sch">Publications per Year × Category — click a cell to drill into papers</div>
-      <div class="mxscroll"><div id="matrix"></div></div>
-      <div class="mxnote">
-        <div class="legend-swatch empty" style="width:14px;height:14px;"></div>
-        Dashed cells = no publications in that year × category
+    <div class="tabp" id="panel-thesis">
+      <div class="thesis-wrap">
+        <div class="thesis-hero">
+          <div class="thesis-label">DRC Portfolio Thesis</div>
+          <div class="thesis-title" id="thesis-statement-title">What does this research portfolio reveal, and where should DRC look next?</div>
+          <div class="thesis-copy" id="thesis-statement-copy"></div>
+        </div>
+        <div class="thesis-stat-grid" id="thesis-stats"></div>
+        <div class="thesis-grid">
+          <section class="thesis-card">
+            <div class="thesis-label">What DRC Has Done</div>
+            <div class="thesis-text" id="thesis-what-done"></div>
+            <div class="thesis-pills" id="thesis-dominant-pills"></div>
+          </section>
+          <section class="thesis-card">
+            <div class="thesis-label">Where The Portfolio Is Strong</div>
+            <div class="thesis-text" id="thesis-strong"></div>
+          </section>
+          <section class="thesis-card">
+            <div class="thesis-label">Where The Portfolio Is Thin</div>
+            <div class="thesis-text" id="thesis-thin"></div>
+          </section>
+          <section class="thesis-card">
+            <div class="thesis-label">Why The Whitespace List Follows</div>
+            <div class="thesis-text" id="thesis-whitespace"></div>
+          </section>
+          <section class="thesis-card full">
+            <div class="thesis-label">Trend Analysis</div>
+            <div class="thesis-text" id="thesis-trends"></div>
+            <div class="thesis-inline-note">The coverage matrix below is the evidence layer: it shows when each category was active and where category coverage stays sparse over time.</div>
+          </section>
+          <section class="thesis-card full">
+            <div class="sch">Portfolio Coverage Matrix</div>
+            <div class="mxscroll"><div id="matrix"></div></div>
+            <div class="mxnote">
+              <div class="legend-swatch empty" style="width:14px;height:14px;"></div>
+              Dashed cells = no publications in that year × category
+            </div>
+          </section>
+          <section class="thesis-card full">
+            <div class="sch">Publication Activity by Year</div>
+            <div id="barchart" class="chart-shell"></div>
+          </section>
+          <section class="thesis-card full">
+            <div class="sch">Tools &amp; Datasets Built by DRC</div>
+            <div class="toolgrid">
+              <a class="toolcard" href="https://www.cambridge.org/core/journals/design-science/article/kaboom-an-agentbased-model-for-simulating-cognitive-style-in-team-problem-solving/DA2EA6A5A1E4472707B9C8C5FF642EA0" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">KABOOM</div>
+                <div class="toolauthor">Samuel Lapp, Kathryn Jablokow, Christopher McComb</div>
+                <div class="tooldesc">Agent-based model for simulating cognitive style, team structure, and problem-solving behavior in design teams.</div>
+              </a>
+              <a class="toolcard" href="https://www.hyform.org" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">HyForm</div>
+                <div class="toolauthor">DRC / Human-AI Design research team</div>
+                <div class="tooldesc">Collaborative UAV design platform used to study human teams, AI assistance, and process management in engineering design tasks.</div>
+              </a>
+              <a class="toolcard" href="https://huggingface.co/datasets/raiselab/HUVER" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">HUVER</div>
+                <div class="toolauthor">Abhiram Karri, Gary Stump, Christopher McComb, Binyang Song</div>
+                <div class="tooldesc">Multimodal repository of UAV configurations, descriptions, and performance data for surrogate modeling and generative design research.</div>
+              </a>
+              <a class="toolcard" href="https://pypi.org/project/keepdelta/" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">KeepDelta</div>
+                <div class="toolauthor">Aslan Noorghasemi, Christopher McComb</div>
+                <div class="tooldesc">Python library for human-readable data differencing that makes evolving structured data easier to compare, track, and inspect.</div>
+              </a>
+              <a class="toolcard" href="https://huggingface.co/spaces/cmudrc/AddLat2D" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">AddLat2D</div>
+                <div class="toolauthor">Martha Baldwin, Nicholas A. Meisel, Christopher McComb</div>
+                <div class="tooldesc">2D lattice generator for creating additive manufacturing datasets with controllable image size, density values, and geometry variation.</div>
+              </a>
+              <a class="toolcard" href="https://huggingface.co/datasets/cmudrc/Material_Selection_Eval" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">MSEval</div>
+                <div class="toolauthor">Yash Patawari Jain, Daniele Grandi, Allin Groom, Brandon Cramer, Christopher McComb</div>
+                <div class="tooldesc">Benchmark dataset of expert material evaluations for testing and comparing model performance in conceptual design material selection.</div>
+              </a>
+              <a class="toolcard" href="https://huggingface.co/datasets/saluslab/HM-SYNC" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">HM-SYNC</div>
+                <div class="toolauthor">John Martins, Cheyu Lin, Katherine Flanigan, Christopher McComb</div>
+                <div class="tooldesc">Multimodal manufacturing dataset capturing observed human-machine interactions to support analysis of behavior in advanced manufacturing systems.</div>
+              </a>
+              <a class="toolcard" href="https://cmudrc.github.io/show-me-the-funding/" target="_blank" rel="noreferrer noopener">
+                <div class="toolicon" aria-hidden="true">↗</div>
+                <div class="tooltitle">Show Me The Funding</div>
+                <div class="toolauthor">Design Research Collective</div>
+                <div class="tooldesc">NSF funding explorer that helps researchers inspect program-level funding patterns and benchmark proposal budgets against historical awards.</div>
+              </a>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
 
@@ -1654,6 +1791,7 @@ function categoryBadgeClass(cat) {
 
 function updateAll() {
   updateCounts();
+  renderPortfolioThesis();
   renderMatrix();
   renderPapers();
   renderBarChart();
@@ -1675,6 +1813,122 @@ function updateCounts() {
     const node = document.getElementById(id);
     if (node) node.textContent = value;
   });
+}
+
+function topCategoriesFromPapers(limit = 3) {
+  const counts = new Map();
+  PAPERS.forEach((paper) => {
+    (paper.cats || []).forEach((category) => {
+      counts.set(category, (counts.get(category) || 0) + 1);
+    });
+  });
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .slice(0, limit);
+}
+
+function topicTrendSummary(limit = 3) {
+  const maxYear = Math.max(...PAPERS.map((paper) => paper.year || 0).filter(Boolean), 0);
+  const cutoff = maxYear ? maxYear - 4 : 0;
+  const recent = new Map();
+  const historical = new Map();
+  PAPERS.forEach((paper) => {
+    const bucket = (paper.year || 0) >= cutoff ? recent : historical;
+    (paper.topics || []).slice(0, 4).forEach((topic) => {
+      bucket.set(topic, (bucket.get(topic) || 0) + 1);
+    });
+  });
+  return [...recent.entries()]
+    .map(([topic, count]) => {
+      const baseline = historical.get(topic) || 0;
+      return { topic, count, baseline, delta: count - baseline };
+    })
+    .sort((a, b) => b.delta - a.delta || b.count - a.count || a.topic.localeCompare(b.topic))
+    .slice(0, limit);
+}
+
+function categoryBridgeSummary() {
+  const combos = [];
+  for (let i = 0; i < CATS.length; i += 1) {
+    for (let j = i + 1; j < CATS.length; j += 1) {
+      const left = CATS[i];
+      const right = CATS[j];
+      const count = PAPERS.filter((paper) => paper.cats.includes(left) && paper.cats.includes(right)).length;
+      combos.push({ pair: [left, right], count });
+    }
+  }
+  combos.sort((a, b) => b.count - a.count || a.pair.join('-').localeCompare(b.pair.join('-')));
+  return {
+    strongest: combos[0],
+    weakest: combos[combos.length - 1],
+  };
+}
+
+function whitespaceEvidenceSummary() {
+  const items = WHITESPACE_ITEMS.length ? WHITESPACE_ITEMS : WS;
+  const highPriority = items.filter((item) => String(item.priorityLabel || item.score || '').startsWith('H') || item.priorityLabel === 'High').length;
+  const withAuthorMatches = items.filter((item) => (item.matched_authors || []).length > 0).length;
+  const avgSupport = items.length
+    ? items.reduce((total, item) => total + ((item.matched_authors || []).length || 0), 0) / items.length
+    : 0;
+  return { total: items.length, highPriority, withAuthorMatches, avgSupport };
+}
+
+function renderPortfolioThesis() {
+  const thesisCopy = document.getElementById('thesis-statement-copy');
+  const thesisStats = document.getElementById('thesis-stats');
+  const thesisDone = document.getElementById('thesis-what-done');
+  const dominantPills = document.getElementById('thesis-dominant-pills');
+  const thesisStrong = document.getElementById('thesis-strong');
+  const thesisThin = document.getElementById('thesis-thin');
+  const thesisWhitespace = document.getElementById('thesis-whitespace');
+  const thesisTrends = document.getElementById('thesis-trends');
+  if (!thesisCopy || !thesisStats || !thesisDone || !dominantPills || !thesisStrong || !thesisThin || !thesisWhitespace || !thesisTrends) return;
+  if (!PAPERS.length) {
+    thesisCopy.textContent = 'Live paper data is not available yet, so the portfolio thesis cannot be calculated.';
+    thesisStats.innerHTML = '';
+    thesisDone.textContent = 'No corpus evidence loaded.';
+    dominantPills.innerHTML = '';
+    thesisStrong.textContent = 'No corpus evidence loaded.';
+    thesisThin.textContent = 'No corpus evidence loaded.';
+    thesisWhitespace.textContent = 'No corpus evidence loaded.';
+    thesisTrends.textContent = 'No corpus evidence loaded.';
+    return;
+  }
+
+  const dominant = topCategoriesFromPapers(3);
+  const weakest = [...topCategoriesFromPapers(CATS.length)].slice(-2);
+  const trends = topicTrendSummary(3);
+  const bridges = categoryBridgeSummary();
+  const whitespaceEvidence = whitespaceEvidenceSummary();
+  const authorCount = AUTHOR_PROFILES.length;
+  const dominantText = dominant.map(([category]) => displayCategoryLabel(category)).join(', ');
+  const strongestPairText = bridges.strongest ? bridges.strongest.pair.map(displayCategoryLabel).join(' + ') : 'none yet';
+  const weakestPairText = bridges.weakest ? bridges.weakest.pair.map(displayCategoryLabel).join(' + ') : 'none yet';
+
+  thesisCopy.textContent = `DRC’s portfolio shows strong foundations in ${dominantText}, but the next opportunity is to connect these capabilities into under-bridged spaces like ${weakestPairText}.`;
+  thesisStats.innerHTML = `
+    <div class="thesis-stat">
+      <div class="thesis-stat-k">Corpus papers</div>
+      <div class="thesis-stat-v">${PAPERS.length}</div>
+    </div>
+    <div class="thesis-stat">
+      <div class="thesis-stat-k">Mapped authors</div>
+      <div class="thesis-stat-v">${authorCount}</div>
+    </div>
+    <div class="thesis-stat">
+      <div class="thesis-stat-k">Whitespace opportunities</div>
+      <div class="thesis-stat-v">${whitespaceEvidence.total}</div>
+    </div>
+  `;
+  thesisDone.textContent = `Historically, the portfolio clusters around ${dominantText}. Across ${authorCount} mapped author profiles, recurring capabilities show up in optimization workflows, design methods, simulation, and human-centered decision support, with publication activity stretching across multiple years and domains.`;
+  dominantPills.innerHTML = dominant.map(([category, count]) => `<span class="pb ${categoryBadgeClass(category)}">${escapeHtml(displayCategoryLabel(category))} · ${count}</span>`).join('');
+  thesisStrong.textContent = `The portfolio is strongest where categories and themes repeat across many papers and authors. ${dominant[0] ? `${displayCategoryLabel(dominant[0][0])} leads the corpus` : 'The leading category dominates the corpus'}, and the most established bridge is ${strongestPairText}${bridges.strongest ? ` with ${bridges.strongest.count} multi-category papers tying those capabilities together` : ''}.`;
+  thesisThin.textContent = `The thinner parts of the portfolio show up where category bridges are weak or missing. ${weakestPairText} is the sparsest combination${bridges.weakest ? ` with only ${bridges.weakest.count} direct bridge papers` : ''}, and lower-volume categories like ${weakest.map(([category]) => displayCategoryLabel(category)).join(' and ')} appear far less often than the dominant clusters.`;
+  thesisWhitespace.textContent = `The whitespace list follows directly from those coverage gaps plus weighted evidence. Each opportunity is scored using trend signals, DRC interest, impact, evidence strength, and feasibility/readiness; ${whitespaceEvidence.highPriority} currently land in the highest tier, and ${whitespaceEvidence.withAuthorMatches} already show author-side support from the current profile set.`;
+  thesisTrends.textContent = trends.length
+    ? `Recent topic momentum is strongest around ${trends.map((item) => item.topic).join(', ')}. That trend layer matters because the whitespace opportunities are not only gap-driven; they also privilege places where the corpus shows active or growing signals that DRC could realistically extend.`
+    : 'Recent trend movement is limited in the currently loaded topic metadata, so the thesis is leaning more on category coverage and whitespace scoring than on fast-rising topic signals.';
 }
 
 function renderMatrix() {
