@@ -246,6 +246,8 @@ def record_to_paper(row: dict[str, Any]) -> dict[str, Any]:
     paper_topics = parse_keyword_labels(row.get("keywords")) + parse_topic_labels(row.get("bert_topics"))
     year_text = normalize_year_label(row.get("year"))
     year_num = int(year_text) if year_text.isdigit() else 0
+    authors = [author for author in split_authors(row.get("authors", "")) if author]
+    keyword_labels = parse_keyword_labels(row.get("keywords"))
     text_blob = " ".join(
         [
             str(row.get("title", "")).strip(),
@@ -257,14 +259,20 @@ def record_to_paper(row: dict[str, Any]) -> dict[str, Any]:
     )
     return {
         "title": str(row.get("title", "")).strip(),
+        "authors": authors,
         "year": year_text,
         "year_num": year_num,
+        "primary_category": normalize_category_token(row.get("primary_category", "")),
         "categories": paper_categories,
         "topics": list(dict.fromkeys(topic for topic in paper_topics if topic))[:8],
+        "keywords": keyword_labels,
         "abstract": str(row.get("abstract", "")).strip(),
         "journal": str(row.get("journal", "")).strip(),
         "hf_dataset": str(row.get("hf_dataset", "")).strip(),
         "data_source": str(row.get("data_source", "")).strip(),
+        "citations": int(float(str(row.get("citations", 0) or 0))),
+        "url": str(row.get("url", "")).strip(),
+        "department": str(row.get("department", "")).strip(),
         "tokens": tokenize_text(text_blob),
     }
 
@@ -872,6 +880,21 @@ def build_author_profiles(records: list[dict[str, Any]]) -> tuple[list[dict[str,
     return profiles, scored_whitespace
 
 
+def build_analysis_artifacts(
+    records: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]]]:
+    papers = [record_to_paper(row) for row in records if str(row.get("title", "")).strip()]
+    papers = sorted(
+        papers,
+        key=lambda paper: (
+            -(paper.get("year_num") or 0),
+            paper.get("title", "").lower(),
+        ),
+    )
+    profiles, whitespace = build_author_profiles(records)
+    return papers, profiles, whitespace
+
+
 def match_authors_to_whitespace(profiles: list[dict[str, Any]]) -> list[dict[str, Any]]:
     whitespace_matches: list[dict[str, Any]] = []
     recent_year_cutoff = max(
@@ -909,7 +932,7 @@ def write_author_outputs(
     author_profiles_path: str | Path,
     whitespace_matches_path: str | Path,
 ) -> tuple[int, float, int]:
-    profiles, whitespace_matches = build_author_profiles(records)
+    _, profiles, whitespace_matches = build_analysis_artifacts(records)
     author_profiles_path = Path(author_profiles_path)
     whitespace_matches_path = Path(whitespace_matches_path)
     author_profiles_path.parent.mkdir(parents=True, exist_ok=True)
@@ -923,6 +946,39 @@ def write_author_outputs(
     avg_papers = round(sum(profile["paper_count"] for profile in profiles) / profile_count, 2) if profile_count else 0.0
     match_count = sum(len(item["matched_authors"]) for item in whitespace_matches)
     return profile_count, avg_papers, match_count
+
+
+def write_analysis_outputs(
+    records: list[dict[str, Any]],
+    *,
+    papers_enriched_path: str | Path,
+    author_profiles_path: str | Path,
+    whitespace_opportunities_path: str | Path,
+    whitespace_matches_path: str | Path | None = None,
+) -> tuple[int, int, int]:
+    papers, profiles, whitespace_opportunities = build_analysis_artifacts(records)
+
+    papers_enriched_path = Path(papers_enriched_path)
+    author_profiles_path = Path(author_profiles_path)
+    whitespace_opportunities_path = Path(whitespace_opportunities_path)
+    output_paths = [papers_enriched_path, author_profiles_path, whitespace_opportunities_path]
+    if whitespace_matches_path is not None:
+        output_paths.append(Path(whitespace_matches_path))
+
+    for path in output_paths:
+        path.parent.mkdir(parents=True, exist_ok=True)
+
+    with papers_enriched_path.open("w", encoding="utf-8") as fh:
+        json.dump(papers, fh, indent=2, ensure_ascii=False)
+    with author_profiles_path.open("w", encoding="utf-8") as fh:
+        json.dump(profiles, fh, indent=2, ensure_ascii=False)
+    with whitespace_opportunities_path.open("w", encoding="utf-8") as fh:
+        json.dump(whitespace_opportunities, fh, indent=2, ensure_ascii=False)
+    if whitespace_matches_path is not None:
+        with Path(whitespace_matches_path).open("w", encoding="utf-8") as fh:
+            json.dump(whitespace_opportunities, fh, indent=2, ensure_ascii=False)
+
+    return len(papers), len(profiles), len(whitespace_opportunities)
 
 
 def load_records_from_csv(csv_path: str | Path) -> list[dict[str, Any]]:

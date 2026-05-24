@@ -24,7 +24,7 @@ from datasets import load_dataset
 from tqdm import tqdm
 from transformers import pipeline
 
-from author_profiles import write_author_outputs
+from author_profiles import write_analysis_outputs
 from category_classifier import (
     classify_categories,
     primary_category_from_multi,
@@ -45,6 +45,9 @@ MODEL_ID = (
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "papers.csv")
 AUTHOR_PROFILES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "author_profiles.json")
 WHITESPACE_MATCHES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "whitespace_matches.json")
+PAPERS_ENRICHED_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "papers_enriched.json")
+WHITESPACE_OPPORTUNITIES_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "whitespace_opportunities.json")
+PROPOSAL_ANALYSIS_CACHE_PATH = os.path.join(os.path.dirname(__file__), "..", "data", "proposal_analysis_cache.json")
 
 # Inference batch size (pipeline accepts lists)
 CLASSIFY_BATCH = 8
@@ -261,26 +264,32 @@ def main() -> None:
         print(f"    {n} category: {int((counts == n).sum())}")
     print(f"    Misc / empty: {int((counts == 0).sum())}")
     try:
-        profile_count, avg_papers, match_count = write_author_outputs(
+        paper_count, profile_count, whitespace_count = write_analysis_outputs(
             df.to_dict(orient="records"),
-            AUTHOR_PROFILES_PATH,
-            WHITESPACE_MATCHES_PATH,
+            papers_enriched_path=PAPERS_ENRICHED_PATH,
+            author_profiles_path=AUTHOR_PROFILES_PATH,
+            whitespace_opportunities_path=WHITESPACE_OPPORTUNITIES_PATH,
+            whitespace_matches_path=WHITESPACE_MATCHES_PATH,
         )
-        print(f"\n👤  Generated data/author_profiles.json with {profile_count} author profiles.")
+        ensure_json_file(PROPOSAL_ANALYSIS_CACHE_PATH, [])
+        print(f"\n🧠  Generated data/papers_enriched.json with {paper_count} enriched papers.")
+        print(f"👤  Generated data/author_profiles.json with {profile_count} author profiles.")
+        print(f"🛰️  Generated data/whitespace_opportunities.json with {whitespace_count} whitespace opportunities.")
         if profile_count == 0:
             print("⚠️  No author data available. Wrote empty [] to data/author_profiles.json.")
-        else:
-            print(f"    Average papers per author: {avg_papers}")
-        print(f"    Whitespace-author matches: {match_count}")
+        print("🗂️  Ensured data/proposal_analysis_cache.json exists.")
     except Exception as exc:
         # The dashboard should never depend on runtime generation in the browser.
         # If author-profile building fails, still emit empty JSON artifacts so the
         # backend pipeline always leaves the expected files behind.
         ensure_json_file(AUTHOR_PROFILES_PATH, [])
         ensure_json_file(WHITESPACE_MATCHES_PATH, [])
+        ensure_json_file(PAPERS_ENRICHED_PATH, [])
+        ensure_json_file(WHITESPACE_OPPORTUNITIES_PATH, [])
+        ensure_json_file(PROPOSAL_ANALYSIS_CACHE_PATH, [])
         print("\n⚠️  Failed to build author profiles from classified papers.")
         print(f"    Reason: {exc}")
-        print("    Wrote empty [] to data/author_profiles.json and data/whitespace_matches.json.")
+        print("    Wrote empty [] to data/papers_enriched.json, data/author_profiles.json, data/whitespace_opportunities.json, data/whitespace_matches.json, and data/proposal_analysis_cache.json.")
     print(df[["title", "year", "hf_dataset", "primary_category", "categories"]].head(5).to_string())
 
 
