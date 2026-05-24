@@ -330,6 +330,16 @@
     background: var(--surface);
     box-shadow: 0 12px 28px rgba(0,0,0,0.16);
   }
+  .thesis-card.plain {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+  .thesis-card.span-2 {
+    grid-column: 1 / -1;
+  }
   .thesis-card.full { grid-column: 1 / -1; }
   .thesis-label {
     font-family: var(--font-ui);
@@ -1232,13 +1242,19 @@
   .legend-swatch.grammar { background: var(--cat-grammar); }
   .legend-swatch.decision { background: var(--cat-decision); }
   .legend-swatch.empty { background: transparent; border: 1px dashed var(--border); }
-  .chart-shell { margin-bottom: 6px; }
+  .chart-shell { margin-bottom: 6px; min-height: 300px; }
+  .chart-shell .emptystate {
+    min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .chart-scroll { display: flex; justify-content: flex-end; overflow-x: auto; overflow-y: hidden; padding-bottom: 6px; }
   .chart-content { width: max-content; min-width: 100%; }
-  .chart-bars { display:flex; align-items:flex-end; gap:4px; height:140px; margin-bottom:10px; }
+  .chart-bars { display:flex; align-items:flex-end; gap:6px; height:220px; margin-bottom:12px; }
   .chart-col { display:flex; flex-direction:column; justify-content:flex-end; align-items:center; flex:1; height:100%; cursor:pointer; transition:opacity 0.15s; }
   .chart-bar { width:100%; background:linear-gradient(180deg,var(--primary),var(--primary-hover)); border:1px solid var(--border); border-bottom:none; border-radius:8px 8px 0 0; min-height:4px; box-shadow:0 6px 16px rgba(0,0,0,0.18); }
-  .chart-labels { display:flex; gap:4px; }
+  .chart-labels { display:flex; gap:6px; }
   .chart-label { flex:1; text-align:center; font-family: var(--font-ui); font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--text-tertiary); }
 
   @media (max-width: 900px) {
@@ -1365,7 +1381,7 @@
         </div>
         <div class="thesis-stat-grid" id="thesis-stats"></div>
         <div class="thesis-grid">
-          <section class="thesis-card">
+          <section class="thesis-card plain span-2">
             <div class="thesis-label">What DRC Has Done</div>
             <div class="thesis-text" id="thesis-what-done"></div>
             <div class="thesis-pills" id="thesis-dominant-pills"></div>
@@ -1378,22 +1394,14 @@
             <div class="thesis-label">Where The Portfolio Is Thin</div>
             <div class="thesis-text" id="thesis-thin"></div>
           </section>
-          <section class="thesis-card">
+          <section class="thesis-card plain span-2">
             <div class="thesis-label">Why The Whitespace List Follows</div>
             <div class="thesis-text" id="thesis-whitespace"></div>
           </section>
           <section class="thesis-card full">
             <div class="thesis-label">Trend Analysis</div>
             <div class="thesis-text" id="thesis-trends"></div>
-            <div class="thesis-inline-note">The coverage matrix below is the evidence layer: it shows when each category was active and where category coverage stays sparse over time.</div>
-          </section>
-          <section class="thesis-card full">
-            <div class="sch">Portfolio Coverage Matrix</div>
-            <div class="mxscroll"><div id="matrix"></div></div>
-            <div class="mxnote">
-              <div class="legend-swatch empty" style="width:14px;height:14px;"></div>
-              Dashed cells = no publications in that year × category
-            </div>
+            <div class="thesis-inline-note">The publication activity view below is the evidence layer: it shows when the portfolio accelerated, where momentum thins out, and which periods anchor the current whitespace case.</div>
           </section>
           <section class="thesis-card full">
             <div class="sch">Publication Activity by Year</div>
@@ -1792,7 +1800,6 @@ function categoryBadgeClass(cat) {
 function updateAll() {
   updateCounts();
   renderPortfolioThesis();
-  renderMatrix();
   renderPapers();
   renderBarChart();
 }
@@ -1932,6 +1939,8 @@ function renderPortfolioThesis() {
 }
 
 function renderMatrix() {
+  const matrixEl = document.getElementById('matrix');
+  if (!matrixEl) return;
   const years = [...new Set(PAPERS.map((p) => p.year))]
     .filter(Boolean)
     .sort((a, b) => b - a)
@@ -1955,7 +1964,7 @@ function renderMatrix() {
     });
   });
   html += '</div>';
-  document.getElementById('matrix').innerHTML = html;
+  matrixEl.innerHTML = html;
 }
 
 function drillDown(cat, year) {
@@ -3034,13 +3043,15 @@ function escapeHtml(s) {
 }
 
 function renderBarChart() {
+  const chartEl = document.getElementById('barchart');
+  if (!chartEl) return;
   const years = [...new Set(PAPERS.map((p) => p.year))].filter(Boolean).sort((a, b) => a - b);
   if (!years.length) {
-    document.getElementById('barchart').innerHTML = '<div class="emptystate">No live publication data available.</div>';
+    chartEl.innerHTML = '<div class="emptystate">No live publication data available.</div>';
     return;
   }
   const maxCount = Math.max(...years.map((year) => PAPERS.filter((p) => p.year === year).length));
-  const chartWidth = Math.max(years.length * 28, 960);
+  const chartWidth = Math.max(years.length * 36, 1200);
   let html = `<div class="chart-scroll"><div class="chart-content" style="min-width:${chartWidth}px"><div class="chart-bars">`;
   years.forEach((year) => {
     const total = PAPERS.filter((p) => p.year === year).length;
@@ -3056,7 +3067,7 @@ function renderBarChart() {
   html += '</div><div class="chart-labels">';
   years.forEach((year) => { html += `<div class="chart-label">'${String(year).slice(2)}</div>`; });
   html += '</div></div></div>';
-  document.getElementById('barchart').innerHTML = html;
+  chartEl.innerHTML = html;
 }
 
 function drillYear(year) {
