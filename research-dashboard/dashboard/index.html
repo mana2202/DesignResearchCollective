@@ -368,7 +368,7 @@
     line-height: 1.65;
     color: var(--text-secondary);
   }
-  .thesis-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .thesis-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
   .thesis-stat-grid {
     display: grid;
     gap: 10px;
@@ -2002,6 +2002,7 @@ function normalizeWhitespaceItem(item) {
     desc: description,
     opp: opportunity,
     priorityLabel,
+    scoreBadge: firstDefined(item.score, priorityLabel),
     overallPriorityScore: item.overall_priority_score,
     priorityFactors: item.priority_factors || {},
     priorityReason: firstDefined(item.priority_reason, ''),
@@ -2022,6 +2023,7 @@ function renderWhitespace() {
       desc: item.desc,
       opp: item.opp,
       priorityLabel: item.score,
+      scoreBadge: item.score,
       overallPriorityScore: null,
       priorityFactors: null,
       priorityReason: '',
@@ -2035,7 +2037,7 @@ function renderWhitespace() {
 function renderWhitespaceCards(container, items) {
   container.innerHTML = items.map((w, index) => `
     <article class="wscard ${w.cat}">
-      <div class="score ${w.sc}">${escapeHtml(w.priorityLabel)}</div>
+      <div class="score ${w.sc}">${escapeHtml(w.scoreBadge || w.priorityLabel)}</div>
       <div class="wstitle">${escapeHtml(w.title)}</div>
       <div class="wsdesc">${escapeHtml(w.desc)}</div>
       <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(w.opp)}</div>
