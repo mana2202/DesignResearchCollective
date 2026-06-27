@@ -173,7 +173,7 @@ def score_paper_match(profile: dict[str, Any], paper: dict[str, Any]) -> dict[st
     proposal_categories = set(profile["categories"])
     paper_categories = {normalize_category_token(category) for category in paper.get("categories", [])}
     category_overlap = proposal_categories & paper_categories
-    current_year = max(paper.get("year_num", 0) for paper in [paper]) or 0
+    current_year = paper.get("year_num", 0) or 0
     recency_score = clamp01((paper.get("year_num", 0) - max(current_year - 12, 0)) / 12) if paper.get("year_num") else 0.0
     match_score = round(
         overlap_score(profile["salient_tokens"], title_tokens) * 0.25

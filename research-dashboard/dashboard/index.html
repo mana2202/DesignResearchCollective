@@ -1600,7 +1600,7 @@
             <div class="paper-analyzer-copy">Paste a proposal, abstract, or project idea. You'll get: which DRC research space it occupies, the nearest prior papers, likely collaborators, what looks distinct, and where the framing still has gaps.</div>
           </div>
         </div>
-        <textarea id="proposal-input" class="proposal-input" placeholder="Example: We want to study how human designers use AI-generated concepts in early-stage engineering design, and whether interactive evaluation loops can reduce fixation while improving concept quality."></textarea>
+        <textarea id="proposal-input" class="proposal-input" maxlength="10000" placeholder="Example: We want to study how human designers use AI-generated concepts in early-stage engineering design, and whether interactive evaluation loops can reduce fixation while improving concept quality."></textarea>
         <div class="paper-analyzer-actions">
           <button type="button" class="paper-analyzer-btn primary" id="analyze-btn" onclick="analyzeProposal()">Analyze</button>
           <button type="button" class="paper-analyzer-btn secondary" onclick="clearProposalAnalyzer()">Clear</button>
@@ -2066,10 +2066,10 @@ function renderMatrix() {
       if (count === 0) {
         html += `<div class="mxcell mxempty" title="No ${cat} papers in ${year}"><span class="mxempty-mark">-</span></div>`;
       } else {
-        html += `<div class="mxcell ${MXCLASS[cat]}"
-          onmouseenter="showTT(event,'${year} · ${cat}','${count} paper${count > 1 ? 's' : ''}')"
+        html += `<div class="mxcell ${MXCLASS[cat]}" data-cat="${cat}" data-year="${year}" data-count="${count}"
+          onmouseenter="showTT(event,this.dataset.year+' · '+this.dataset.cat,this.dataset.count+' paper'+(+this.dataset.count>1?'s':''))"
           onmouseleave="hideTT()"
-          onclick="drillDown('${cat}',${year})"><span class="mxn">${count}</span></div>`;
+          onclick="drillDown(this.dataset.cat,+this.dataset.year)"><span class="mxn">${count}</span></div>`;
       }
     });
   });
