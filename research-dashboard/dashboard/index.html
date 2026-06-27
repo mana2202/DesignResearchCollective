@@ -341,6 +341,51 @@
     grid-column: 1 / -1;
   }
   .thesis-card.full { grid-column: 1 / -1; }
+  .thesis-card.strong {
+    border-color: rgba(61,217,164,0.30);
+    background: linear-gradient(180deg, rgba(61,217,164,0.06), var(--surface));
+  }
+  .thesis-card.thin {
+    border-color: rgba(232,184,75,0.30);
+    background: linear-gradient(180deg, rgba(232,184,75,0.06), var(--surface));
+  }
+  .thesis-card.strong .thesis-label { color: var(--status-positive); }
+  .thesis-card.thin .thesis-label { color: var(--status-warning); }
+
+  .ws-filter-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: -2px 0 14px;
+    flex-wrap: wrap;
+  }
+  .ws-filter-label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+    margin-right: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .ws-filter-btn {
+    padding: 4px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface3);
+    color: var(--text-tertiary);
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+    line-height: 1;
+  }
+  .ws-filter-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.15); }
+  .ws-filter-btn.active-h { background: rgba(232,184,75,0.15); color: var(--status-warning); border-color: rgba(232,184,75,0.4); }
+  .ws-filter-btn.active-m { background: rgba(61,217,164,0.12); color: var(--status-positive); border-color: rgba(61,217,164,0.3); }
+  .ws-filter-btn.active-l { background: rgba(98,160,255,0.12); color: #8ab8ff; border-color: rgba(98,160,255,0.3); }
+  .ws-filter-btn.active-all { background: var(--primary-subtle); color: var(--primary); border-color: var(--primary-border); }
   .thesis-label {
     font-family: var(--font-ui);
     font-size: 11px;
@@ -431,7 +476,7 @@
   .score { position: absolute; top: 12px; right: 12px; min-width: 24px; height: 24px; padding: 0 8px; border-radius: 999px; display: flex; align-items: center; justify-content: center; font-family: var(--font-ui); font-size: 12px; font-weight: 700; line-height: 1; letter-spacing: 0.04em; text-transform: uppercase; }
   .sh { background: rgba(232,184,75,0.15); color: var(--status-warning); border: 1px solid rgba(232,184,75,0.3); }
   .sm { background: rgba(61,217,164,0.1); color: var(--status-positive); border: 1px solid rgba(61,217,164,0.2); }
-  .sl { background: rgba(240,131,110,0.12); color: var(--status-critical); border: 1px solid rgba(240,131,110,0.25); }
+  .sl { background: rgba(98,160,255,0.12); color: #8ab8ff; border: 1px solid rgba(98,160,255,0.25); }
   .wsmeta { margin-top: 10px; }
   .wsmeta summary { cursor: pointer; list-style: none; font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--text-tertiary); letter-spacing: 0.08em; text-transform: uppercase; }
   .wsmeta summary::-webkit-details-marker { display: none; }
@@ -440,8 +485,10 @@
   .wsmeta-body { margin-top: 8px; padding: 10px 11px; border-radius: 10px; background: rgba(255,255,255,0.025); border: 1px solid var(--border); }
   .wsreason { font-family: var(--font-ui); font-size: 13px; line-height: 1.55; color: var(--text-secondary); margin-bottom: 8px; }
   .wsfactor-grid { display: grid; gap: 6px; }
-  .wsfactor { display: flex; justify-content: space-between; gap: 12px; font-family: var(--font-ui); font-size: 12px; line-height: 1.45; color: var(--text-tertiary); }
-  .wsfactor strong { color: var(--text); font-weight: 600; }
+  .wsfactor { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 12px; line-height: 1.45; color: var(--text-tertiary); }
+  .wsfactor strong { color: var(--text); font-weight: 600; text-align: right; }
+  .wsfactor-bar-wrap { height: 4px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+  .wsfactor-bar { height: 100%; border-radius: 999px; background: var(--primary); }
   .wsmatch { margin-top: 8px; }
   .wsmatch-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-family: var(--font-ui); font-size: 12px; color: var(--text-tertiary); }
   .wsmatch-score { color: var(--text); font-weight: 700; }
@@ -662,8 +709,17 @@
     background: var(--primary-subtle);
   }
   .paper-analyzer-btn.primary {
-    background: linear-gradient(180deg, var(--primary-subtle), rgba(255,255,255,0.02));
-    border-color: var(--primary-border);
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+  .paper-analyzer-btn.primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+  }
+  .paper-analyzer-btn.secondary {
+    color: var(--text-tertiary);
+    font-weight: 500;
   }
   .paper-analysis-results {
     margin-top: 16px;
@@ -1255,7 +1311,7 @@
   .chart-col { display:flex; flex-direction:column; justify-content:flex-end; align-items:center; flex: none; width: 44px; height:100%; cursor:pointer; transition:opacity 0.15s; }
   .chart-bar { width:100%; background:linear-gradient(180deg,var(--primary),var(--primary-hover)); border:1px solid var(--border); border-bottom:none; border-radius:8px 8px 0 0; min-height:4px; box-shadow:0 6px 16px rgba(0,0,0,0.18); }
   .chart-labels { display:flex; gap:6px; }
-  .chart-label { flex: none; width: 44px; text-align:center; font-family: var(--font-ui); font-size: 13px; font-weight: 400; line-height: 1.5; color: var(--text-tertiary); }
+  .chart-label { flex: none; width: 44px; text-align:center; font-family: var(--font-ui); font-size: 10px; font-weight: 400; line-height: 1.5; color: var(--text-tertiary); }
 
   @media (max-width: 900px) {
     .ovgrid { grid-template-columns: 1fr; }
@@ -1386,11 +1442,11 @@
             <div class="thesis-text" id="thesis-what-done"></div>
             <div class="thesis-pills" id="thesis-dominant-pills"></div>
           </section>
-          <section class="thesis-card">
+          <section class="thesis-card strong">
             <div class="thesis-label">Where The Portfolio Is Strong</div>
             <div class="thesis-text" id="thesis-strong"></div>
           </section>
-          <section class="thesis-card">
+          <section class="thesis-card thin">
             <div class="thesis-label">Where The Portfolio Is Thin</div>
             <div class="thesis-text" id="thesis-thin"></div>
           </section>
@@ -1465,8 +1521,15 @@
     </div>
 
     <div class="tabp active" id="panel-whitespace">
-      <div class="sch">12 Identified Research Opportunities</div>
+      <div class="sch" id="ws-section-header">12 Identified Research Opportunities</div>
       <div class="wslegend"><strong>Priority legend:</strong> <span class="wslegend-items"><span class="wslegend-pill high"><span class="k">H</span><span>High</span></span><span class="wslegend-pill medium"><span class="k">M</span><span>Medium</span></span><span class="wslegend-pill low"><span class="k">L</span><span>Low</span></span></span> The number shows rank within that tier.</div>
+      <div class="ws-filter-bar">
+        <span class="ws-filter-label">Filter:</span>
+        <button class="ws-filter-btn active-all" id="wsf-all" onclick="setWsPriority('all',this)">All</button>
+        <button class="ws-filter-btn" id="wsf-high" onclick="setWsPriority('high',this)">H — High</button>
+        <button class="ws-filter-btn" id="wsf-medium" onclick="setWsPriority('medium',this)">M — Medium</button>
+        <button class="ws-filter-btn" id="wsf-low" onclick="setWsPriority('low',this)">L — Low</button>
+      </div>
       <div class="wsgrid" id="wsgrid"></div>
     </div>
 
@@ -1492,13 +1555,13 @@
         <div class="paper-analyzer-head">
           <div>
             <div class="paper-analyzer-title">Analyze a research proposal</div>
-            <div class="paper-analyzer-copy">Paste a proposal, abstract, thesis direction, or project idea to see what space it occupies across the current corpus.</div>
+            <div class="paper-analyzer-copy">Paste a proposal, abstract, or project idea. You'll get: which DRC research space it occupies, the nearest prior papers, likely collaborators, what looks distinct, and where the framing still has gaps.</div>
           </div>
         </div>
         <textarea id="proposal-input" class="proposal-input" placeholder="Example: We want to study how human designers use AI-generated concepts in early-stage engineering design, and whether interactive evaluation loops can reduce fixation while improving concept quality."></textarea>
         <div class="paper-analyzer-actions">
-          <button type="button" class="paper-analyzer-btn primary" onclick="analyzeProposal()">Analyze</button>
-          <button type="button" class="paper-analyzer-btn" onclick="clearProposalAnalyzer()">Clear</button>
+          <button type="button" class="paper-analyzer-btn primary" id="analyze-btn" onclick="analyzeProposal()">Analyze</button>
+          <button type="button" class="paper-analyzer-btn secondary" onclick="clearProposalAnalyzer()">Clear</button>
         </div>
         <div class="paper-analysis-results" id="proposal-analysis-results"></div>
       </div>
@@ -1586,6 +1649,7 @@ const WS = [
 
 let activeCat = 'all';
 let activeYears = new Set();
+let activePriority = 'all';
 
 function filtered() {
   return PAPERS.filter((p) => {
@@ -2035,17 +2099,47 @@ function renderWhitespace() {
       matched_authors: [],
     }));
 
+  const header = document.getElementById('ws-section-header');
+  if (header) header.textContent = `${WHITESPACE_ITEMS.length} Identified Research Opportunit${WHITESPACE_ITEMS.length === 1 ? 'y' : 'ies'}`;
   renderWhitespaceCards(container, WHITESPACE_ITEMS);
 }
 
+function priorityTier(sc) {
+  if (sc === 'sh') return 'high';
+  if (sc === 'sm') return 'medium';
+  if (sc === 'sl') return 'low';
+  return 'medium';
+}
+
+function setWsPriority(tier, btn) {
+  activePriority = tier;
+  document.querySelectorAll('.ws-filter-btn').forEach((b) => {
+    b.classList.remove('active-all', 'active-h', 'active-m', 'active-l');
+  });
+  if (tier === 'all') btn.classList.add('active-all');
+  else if (tier === 'high') btn.classList.add('active-h');
+  else if (tier === 'medium') btn.classList.add('active-m');
+  else if (tier === 'low') btn.classList.add('active-l');
+  const filtered = activePriority === 'all'
+    ? WHITESPACE_ITEMS
+    : WHITESPACE_ITEMS.filter((w) => priorityTier(w.sc) === activePriority);
+  const header = document.getElementById('ws-section-header');
+  if (header) header.textContent = `${filtered.length} Research Opportunit${filtered.length === 1 ? 'y' : 'ies'}`;
+  renderWhitespaceCards(document.getElementById('wsgrid'), filtered);
+}
+
 function renderWhitespaceCards(container, items) {
+  if (!items.length) {
+    container.innerHTML = '<div class="emptystate">No opportunities match this filter.</div>';
+    return;
+  }
   container.innerHTML = items.map((w, index) => `
     <article class="wscard ${w.cat}">
       <div class="score ${w.sc}">${escapeHtml(w.scoreBadge || w.priorityLabel)}</div>
       <div class="wstitle">${escapeHtml(w.title)}</div>
       <div class="wsdesc">${escapeHtml(w.desc)}</div>
       <div class="wsopp"><span class="wsopp-h">→ Research Opportunity</span>${escapeHtml(w.opp)}</div>
-      <button type="button" class="wscta" onclick="openWhitespaceDetail(${index})">More details</button>
+      <button type="button" class="wscta" onclick="openWhitespaceDetail(${WHITESPACE_ITEMS.indexOf(w) >= 0 ? WHITESPACE_ITEMS.indexOf(w) : index})">Evidence &amp; collaborators →</button>
     </article>`).join('');
 }
 
@@ -2064,18 +2158,25 @@ function renderWhitespacePriority(item) {
   </details>`;
 }
 
+function factorBar(score) {
+  const pct = Math.round(clamp01js(Number(score || 0)) * 100);
+  return `<div class="wsfactor-bar-wrap"><div class="wsfactor-bar" style="width:${pct}%"></div></div>`;
+}
+
+function clamp01js(v) { return Math.max(0, Math.min(1, v)); }
+
 function renderWhitespacePriorityContent(item) {
   if (item.overallPriorityScore == null || !item.priorityFactors) return '';
   const factors = item.priorityFactors;
   return `
     <div class="wsreason">${escapeHtml(item.priorityReason)}</div>
     <div class="wsfactor-grid">
-      <div class="wsfactor"><span>Overall priority score</span><strong>${Number(item.overallPriorityScore).toFixed(2)}</strong></div>
-      <div class="wsfactor"><span>Current trends</span><strong>${Number(factors.current_trends_score || 0).toFixed(2)}</strong></div>
-      <div class="wsfactor"><span>DRC interest</span><strong>${Number(factors.drc_interest_score || 0).toFixed(2)}</strong></div>
-      <div class="wsfactor"><span>Impact</span><strong>${Number(factors.impact_score || 0).toFixed(2)}</strong></div>
-      <div class="wsfactor"><span>Evidence strength</span><strong>${Number(factors.evidence_strength_score || 0).toFixed(2)}</strong></div>
-      <div class="wsfactor"><span>Feasibility / readiness</span><strong>${Number(factors.feasibility_readiness_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Overall score</span>${factorBar(item.overallPriorityScore)}<strong>${Number(item.overallPriorityScore).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Current trends</span>${factorBar(factors.current_trends_score)}<strong>${Number(factors.current_trends_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>DRC interest</span>${factorBar(factors.drc_interest_score)}<strong>${Number(factors.drc_interest_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Impact</span>${factorBar(factors.impact_score)}<strong>${Number(factors.impact_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Evidence strength</span>${factorBar(factors.evidence_strength_score)}<strong>${Number(factors.evidence_strength_score || 0).toFixed(2)}</strong></div>
+      <div class="wsfactor"><span>Feasibility</span>${factorBar(factors.feasibility_readiness_score)}<strong>${Number(factors.feasibility_readiness_score || 0).toFixed(2)}</strong></div>
     </div>
   `;
 }
@@ -2667,8 +2768,18 @@ function getProposalText() {
 
 function analyzeProposal() {
   const text = getProposalText();
-  PROPOSAL_ANALYSIS = text ? buildProposalAnalysis(text) : { error: 'Paste a proposal, abstract, or project idea to analyze.' };
-  renderProposalAnalyzerResults();
+  if (!text) {
+    PROPOSAL_ANALYSIS = { error: 'Paste a proposal, abstract, or project idea to analyze.' };
+    renderProposalAnalyzerResults();
+    return;
+  }
+  const btn = document.getElementById('analyze-btn');
+  if (btn) { btn.disabled = true; btn.textContent = 'Analyzing…'; }
+  setTimeout(() => {
+    PROPOSAL_ANALYSIS = buildProposalAnalysis(text);
+    renderProposalAnalyzerResults();
+    if (btn) { btn.disabled = false; btn.textContent = 'Analyze'; }
+  }, 0);
 }
 
 function clearProposalAnalyzer() {
@@ -3070,7 +3181,7 @@ function renderBarChart() {
     </div>`;
   });
   html += '</div><div class="chart-labels">';
-  years.forEach((year) => { html += `<div class="chart-label">'${String(year).slice(2)}</div>`; });
+  years.forEach((year) => { html += `<div class="chart-label">${year}</div>`; });
   html += '</div></div></div>';
   chartEl.innerHTML = html;
 }
