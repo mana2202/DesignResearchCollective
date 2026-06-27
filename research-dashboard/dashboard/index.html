@@ -844,6 +844,48 @@
     margin: 18px 0 14px;
   }
 
+  .niche-momentum-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+  }
+  .niche-trend-badge {
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .niche-momentum-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+  .niche-stat {
+    padding: 10px 12px;
+    border-radius: 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+  }
+  .niche-stat-v {
+    font-family: var(--font-ui);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .niche-stat-k {
+    margin-top: 4px;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.4;
+  }
+
   .plist { display: grid; gap: 6px; }
   .prow { display: grid; grid-template-columns: 6px 1fr auto; gap: 12px; align-items: start; padding: 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; transition: border-color 0.12s, transform 0.12s; }
   .prow:hover { border-color: rgba(255,255,255,0.12); transform: translateY(-1px); }
@@ -2996,6 +3038,111 @@ function summarizeProposalSpace(profile, paperMatches, capabilities) {
   return summary;
 }
 
+const NICHE_SCORE_THRESHOLD = 0.04;
+const NICHE_RECENT_WINDOW = 2;
+
+const NICHE_TREND_META = {
+  accelerating: { label: '↑↑ Accelerating', color: 'var(--status-positive)' },
+  growing:      { label: '↑ Growing',        color: 'var(--status-positive)' },
+  steady:       { label: '→ Steady',          color: 'var(--text-secondary)' },
+  declining:    { label: '↓ Declining',       color: 'var(--status-warning)' },
+  emerging:     { label: '◎ Emerging',        color: 'var(--cat-ideation)' },
+  gap:          { label: '○ No DRC presence', color: 'var(--text-tertiary)' },
+};
+
+function buildNicheMomentum(profile) {
+  const drcPapers = PAPERS.filter((p) => p.source === 'drc' && p.year);
+  if (!drcPapers.length) return { gap: true };
+
+  const maxYear = Math.max(...drcPapers.map((p) => p.year));
+  const recentCutoff = maxYear - NICHE_RECENT_WINDOW + 1;
+
+  const scored = drcPapers
+    .map((p) => scorePaperForProposal(p, profile))
+    .filter((p) => p.matchScore > NICHE_SCORE_THRESHOLD);
+
+  if (!scored.length) return { gap: true, maxYear };
+
+  const recent = scored.filter((p) => p.year >= recentCutoff);
+  const historical = scored.filter((p) => p.year < recentCutoff);
+
+  const minScoredYear = Math.min(...scored.map((p) => p.year));
+  const historicalYears = Math.max(recentCutoff - minScoredYear, 1);
+  const recentPerYear = recent.length / NICHE_RECENT_WINDOW;
+  const historicalPerYear = historical.length / historicalYears;
+
+  let trend;
+  if (!historical.length) {
+    trend = recent.length ? 'emerging' : 'gap';
+  } else {
+    const ratio = recentPerYear / Math.max(historicalPerYear, 0.5);
+    trend = ratio >= 2.0 ? 'accelerating' : ratio >= 1.2 ? 'growing' : ratio <= 0.5 ? 'declining' : 'steady';
+  }
+
+  const recentTopics = new Map();
+  const historicalTopics = new Map();
+  recent.forEach((p) => (p.topics || []).slice(0, 4).forEach((t) => recentTopics.set(t, (recentTopics.get(t) || 0) + 1)));
+  historical.forEach((p) => (p.topics || []).slice(0, 4).forEach((t) => historicalTopics.set(t, (historicalTopics.get(t) || 0) + 1)));
+
+  const risingTopics = [...recentTopics.entries()]
+    .map(([topic, rCount]) => ({
+      topic,
+      delta: rCount / NICHE_RECENT_WINDOW - (historicalTopics.get(topic) || 0) / historicalYears,
+    }))
+    .filter((t) => t.delta > 0)
+    .sort((a, b) => b.delta - a.delta)
+    .slice(0, 4)
+    .map((t) => t.topic);
+
+  const recentPapers = [...recent]
+    .sort((a, b) => b.year - a.year || b.matchScore - a.matchScore)
+    .slice(0, 3);
+
+  return { gap: false, total: scored.length, recentCount: recent.length, historicalCount: historical.length, recentCutoff, maxYear, trend, risingTopics, recentPapers };
+}
+
+function renderNicheMomentum(m) {
+  if (!m) return '';
+  const meta = NICHE_TREND_META[m.trend || 'gap'] || NICHE_TREND_META.gap;
+  const head = `
+    <div class="niche-momentum-head">
+      <div class="paper-analysis-label" style="margin-bottom:0">DRC Niche Momentum</div>
+      <span class="niche-trend-badge" style="color:${meta.color}">${meta.label}</span>
+    </div>`;
+  if (m.gap) {
+    return `<section class="paper-analysis-card">${head}<div class="paper-analysis-empty">No DRC publications found in this niche — this appears to be a genuine portfolio gap.</div></section>`;
+  }
+  return `<section class="paper-analysis-card">
+    ${head}
+    <div class="niche-momentum-stats">
+      <div class="niche-stat"><div class="niche-stat-v">${m.total}</div><div class="niche-stat-k">DRC papers in niche</div></div>
+      <div class="niche-stat"><div class="niche-stat-v">${m.recentCount}</div><div class="niche-stat-k">Last 2 yrs (${m.recentCutoff}–${m.maxYear})</div></div>
+      <div class="niche-stat"><div class="niche-stat-v">${m.historicalCount}</div><div class="niche-stat-k">Before ${m.recentCutoff}</div></div>
+    </div>
+    ${m.risingTopics.length ? `
+      <div style="margin-top:14px;">
+        <div class="paper-analysis-label" style="margin-bottom:6px;">Rising topics in DRC's recent work here</div>
+        <div class="paper-analysis-meta">${m.risingTopics.map((t) => `<span class="tchip">${escapeHtml(t)}</span>`).join('')}</div>
+      </div>` : ''}
+    ${m.recentPapers.length ? `
+      <div style="margin-top:14px;">
+        <div class="paper-analysis-label" style="margin-bottom:8px;">Most recent DRC papers in this space</div>
+        <div class="paper-analysis-papers">
+          ${m.recentPapers.map((p) => `
+            <div class="paper-analysis-paper">
+              <div class="paper-analysis-row">
+                <div class="paper-analysis-title-row">
+                  <strong>${escapeHtml(p.title)}</strong>
+                  <div class="paper-analysis-subtle">${p.year} · ${escapeHtml(p.authors)}</div>
+                </div>
+                <div class="paper-analysis-score">${(p.matchScore * 100).toFixed(0)}%</div>
+              </div>
+            </div>`).join('')}
+        </div>
+      </div>` : ''}
+  </section>`;
+}
+
 function buildProposalAnalysis(text) {
   const profile = buildProposalProfile(text);
   const paperMatches = scorePapersForProposal(profile);
@@ -3003,9 +3150,11 @@ function buildProposalAnalysis(text) {
   const capabilities = identifyProposalCapabilities(profile, paperMatches, collaboratorMatches);
   const distinctiveness = describeProposalDistinctiveness(profile, paperMatches);
   const risks = identifyProposalRisks(profile, paperMatches, collaboratorMatches);
+  const nicheMomentumResult = buildNicheMomentum(profile);
   return {
     profile,
     summary: summarizeProposalSpace(profile, paperMatches, capabilities),
+    nicheMomentum: nicheMomentumResult,
     paperMatches,
     collaboratorMatches,
     capabilities,
@@ -3025,7 +3174,7 @@ function renderProposalAnalyzerResults() {
     container.innerHTML = `<div class="paper-analysis-empty">${escapeHtml(PROPOSAL_ANALYSIS.error)}</div>`;
     return;
   }
-  const { profile, summary, paperMatches, collaboratorMatches, capabilities, distinctiveness, risks } = PROPOSAL_ANALYSIS;
+  const { profile, summary, nicheMomentum, paperMatches, collaboratorMatches, capabilities, distinctiveness, risks } = PROPOSAL_ANALYSIS;
   container.innerHTML = `
     <div class="paper-analysis-grid">
       <section class="paper-analysis-card">
@@ -3056,6 +3205,8 @@ function renderProposalAnalyzerResults() {
         ` : '<div class="paper-analysis-empty">Not enough signal yet to tie this proposal to a specific DRC capability cluster.</div>'}
       </section>
     </div>
+
+    ${renderNicheMomentum(nicheMomentum)}
 
     <section class="paper-analysis-card">
       <div class="paper-analysis-label">Nearest prior papers</div>

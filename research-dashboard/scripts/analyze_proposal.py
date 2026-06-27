@@ -378,6 +378,93 @@ def strip_private_fields(papers: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return [{key: value for key, value in paper.items() if not key.startswith("_")} for paper in papers]
 
 
+DRC_HF_DATASET = "ccm/publications"
+NICHE_SCORE_THRESHOLD = 0.04
+NICHE_RECENT_WINDOW = 2
+
+
+def niche_momentum(profile: dict[str, Any], papers: list[dict[str, Any]]) -> dict[str, Any]:
+    """
+    Compute DRC-only publication trend in the proposal's specific niche.
+
+    Filters to ccm/publications papers, scores each against the proposal
+    profile, then splits into recent (last NICHE_RECENT_WINDOW years) and
+    historical to derive a trend direction and rising topic signals.
+    """
+    drc_papers = [p for p in papers if p.get("hf_dataset") == DRC_HF_DATASET and p.get("year_num")]
+    if not drc_papers:
+        return {"gap": True}
+
+    max_year = max(p["year_num"] for p in drc_papers)
+    recent_cutoff = max_year - NICHE_RECENT_WINDOW + 1
+
+    scored: list[dict[str, Any]] = []
+    for paper in drc_papers:
+        match = score_paper_match(profile, paper)
+        if match["match_score"] > NICHE_SCORE_THRESHOLD:
+            scored.append({**paper, "match_score": match["match_score"]})
+
+    if not scored:
+        return {"gap": True, "max_year": max_year}
+
+    recent = [p for p in scored if p["year_num"] >= recent_cutoff]
+    historical = [p for p in scored if p["year_num"] < recent_cutoff]
+
+    min_scored_year = min(p["year_num"] for p in scored)
+    historical_years = max(recent_cutoff - min_scored_year, 1)
+    recent_per_year = len(recent) / NICHE_RECENT_WINDOW
+    historical_per_year = len(historical) / historical_years
+
+    if not historical:
+        trend = "emerging" if recent else "gap"
+    else:
+        ratio = recent_per_year / max(historical_per_year, 0.5)
+        if ratio >= 2.0:
+            trend = "accelerating"
+        elif ratio >= 1.2:
+            trend = "growing"
+        elif ratio <= 0.5:
+            trend = "declining"
+        else:
+            trend = "steady"
+
+    recent_topics: dict[str, int] = {}
+    historical_topics: dict[str, int] = {}
+    for p in recent:
+        for topic in (p.get("topics") or [])[:4]:
+            recent_topics[topic] = recent_topics.get(topic, 0) + 1
+    for p in historical:
+        for topic in (p.get("topics") or [])[:4]:
+            historical_topics[topic] = historical_topics.get(topic, 0) + 1
+
+    rising_topics = sorted(
+        recent_topics.items(),
+        key=lambda kv: -(kv[1] / NICHE_RECENT_WINDOW - historical_topics.get(kv[0], 0) / historical_years),
+    )[:4]
+
+    recent_papers_out = sorted(recent, key=lambda p: (-p["year_num"], -p["match_score"]))[:3]
+
+    return {
+        "gap": False,
+        "total_niche_papers": len(scored),
+        "recent_count": len(recent),
+        "historical_count": len(historical),
+        "recent_cutoff_year": recent_cutoff,
+        "max_year": max_year,
+        "trend_direction": trend,
+        "rising_topics": [t for t, _ in rising_topics],
+        "recent_papers": [
+            {
+                "title": p["title"],
+                "year": p["year_num"],
+                "authors": p.get("authors", []),
+                "match_score": round(p["match_score"], 3),
+            }
+            for p in recent_papers_out
+        ],
+    }
+
+
 def analyze_proposal(proposal_text: str, *, use_cache: bool = True) -> dict[str, Any]:
     proposal_text = proposal_text.strip()
     if not proposal_text:
@@ -398,6 +485,7 @@ def analyze_proposal(proposal_text: str, *, use_cache: bool = True) -> dict[str,
     capabilities = infer_capabilities(profile)
     distinct = distinctiveness_summary(profile, nearby_papers)
     risks = infer_risks(profile, nearby_papers, collaborators)
+    momentum = niche_momentum(profile, papers)
 
     proposal_tokens = set(profile["salient_tokens"])
     whitespace_hits = [
@@ -419,6 +507,7 @@ def analyze_proposal(proposal_text: str, *, use_cache: bool = True) -> dict[str,
     analysis = {
         "proposal_text": proposal_text,
         "research_space_summary": research_space_summary(profile, nearby_papers),
+        "drc_niche_momentum": momentum,
         "nearest_prior_papers": strip_private_fields(nearby_papers),
         "what_is_distinct": distinct,
         "drc_capability_it_builds_on": capabilities,
@@ -435,6 +524,7 @@ def analyze_proposal(proposal_text: str, *, use_cache: bool = True) -> dict[str,
                 "author representative papers",
                 "author recent DRC relevance",
                 "bridge-to-gap overlap",
+                "drc niche momentum (last 2 years)",
             ],
             "salient_tokens": sorted(proposal_tokens),
         },
